@@ -11,17 +11,17 @@ import java.util.StringJoiner;
 import data.dto.SearchResult;
 import mysql.db.DBConnect;
 
-public class SearchDao_v2 {
+public class SearchDao_v2_new {
 
 	DBConnect db=new DBConnect();
 	
-	public List<SearchResult> searchAllTablesColumns(String inputWords) {
+	public List<SearchResult> searchAllTablesColumns(String inputWords) { //주요 키워드 앞에는 '>'를 표기하라는 주의사항 필서
 		
 		List<SearchResult> results=new ArrayList<SearchResult>();
 		
 		String [] keyWordsDivided=inputWords.split(" ");
 		
-		StringJoiner sj=new StringJoiner(" +"); //각 단어 모두가 들어있어야 검색되게
+		StringJoiner sj=new StringJoiner("* "); //각 단어 중 하나라도 들어있으면 검색되게,와일드카드 조건
 
 		for(String keyWord:keyWordsDivided)
 		{
@@ -118,8 +118,10 @@ public class SearchDao_v2 {
 		} finally {
 			db.dbClose(rs, pstmt, conn);
 		}
-
-		
+	
 		return results;
 	}
+	
+	//디폴트가 관련도순, 통계테이블과 조인해서 등록일별로 최신순,선택횟수별로 인기순, 선택일자로 어제의인기검색어
+	//테이블 정보로 카테고리로 출력값 구분가능
 }
