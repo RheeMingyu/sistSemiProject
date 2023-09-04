@@ -63,8 +63,9 @@ public class SearchDao_v2_new {
 			while(rs.next())
 			{
 				String cn=rs.getString("column_name");
-				if(!cn.equals("tour_seq")||!cn.equals("photo")||!cn.equals("viewcount")||!cn.equals("likes")||!cn.equals("seq"))
-					columns+=cn+",";
+				if(!cn.equals("tour_seq")||!cn.equals("photo")||!cn.equals("writeday")||!cn.equals("stars")||!cn.equals("viewcount")||
+					!cn.equals("price")||!cn.equals("day")||!cn.equals("order")||!cn.equals("likes")||!cn.equals("seq"))
+					{columns+=cn+",";}
 			}
 			
 		} catch (SQLException e) {

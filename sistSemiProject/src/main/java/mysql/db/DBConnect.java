@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class DBConnect {
 
-	static final String MYSQL_URL="jdbc:mysql://localhost:3306/coffee?serverTimezone=Asia/Seoul";
+	static final String MYSQL_URL="jdbc:mysql://semi.ctenjxtdwkfn.ap-northeast-2.rds.amazonaws.com:3306/semi?serverTimezone=Asia/Seoul";
 	
 	String driver="com.mysql.cj.jdbc.Driver";
 	
@@ -29,7 +29,7 @@ public class DBConnect {
 		Connection conn=null;
 		
 		try {
-			conn=DriverManager.getConnection(MYSQL_URL, "rheemingyu", "a1234");
+			conn=DriverManager.getConnection(MYSQL_URL, "admin2", "inkel357011");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
