@@ -31,39 +31,11 @@
 </style>
 <script>
 	$(function(){
-		<%for(int i=1;i<=3;i++){%>
-			$("a.sortBtn"+i).click(function(){
-				<%
-				for(int j=1;j<=3;j++){session.removeAttribute("sort"+j);}
-				session.setAttribute("sort"+i, i); %>
-			});
-		<%}%>
-		
 		$("button.v").click(function(){
-			<%session.removeAttribute("h_align");%>
+			$("div.col-md-6").attr("class","forColMd");
 		});
 		$("button.h").click(function(){
-			<%session.setAttribute("h_align", "on");%>
-		});
-		
-		$(document).on("click","sortAll",function(){
-			$("table").show();
-		});
-		$(document).on("click","sortTourSpot",function(){
-			$("table.tourspot").siblings().hide();
-			$("table.tourspot").show();
-		});
-		$(document).on("click","sortMyCourse",function(){
-			$("table.mycourse").siblings().hide();
-			$("table.mycourse").show();
-		});
-		$(document).on("click","sortRecomCourse",function(){
-			$("table.recomcourse").siblings().hide();
-			$("table.recomcourse").show();
-		});
-		$(document).on("click","sortTourReview",function(){
-			$("table.tourreview").siblings().hide();
-			$("table.tourreview").show();
+			$("div.forColMd").attr("class","forColMd col-md-6");
 		});
 	});
 </script>
@@ -80,14 +52,22 @@
 		
 		return tableName;
 	}%>
-	<%	
-	String [] tables={"tourspot","mycourse","recomcourse","tourreview","guest"};
+	<%
+	String sortidx=(request.getParameter("sortidx")!=null?request.getParameter("sortidx"):"");
+	List<String> tables=new ArrayList<String>();
 	
+	if(sortidx.equals("0")||sortidx.equals("")){tables.add("tourspot");tables.add("mycourse");tables.add("recomcourse");tables.add("tourreview");tables.add("guestreview");}
+	else if(sortidx.equals("1")){tables.add("tourspot");}
+	else if(sortidx.equals("2")){tables.add("mycourse");}
+	else if(sortidx.equals("3")){tables.add("recomcourse");}
+	else if(sortidx.equals("4")){tables.add("tourreview");}
+	else if(sortidx.equals("5")){tables.add("guestreview");}
+
 	//String inputWords=(request.getParameter("inputWords")==null?"":request.getParameter("inputWords"));
 	String inputWords="좋은 해수욕장 추천";
 	SearchDao_v3 searchDao=new SearchDao_v3();
 	
-	int totalCount=searchDao.getTotalcount(inputWords);
+	int totalCount=searchDao.getTotalCount(inputWords,tables);
 	int totalPage;
 	int startPage;
 	int endPage;
@@ -119,19 +99,22 @@
 					<div class="collapse navbar-collapse" id="collapsibleNavbar">
 						<ul class="navbar-nav">
 							<li class="nav-item">
-								<a class="nav-link sortAll" href="#">전체</a>
+								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=0&currentPage=<%=currentPage%>">전체</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link sortTourSpot" href="#">관광지</a>
+								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=1&currentPage=<%=currentPage%>">관광지</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link sortMyCourse" href="#">나만의코스</a>
+								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=2&currentPage=<%=currentPage%>">나만의코스</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link sortRecomCourse" href="#">추천코스</a>
+								<a class="nav-link " href="index.jsp?main=search/searchBoard_3.jsp?sortidx=3&currentPage=<%=currentPage%>">추천코스</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link sortTourReview" href="#">리뷰</a>
+								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=4&currentPage=<%=currentPage%>">리뷰</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=5&currentPage=<%=currentPage%>">비회원리뷰</a>
 							</li>
 						</ul>
 					</div>
@@ -142,6 +125,7 @@
 		<div class="container mt-3">
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs left-tab">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<li class="nav-item">
 					<button type="button" class="btn btn-outline-info btn-sm v"><i class="bi bi-arrow-down-up"></i></button>
 				</li>&nbsp;
@@ -162,10 +146,9 @@
 			</ul>
 		</div>
 	</div>
-	<div class="tab-content row">
-		<div id="tabs1" class="container tab-pane fade"><br>
-			<%List<HashMap<String,HashMap<String,String>>> list_relevance=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, startNum, perPage, 1);
-			if(list_relevance==null){%><h1>화면 업로드 준비중입니다</h1><%}else{
+	<div class="tab-content">
+		<div id="tabs1" class="container tab-pane fade row"><br>
+			<%List<HashMap<String,HashMap<String,String>>> list_relevance=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 1);
 			for(int i=0;i<list_relevance.size();i++)
 			{
 				HashMap<String,HashMap<String,String>> tableMap=list_relevance.get(i);
@@ -179,6 +162,7 @@
 					else
 					{
 						HashMap<String,String> map=tableMap.get(table);%>
+						<div class="forColMd">
 						<table>
 							<caption align="top"><%=table %></caption>
 							<tr>
@@ -201,13 +185,13 @@
 								</tr>	
 							<%j++;}%>
 					</table>
+					</div>
 					<%}
 				}
-			}}%>
+			}%>
 		</div>
 		<div id="tabs2" class="container tab-pane fade"><br>
-			<%List<HashMap<String,HashMap<String,String>>> list_latest=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, startNum, perPage, 2);
-			if(list_latest==null){%><h1>화면 업로드 준비중입니다</h1><%}else{
+			<%List<HashMap<String,HashMap<String,String>>> list_latest=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 2);
 			for(int i=0;i<list_latest.size();i++)
 			{
 				HashMap<String,HashMap<String,String>> tableMap=list_latest.get(i);
@@ -221,6 +205,7 @@
 					else
 					{
 						HashMap<String,String> map=tableMap.get(table);%>
+						<div class="forColMd">
 						<table>
 							<caption align="top"><%=table %></caption>
 							<tr>
@@ -243,13 +228,13 @@
 								</tr>	
 							<%j++;}%>
 					</table>
+					</div>
 					<%}
 				}
-			}}%>
+			}%>
 		</div>
 		<div id="tabs3" class="container tab-pane fade"><br>
-			<%List<HashMap<String,HashMap<String,String>>> list_popularity=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, startNum, perPage, 3);
-			if(list_popularity==null){%><h1>화면 업로드 준비중입니다</h1><%}else{
+			<%List<HashMap<String,HashMap<String,String>>> list_popularity=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 3);
 			for(int i=0;i<list_popularity.size();i++)
 			{
 				HashMap<String,HashMap<String,String>> tableMap=list_popularity.get(i);
@@ -263,6 +248,7 @@
 					else
 					{
 						HashMap<String,String> map=tableMap.get(table);%>
+						<div class="forColMd">
 						<table>
 							<caption align="top"><%=table %></caption>
 							<tr>
@@ -285,9 +271,10 @@
 								</tr>	
 							<%j++;}%>
 					</table>
+					</div>
 					<%}
 				}
-			}}%>
+			}%>
 		</div>
 		
 		<div style="width: 600px;text-align: center">

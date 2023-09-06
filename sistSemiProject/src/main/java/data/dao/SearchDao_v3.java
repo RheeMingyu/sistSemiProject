@@ -21,7 +21,7 @@ public class SearchDao_v3 {
 
 	DBConnect db=new DBConnect();
 	
-	String [] tables= {"tourspot","mycourse","recomcourse","tourreview","guest"};
+	//String [] tables= {"tourspot","mycourse","recomcourse","tourreview","guest"};
 	
 	/*public List<HashMap<String, String>> searchInputWordsInWholeTables_GPT(String inputWords, int startNum, int perPage) {
 	    List<HashMap<String, String>> resultsList = new ArrayList<HashMap<String, String>>();
@@ -118,7 +118,7 @@ public class SearchDao_v3 {
 		return resultsList;
 	}*/
 	
-	public List<HashMap<String, HashMap<String, String>>> searchInputWordsInWholeTablesWithStatistics(String inputWords,int startNum,int perPage,int sort) {
+	public List<HashMap<String, HashMap<String, String>>> searchInputWordsInWholeTablesWithStatistics(String inputWords,List<String> tables,int startNum,int perPage,int sort) {
 		
 		List<HashMap<String, HashMap<String, String>>> resultsList=new ArrayList<HashMap<String,HashMap<String,String>>>();
 		
@@ -140,7 +140,7 @@ public class SearchDao_v3 {
 			if(sort==1) {mapList=searchColumnsValuesInTable(table, columns, sj.toString()+"*", startNum, perPage);}
 			else if(sort==2) {mapList=searchColumnsValuesInTableOrderByLatest(table, columns, sj.toString()+"*", startNum, perPage);}
 			else if(sort==3) {mapList=searchColumnsValuesInTableOrderByPopularity(table, columns, sj.toString()+"*", startNum, perPage);}
-			else if(!Objects.nonNull(sort)) {return null;}
+			//else if(sort.equals("")) {return null;}
 			
 			for(HashMap<String, String> map:mapList)
 			{				
@@ -181,7 +181,7 @@ public class SearchDao_v3 {
 		ResultSet rs=null;
 
 		String sql="select column_name from information_schema.columns "
-					+"where table_schema='semipjt' and table_name=?";
+					+"where table_schema='semi' and table_name=?";
 			
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -220,7 +220,7 @@ public class SearchDao_v3 {
 		ResultSet rs=null;
 		
 		String seqName="";
-		if(table.equals(tables[0])) {seqName="seq";}
+		if(table.equals("tourspot")) {seqName="seq";}
 		else {seqName="tour_seq";}
 		
 		/*StringJoiner sj=new StringJoiner(",t.");
@@ -284,7 +284,7 @@ public class SearchDao_v3 {
 		ResultSet rs=null;
 		
 		String seqName="";
-		if(table.equals(tables[0])) {seqName="seq";}
+		if(table.equals("tourspot")) {seqName="seq";}
 		else {seqName="tour_seq";}
 		
 		String sql="select t.* from "+table+" t,statistics s where t."+seqName
@@ -340,7 +340,7 @@ public class SearchDao_v3 {
 		ResultSet rs=null;
 		
 		String seqName="";
-		if(table.equals(tables[0])) {seqName="seq";}
+		if(table.equals("tourspot")) {seqName="seq";}
 		else {seqName="tour_seq";}
 		
 		String sql="select t.* from "+table+" t,statistics s where t."+seqName
@@ -386,7 +386,7 @@ public class SearchDao_v3 {
 		return results;
 	}
 	
-	public int getTotalcount(String inputWords) {
+	public int getTotalCount(String inputWords,List<String> tables) {
 		
 		int total=0;
 		
@@ -437,5 +437,5 @@ public class SearchDao_v3 {
 		return total;
 	}
 	
-	//photo컬럼 있는 테이블에서 photo값 뽑기(searchboard 출력값에 사진 출력)
+	//session null여부에 따라 tables list에 차별적 add하기
 }
