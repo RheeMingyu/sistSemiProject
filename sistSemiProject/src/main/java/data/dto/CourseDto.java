@@ -8,6 +8,7 @@ public class CourseDto {
 	private String name;
 	private String day;
 	private String order;
+	private String intro;
 	
 	public String getSeq() {
 		return seq;
@@ -44,6 +45,12 @@ public class CourseDto {
 	}
 	public void setOrder(String order) {
 		this.order = order;
+	}
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 	
 }

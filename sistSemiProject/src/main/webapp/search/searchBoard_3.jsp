@@ -1,6 +1,8 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="data.dto.SearchResult"%>
 <%@page import="java.util.List"%>
-<%@page import="data.dao.SearchDao_v2"%>
+<%@page import="data.dao.SearchDao_v3"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
@@ -31,8 +33,9 @@
 	$(function(){
 		<%for(int i=1;i<=3;i++){%>
 			$("a.sortBtn"+i).click(function(){
-				<%for(int j=1;j<=3;j++){session.removeAttribute("sort"+j);}
-				session.setAttribute("sort"+i, "on"); %>
+				<%
+				for(int j=1;j<=3;j++){session.removeAttribute("sort"+j);}
+				session.setAttribute("sort"+i, i); %>
 			});
 		<%}%>
 		
@@ -72,14 +75,17 @@
 		if(table.equals("tourspot")){tableName="관광지";}
 		else if(table.equals("mycourse")){tableName="나만의코스";}
 		else if(table.equals("recomcourse")){tableName="추천코스";}
-		else{tableName="리뷰";}
+		else if(table.equals("tourreview")){tableName="리뷰";}
+		else{tableName="비회원리뷰";}
 		
 		return tableName;
 	}%>
-	<%
-	String inputWords=(request.getParameter("inputWords")==null?"":request.getParameter("inputWords"));
+	<%	
+	String [] tables={"tourspot","mycourse","recomcourse","tourreview","guest"};
 	
-	SearchDao_v2 searchDao=new SearchDao_v2();
+	//String inputWords=(request.getParameter("inputWords")==null?"":request.getParameter("inputWords"));
+	String inputWords="좋은 해수욕장 추천";
+	SearchDao_v3 searchDao=new SearchDao_v3();
 	
 	int totalCount=searchDao.getTotalcount(inputWords);
 	int totalPage;
@@ -158,69 +164,130 @@
 	</div>
 	<div class="tab-content row">
 		<div id="tabs1" class="container tab-pane fade"><br>
-			<%List<SearchResult> list=searchDao.searchAllTablesColumns(inputWords,startNum,perPage);
-			for(int i=0;i<list.size();i++)
+			<%List<HashMap<String,HashMap<String,String>>> list_relevance=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, startNum, perPage, 1);
+			if(list_relevance==null){%><h1>화면 업로드 준비중입니다</h1><%}else{
+			for(int i=0;i<list_relevance.size();i++)
 			{
-				if(i==0||!list.get(i).getTable().equals(list.get(i-1).getTable())){%>
-					<table class="table table-bordered <%=list.get(i).getTable()%>">
-						<caption align="top"><%=translation(list.get(i).getTable()) %></caption><%} %>
-					<%if((String)session.getAttribute("h_align")!=null){%><div class="col-md-6"><%} %>
-					<tr>
-						<th><%=list.get(i).getColumn() %></th>
-					</tr>
-					<tr>
-						<td>
-							<a href="#" class="searchList"><%=list.get(i).getValue() %></a>
-						</td>
-					</tr>
-					<%if((String)session.getAttribute("h_align")!=null){%></div><%} %>
-				<%if(i==0||!list.get(i).getTable().equals(list.get(i-1).getTable())){%>
-					</table><%} %>
-			<%}%>
+				HashMap<String,HashMap<String,String>> tableMap=list_relevance.get(i);
+				
+				for(String table:tables)
+				{
+					String columns=searchDao.searchColumnNamesInEachTables(table);
+					String [] columnsArr=columns.split(",");
+					
+					if(tableMap.get(table)==null){continue;}
+					else
+					{
+						HashMap<String,String> map=tableMap.get(table);%>
+						<table>
+							<caption align="top"><%=table %></caption>
+							<tr>
+								<th>사진</th><th>컬럼</th><th>데이터</th>
+							</tr>
+							<%String photo="";
+							for(String column:columnsArr){
+								if(column.equals("photo")){photo=map.get("photo");}
+							}
+							for(String column:columnsArr)
+							{int j=0;%>
+								<tr>
+									<%if(j==0&&!photo.equals("")){%>
+										<td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
+									<%}else if(j==0&&photo.equals("")){%>
+										<td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
+									<%}%>
+									<td><%=column %></td>
+									<td><%=map.get(column) %></td>
+								</tr>	
+							<%j++;}%>
+					</table>
+					<%}
+				}
+			}}%>
 		</div>
 		<div id="tabs2" class="container tab-pane fade"><br>
-			<%
-			List<SearchResult> list_latest=searchDao.searchAllTablesColumnsOrderByLatest(inputWords,startNum,perPage);
+			<%List<HashMap<String,HashMap<String,String>>> list_latest=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, startNum, perPage, 2);
+			if(list_latest==null){%><h1>화면 업로드 준비중입니다</h1><%}else{
 			for(int i=0;i<list_latest.size();i++)
 			{
-				if(i==0||!list_latest.get(i).getTable().equals(list_latest.get(i-1).getTable())){%>
-					<table class="table table-bordered <%=list.get(i).getTable()%>">
-						<caption align="top"><%=translation(list_latest.get(i).getTable()) %></caption><%} %>
-					<%if((String)session.getAttribute("h_align")!=null){%><div class="col-md-6"><%} %>
-					<tr>
-						<th><%=list_latest.get(i).getColumn() %></th>
-					</tr>
-					<tr>
-						<td>
-							<a href="#" class="searchList"><%=list_latest.get(i).getValue() %></a>
-						</td>
-					</tr>
-					<%if((String)session.getAttribute("h_align")!=null){%></div><%} %>
-				<%if(i==0||!list_latest.get(i).getTable().equals(list_latest.get(i-1).getTable())){%>
-					</table><%} %>
-			<%}%>
+				HashMap<String,HashMap<String,String>> tableMap=list_latest.get(i);
+				
+				for(String table:tables)
+				{
+					String columns=searchDao.searchColumnNamesInEachTables(table);
+					String [] columnsArr=columns.split(",");
+					
+					if(tableMap.get(table)==null){continue;}
+					else
+					{
+						HashMap<String,String> map=tableMap.get(table);%>
+						<table>
+							<caption align="top"><%=table %></caption>
+							<tr>
+								<th>사진</th><th>컬럼</th><th>데이터</th>
+							</tr>
+							<%String photo="";
+							for(String column:columnsArr){
+								if(column.equals("photo")){photo=map.get("photo");}
+							}
+							for(String column:columnsArr)
+							{int j=0;%>
+								<tr>
+									<%if(j==0&&!photo.equals("")){%>
+										<td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
+									<%}else if(j==0&&photo.equals("")){%>
+										<td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
+									<%}%>
+									<td><%=column %></td>
+									<td><%=map.get(column) %></td>
+								</tr>	
+							<%j++;}%>
+					</table>
+					<%}
+				}
+			}}%>
 		</div>
 		<div id="tabs3" class="container tab-pane fade"><br>
-			<%
-			List<SearchResult> list_popularity=searchDao.searchAllTablesColumnsOrderByPopularity(inputWords,startNum,perPage);
+			<%List<HashMap<String,HashMap<String,String>>> list_popularity=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, startNum, perPage, 3);
+			if(list_popularity==null){%><h1>화면 업로드 준비중입니다</h1><%}else{
 			for(int i=0;i<list_popularity.size();i++)
 			{
-				if(i==0||!list_popularity.get(i).getTable().equals(list_popularity.get(i-1).getTable())){%>
-					<table class="table table-bordered <%=list.get(i).getTable()%>">
-						<caption align="top"><%=translation(list_popularity.get(i).getTable()) %></caption><%} %>
-					<%if((String)session.getAttribute("h_align")!=null){%><div class="col-md-6"><%} %>
-					<tr>
-						<th><%=list_popularity.get(i).getColumn() %></th>
-					</tr>
-					<tr>
-						<td>
-							<a href="#" class="searchList"><%=list_popularity.get(i).getValue() %></a>
-						</td>
-					</tr>
-					<%if((String)session.getAttribute("h_align")!=null){%></div><%} %>
-				<%if(i==0||!list_popularity.get(i).getTable().equals(list_popularity.get(i-1).getTable())){%>
-					</table><%} %>
-			<%}%>
+				HashMap<String,HashMap<String,String>> tableMap=list_popularity.get(i);
+				
+				for(String table:tables)
+				{
+					String columns=searchDao.searchColumnNamesInEachTables(table);
+					String [] columnsArr=columns.split(",");
+					
+					if(tableMap.get(table)==null){continue;}
+					else
+					{
+						HashMap<String,String> map=tableMap.get(table);%>
+						<table>
+							<caption align="top"><%=table %></caption>
+							<tr>
+								<th>사진</th><th>컬럼</th><th>데이터</th>
+							</tr>
+							<%String photo="";
+							for(String column:columnsArr){
+								if(column.equals("photo")){photo=map.get("photo");}
+							}
+							for(String column:columnsArr)
+							{int j=0;%>
+								<tr>
+									<%if(j==0&&!photo.equals("")){%>
+										<td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
+									<%}else if(j==0&&photo.equals("")){%>
+										<td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
+									<%}%>
+									<td><%=column %></td>
+									<td><%=map.get(column) %></td>
+								</tr>	
+							<%j++;}%>
+					</table>
+					<%}
+				}
+			}}%>
 		</div>
 		
 		<div style="width: 600px;text-align: center">
@@ -229,7 +296,7 @@
 				if(startPage>1)
 				{%>
 					<li>
-						<a href="index.jsp?main=search/searchBoard_2.jsp?currentPage=<%=startPage-1%>" class="page-link">이전</a>
+						<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=startPage-1%>" class="page-link">이전</a>
 					</li>
 				<%}			
 				for(int pp=startPage;pp<=endPage;pp++)
@@ -237,19 +304,19 @@
 					if(pp==currentPage)
 					{%>
 						<li class="page-item active">
-							<a href="index.jsp?main=search/searchBoard_2.jsp?currentPage=<%=pp%>" class="page-link"><%=pp %></a>
+							<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=pp%>" class="page-link"><%=pp %></a>
 						</li>
 					<%}else
 					{%>
 						<li>
-							<a href="index.jsp?main=search/searchBoard_2.jsp?currentPage=<%=pp%>" class="page-link"><%=pp %></a>
+							<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=pp%>" class="page-link"><%=pp %></a>
 						</li>
 					<%}
 				}
 				if(endPage<totalPage)
 				{%>
 					<li>
-						<a href="index.jsp?main=search/searchBoard_2.jsp?currentPage=<%=endPage+1%>" class="page-link">다음</a>
+						<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=endPage+1%>" class="page-link">다음</a>
 					</li>
 				<%}	
 				%>

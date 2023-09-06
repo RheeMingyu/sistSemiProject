@@ -337,4 +337,6 @@ public class SearchDao_v2 {
 		}
 		return total;
 	}
+	
+	//photo컬럼 있는 테이블에서 photo값 뽑기(searchboard 출력값에 사진 출력)
 }
