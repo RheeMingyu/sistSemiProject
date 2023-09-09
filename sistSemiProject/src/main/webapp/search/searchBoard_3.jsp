@@ -1,3 +1,4 @@
+<%@page import="data.dao.SearchDao"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="data.dto.SearchResult"%>
@@ -32,11 +33,15 @@
 <script>
 	$(function(){
 		$("button.v").click(function(){
-			$("div.col-md-6").attr("class","forColMd");
+			$("div.v_align").show();
+			$("div.grid_align").hide();
 		});
 		$("button.h").click(function(){
-			$("div.forColMd").attr("class","forColMd col-md-6");
+			$("div.grid_align").show();
+			$("div.v_align").hide();
 		});
+		
+		$("div.grid_align").hide();
 	});
 </script>
 <body>
@@ -44,10 +49,10 @@
 	public String translation(String table) {
 		String tableName="";
 		
-		if(table.equals("tourspot")){tableName="관광지";}
-		else if(table.equals("mycourse")){tableName="나만의코스";}
-		else if(table.equals("recomcourse")){tableName="추천코스";}
-		else if(table.equals("tourreview")){tableName="리뷰";}
+		if(table.equals("TourSpot")){tableName="관광지";}
+		else if(table.equals("MyCourse")){tableName="나만의코스";}
+		else if(table.equals("RecomCourse")){tableName="추천코스";}
+		else if(table.equals("TourReview")){tableName="리뷰";}
 		else{tableName="비회원리뷰";}
 		
 		return tableName;
@@ -56,15 +61,16 @@
 	String sortidx=(request.getParameter("sortidx")!=null?request.getParameter("sortidx"):"");
 	List<String> tables=new ArrayList<String>();
 	
-	if(sortidx.equals("0")||sortidx.equals("")){tables.add("tourspot");tables.add("mycourse");tables.add("recomcourse");tables.add("tourreview");tables.add("guestreview");}
-	else if(sortidx.equals("1")){tables.add("tourspot");}
-	else if(sortidx.equals("2")){tables.add("mycourse");}
-	else if(sortidx.equals("3")){tables.add("recomcourse");}
-	else if(sortidx.equals("4")){tables.add("tourreview");}
-	else if(sortidx.equals("5")){tables.add("guestreview");}
+	if(sortidx.equals("0")||sortidx.equals(""))
+	{tables.add("TourSpot");tables.add("MyCourse");tables.add("RecomCourse");tables.add("TourReview");tables.add("GuestReview");}
+	else if(sortidx.equals("1")){tables.add("TourSpot");}
+	else if(sortidx.equals("2")){tables.add("MyCourse");}
+	else if(sortidx.equals("3")){tables.add("RecomCourse");}
+	else if(sortidx.equals("4")){tables.add("TourReview");}
+	else if(sortidx.equals("5")){tables.add("GuestReview");}
 
 	//String inputWords=(request.getParameter("inputWords")==null?"":request.getParameter("inputWords"));
-	String inputWords="좋은 해수욕장 추천";
+	String inputWords="멋진 해수욕장 추천";
 	SearchDao_v3 searchDao=new SearchDao_v3();
 	
 	int totalCount=searchDao.getTotalCount(inputWords,tables);
@@ -127,10 +133,10 @@
 			<ul class="nav nav-tabs left-tab">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<li class="nav-item">
-					<button type="button" class="btn btn-outline-info btn-sm v"><i class="bi bi-arrow-down-up"></i></button>
+					<button type="button" class="btn btn-outline-info btn-sm v"><i class="bi bi-justify"></i></button>
 				</li>&nbsp;
 				<li class="nav-item">
-					<button type="button" class="btn btn-outline-info btn-sm h"><i class="bi bi-arrow-left-right"></i></button>
+					<button type="button" class="btn btn-outline-info btn-sm h"><i class="bi bi-border-all"></i></button>
 				</li>
 			</ul>
 			<ul class="nav nav-tabs right-tab">
@@ -162,29 +168,50 @@
 					else
 					{
 						HashMap<String,String> map=tableMap.get(table);%>
-						<div class="forColMd">
-						<table>
-							<caption align="top"><%=table %></caption>
+						<div class="v_align">
+						<table class="table table-bordered">
+							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
 							<tr>
 								<th>사진</th><th>컬럼</th><th>데이터</th>
 							</tr>
 							<%String photo="";
+							String intro="";
+							String comment="";
+							String content="";
 							for(String column:columnsArr){
-								if(column.equals("photo")){photo=map.get("photo");}
+								if(column.equals("photo")){photo=(map.get("photo")==null?"":map.get("photo"));}
+								else if(column.equals("mainphoto")){photo=(map.get("mainphoto")==null?"":map.get("mainphoto"));}
 							}
+							int j=0;
 							for(String column:columnsArr)
-							{int j=0;%>
+							{%>
 								<tr>
 									<%if(j==0&&!photo.equals("")){%>
 										<td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
 									<%}else if(j==0&&photo.equals("")){%>
 										<td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
-									<%}%>
+									<%}
+									if(!column.equals("photo")&&!column.equals("mainphoto")){%>
 									<td><%=column %></td>
-									<td><%=map.get(column) %></td>
-								</tr>	
+									<td><%=map.get(column) %></td><%} %>
+								</tr>
 							<%j++;}%>
 					</table>
+					</div>
+					<div class="grid_align col-md-6">
+						<table class="table table-bordered">
+							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
+							<tr>
+								<td colspan="2"><img src="save/<%=photo %>"></td>
+							</tr>
+							<%for(String column:columnsArr)
+							{
+								if(!column.equals("photo")&&!column.equals("mainphoto")){%>
+								<tr>
+									<td><%=column %></th><td><%=map.get(column) %></td>
+								</tr>
+							<%}}%>
+						</table>
 					</div>
 					<%}
 				}
@@ -205,29 +232,47 @@
 					else
 					{
 						HashMap<String,String> map=tableMap.get(table);%>
-						<div class="forColMd">
-						<table>
-							<caption align="top"><%=table %></caption>
+						<div class="v_align">
+						<table class="table table-bordered">
+							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
 							<tr>
 								<th>사진</th><th>컬럼</th><th>데이터</th>
 							</tr>
 							<%String photo="";
 							for(String column:columnsArr){
-								if(column.equals("photo")){photo=map.get("photo");}
+								if(column.equals("photo")){photo=(map.get("photo")==null?"":map.get("photo"));}
+								else if(column.equals("mainphoto")){photo=(map.get("mainphoto")==null?"":map.get("mainphoto"));}
 							}
+							int j=0;
 							for(String column:columnsArr)
-							{int j=0;%>
+							{%>
 								<tr>
 									<%if(j==0&&!photo.equals("")){%>
 										<td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
 									<%}else if(j==0&&photo.equals("")){%>
 										<td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
-									<%}%>
+									<%}
+									if(!column.equals("photo")&&!column.equals("mainphoto")){%>
 									<td><%=column %></td>
-									<td><%=map.get(column) %></td>
+									<td><%=map.get(column) %></td><%} %>
 								</tr>	
 							<%j++;}%>
 					</table>
+					</div>
+					<div class="grid_align col-md-6">
+						<table class="table table-bordered">
+							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
+							<tr>
+								<td colspan="2"><img src="save/<%=photo %>"></td>
+							</tr>
+							<%for(String column:columnsArr)
+							{
+								if(!column.equals("photo")&&!column.equals("mainphoto")){%>
+								<tr>
+									<td><%=column %></th><td><%=map.get(column) %></td>
+								</tr>
+							<%}}%>
+						</table>
 					</div>
 					<%}
 				}
@@ -248,41 +293,59 @@
 					else
 					{
 						HashMap<String,String> map=tableMap.get(table);%>
-						<div class="forColMd">
-						<table>
-							<caption align="top"><%=table %></caption>
+						<div class="v_align">
+						<table class="table table-bordered">
+							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
 							<tr>
 								<th>사진</th><th>컬럼</th><th>데이터</th>
 							</tr>
 							<%String photo="";
 							for(String column:columnsArr){
-								if(column.equals("photo")){photo=map.get("photo");}
+								if(column.equals("photo")){photo=(map.get("photo")==null?"":map.get("photo"));}
+								else if(column.equals("mainphoto")){photo=(map.get("mainphoto")==null?"":map.get("mainphoto"));}
 							}
+							int j=0;
 							for(String column:columnsArr)
-							{int j=0;%>
+							{%>
 								<tr>
 									<%if(j==0&&!photo.equals("")){%>
 										<td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
 									<%}else if(j==0&&photo.equals("")){%>
 										<td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
-									<%}%>
+									<%}
+									if(!column.equals("photo")&&!column.equals("mainphoto")){%>
 									<td><%=column %></td>
-									<td><%=map.get(column) %></td>
+									<td><%=map.get(column) %></td><%} %>
 								</tr>	
 							<%j++;}%>
 					</table>
+					</div>
+					<div class="grid_align col-md-6">
+						<table class="table table-bordered">
+							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
+							<tr>
+								<td colspan="2"><img src="save/<%=photo %>"></td>
+							</tr>
+							<%for(String column:columnsArr)
+							{
+								if(!column.equals("photo")&&!column.equals("mainphoto")){%>
+								<tr>
+									<td><%=column %></th><td><%=map.get(column) %></td>
+								</tr>
+							<%}}%>
+						</table>
 					</div>
 					<%}
 				}
 			}%>
 		</div>
 		
-		<div style="width: 600px;text-align: center">
+		<div style="width: 600px;text-align: center" class="container mt-3">
 			<ul class="pagination justify-content-center">
 				<%
 				if(startPage>1)
 				{%>
-					<li>
+					<li class="page-item">
 						<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=startPage-1%>" class="page-link">이전</a>
 					</li>
 				<%}			
@@ -295,14 +358,14 @@
 						</li>
 					<%}else
 					{%>
-						<li>
+						<li class="page-item">
 							<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=pp%>" class="page-link"><%=pp %></a>
 						</li>
 					<%}
 				}
 				if(endPage<totalPage)
 				{%>
-					<li>
+					<li class="page-item">
 						<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=endPage+1%>" class="page-link">다음</a>
 					</li>
 				<%}	

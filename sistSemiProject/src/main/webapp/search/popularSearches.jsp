@@ -17,96 +17,170 @@
 	#shape{
 		margin: 40px 20px 40px 20px;
 	}
-	div.subject,div.list,span{
+	div.subject,span.pspan{
 		cursor: pointer;
+	}
+	div.list,div.select,button.btn-success{
+		display: none;
+	}
+	div.ptop{
+		font-size: 1.3em;
+		margin-bottom: 12px;
+	}
+	span.cat{
+		font-size: 1.15em;
 	}
 </style>
 <script>
 	$(function(){
-		$("div.sa").click(function(){
-			$("div.select").hide();
-			$("div.age_select").show();
-			$("button.btn-danger").trigger("click");
-			$("button.btn-success").attr("id","ageBtn");
+		
+		$(subjectDivs[0]).click(function(){
+			showList(0);
 		});
-		$("div.sm").click(function(){
-			$("div.select").hide();
-			$("div.mbti_select").show();
-			$("button.btn-danger").trigger("click");
-			$("button.btn-success").attr("id","mbtiBtn");
+		$(subjectDivs[1]).click(function(){
+			showList(1);
 		});
-		$("div.sg").click(function(){
-			$("div.select").hide();
-			$("div.gender_select").show();
-			$("button.btn-danger").trigger("click");
-			$("button.btn-success").attr("id","genderBtn");
+		$(subjectDivs[2]).click(function(){
+			showList(2);
 		});
-		$("div.sr").click(function(){
-			$("div.select").hide();
-			$("div.area_select").show();
-			$("button.btn-danger").trigger("click");
-			$("button.btn-success").attr("id","areaBtn");
+		$(subjectDivs[3]).click(function(){
+			showList(3);
+		});
+		$("i.pback").click(function(){
+			hideList();
 		});
 		
-		$(document).on("click","#ageBtn",function(){
+		$(buttonDivs[0]).on("click",function(){
 			var age_v=$("#age").val();
-			var s="";
+			var s="<ol>";
 			$.ajax({
 				type:"get",
-				dataType:"json",
 				data:{"age":age_v},
 				url:"ageListProc.jsp",
+				dataType:"json",
 				success:function(res){
-					s+="<ol>";
-					$.each(res,function(i,e){
-						"<li>"+e+"</li>";
-					});
+					$.each(res, function(i,e){s+="<li>"+e+"</li>";});
 					s+="</ol>";
+					$(listDivs[0]).html(s);
 				}
-				$("div.la").html(s);
 			});
+			$("button.btn-danger").trigger("click");
 		});
-		$(document).on("click","#mbtiBtn",function(){
+		$(buttonDivs[1]).on("click",function(){
 			var mbti_v=$("#mbti").val();
-			var s="";
+			var s="<ol>";
 			$.ajax({
 				type:"get",
-				dataType:"json",
 				data:{"mbti":mbti_v},
-				url:"",
+				url:"mbtiListProc.jsp",
+				dataType:"json",
 				success:function(res){
-					
+					$.each(res, function(i,e){s+="<li>"+e+"</li>";});
+					s+="</ol>";
+					$(listDivs[1]).html(s);
 				}
 			});
+			$("button.btn-danger").trigger("click");
+		});
+		$(buttonDivs[2]).on("click",function(){
+			var gender_v=$("#gender").val();
+			var s="<ol>";
+			$.ajax({
+				type:"get",
+				data:{"gender":gender_v},
+				url:"genderListProc.jsp",
+				dataType:"json",
+				success:function(res){
+					$.each(res, function(i,e){s+="<li>"+e+"</li>";});
+					s+="</ol>";
+					$(listDivs[2]).html(s);
+				}
+			});
+			$("button.btn-danger").trigger("click");
+		});
+		$(buttonDivs[3]).on("click",function(){
+			var gender_v=$("#gender").val();
+			var s="<ol>";
+			$.ajax({
+				type:"get",
+				data:{"gender":gender_v},
+				url:"areaListProc.jsp",
+				dataType:"json",
+				success:function(res){
+				    $.each(res, function(i,e){s+="<li>"+e+"</li>";});
+					s+="</ol>";
+					$(listDivs[3]).html(s);
+				}
+			});
+			$("button.btn-danger").trigger("click");
 		});
 	});
+	
+	var subjectDivs = document.getElementsByClassName("subject");
+	
+	var listDivs = document.getElementsByClassName("list");
+	var selectDivs = document.getElementsByClassName("select");
+	var buttonDivs = document.getElementsByClassName("btn-success");
+	var currentlyDisplayedList = null;
+	var currentlyDisplayedSelect = null;
+	var currentlyDisplayedButton = null;
+	
+	function showList(index) {
+	
+		// Hide the currently displayed list
+		if (currentlyDisplayedList !== null) {
+		currentlyDisplayedList.style.display = "none";
+		}
+		if (currentlyDisplayedList !== null) {
+		currentlyDisplayedSelect.style.display = "none";
+		}
+		if (currentlyDisplayedList !== null) {
+		currentlyDisplayedButton.style.display = "none";
+		}
+			  
+		// Show the selected list
+		listDivs[index].style.display = "block";
+		currentlyDisplayedList = listDivs[index];
+		selectDivs[index].style.display = "block";
+		currentlyDisplayedSelect = selectDivs[index];
+		buttonDivs[index].style.display = "block";
+		currentlyDisplayedButton = buttonDivs[index];
+		
+		$("button.btn-primary").trigger("click");
+	}
+	
+	function hideList() {
+		currentlyDisplayedList.style.display = "none";
+		currentlyDisplayedSelect.style.display = "none";
+		currentlyDisplayedButton.style.display = "none";
+	}
 </script>
 <body>
 	<div id="shape">
-		<div><b>주제별 인기 검색어</b>&nbsp;&nbsp;&nbsp;<span><i class="bi bi-backspace-fill"></i></span></div>
-		<div class="subject age sa">
-			<h5>나이대별</h5>
+		<div class="ptop"><b>주제별 인기 검색어</b><span class="pspan" style="float: right"><i class="bi bi-backspace-fill pback"></i></span></div>
+		<div class="subject">
+			<span class="cat">나이대별</span>
 		</div>
-		<div class="list age la">
-		
+		<div class="list">
+		안녕하세요
 		</div>
-		<div class="subject mbti sm">
-			<h5>mbti별</h5>
+		<div class="subject">
+			<span class="cat">mbti별</span>
 		</div>
-		<div class="list mbti lm">
-		
+		<div class="list">
+		2
 		</div>
-		<div class="subject gender sg">
-			<h5>성별</h5>
+		<div class="subject">
+			<span class="cat">성별</span>
 		</div>
-		<div class="list gender lg">
-		
+		<div class="list">
+		3
 		</div>
-		<div class="subject area sr">
-			<h5>지역별</h5>
+		<div class="subject">
+			<span class="cat">지역별</span>
 		</div>
-		<div class="list area lr">
-		
+		<div class="list">
+		4
 		</div>
 	</div>
 	
@@ -126,7 +200,7 @@
 				
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="select age_select">
+					<div class="select">
 						<select id="age">
 							<option value="10" selected>10대</option>
 							<option value="20">20대</option>
@@ -136,7 +210,7 @@
 							<option value="60">60대 이상</option>
 						</select>
 					</div>
-					<div class="select mbti_select">
+					<div class="select">
 						<select id="mbti1">
 							<option value="e" selected>E</option>
 							<option value="i">I</option>
@@ -154,13 +228,13 @@
 							<option value="j">J</option>
 						</select>
 					</div>
-					<div class="select gender_select">
+					<div class="select">
 						<select id="gender">
 							<option value="male" selected>남</option>
 							<option value="female">여</option>
 						</select>
 					</div>
-					<div class="select area_select">
+					<div class="select">
 						<select id="area">
 							<option value="서울" selected>서울특별시</option>
 							<option value="인천">인천광역시</option>
@@ -182,7 +256,10 @@
 				
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success">제출</button>
+					<button type="button" class="btn btn-success" id="ageBtn">제출</button>
+					<button type="button" class="btn btn-success" id="mbtiBtn">제출</button>
+					<button type="button" class="btn btn-success" id="genderBtn">제출</button>
+					<button type="button" class="btn btn-success" id="areaBtn">제출</button>
 					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
 				</div>
 			

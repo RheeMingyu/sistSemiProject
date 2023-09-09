@@ -24,8 +24,8 @@ public class PopularSearchesDao {
 		int ageInt=Integer.parseInt(ageRange);
 		String range_code=(ageInt==60?">=60":" between "+ageInt+" and "+(ageInt+9));
 		
-		String sql="select t.name from tourspot t,statistics s,member m"
-					+" where t.seq=s=tour_seq and s.id=m.id and m.age"+range_code
+		String sql="select t.name from TourSpot t,Statistics s,Member m"
+					+" where t.seq=s.tour_seq and s.id=m.id and m.age"+range_code
 					+" order by s.selected_cnt desc limit 0,9";
 		
 		try {
@@ -52,7 +52,7 @@ public class PopularSearchesDao {
 		Statement stmt=null;
 		ResultSet rs=null;
 		
-		String sql="select t.name from tourspot t,statistics s,member m"
+		String sql="select t.name from TourSpot t,Statistics s,Member m"
 					+" where t.seq=s.tour_seq and m.id=s.id and m.mbti="+mbti
 					+" order by s.selected_cnt desc limit 0,9";
 		
@@ -80,7 +80,7 @@ public class PopularSearchesDao {
 		Statement stmt=null;
 		ResultSet rs=null;
 		
-		String sql="select t.name from tourspot t,statistics s,member m"
+		String sql="select t.name from TourSpot t,Statistics s,Member m"
 					+" where t.seq=s.tour_seq and s.id=m.id and m.gender="+gender
 					+" order by s.selected_cnt desc limit 0,9";
 		
@@ -108,7 +108,7 @@ public class PopularSearchesDao {
 		Statement stmt=null;
 		ResultSet rs=null;
 		
-		String sql="select t.name from tourspot t,statistics s,member m"
+		String sql="select t.name from TourSpot t,Statistics s,Member m"
 					+" where t.seq=s.tour_seq and s.id=m.id and m.area="+area
 					+" order by s.selected_cnt desc limit 0,9";
 		

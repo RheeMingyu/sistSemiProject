@@ -50,7 +50,7 @@ public class SearchDao {
 		for(String table:tables)
 		{
 			String sql="select column_name from information_schema.columns "
-						+"where table_schema='semipjt' and table_name=?";
+						+"where table_schema='semi' and table_name=?";
 			
 			try {
 				pstmt=conn.prepareStatement(sql);

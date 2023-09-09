@@ -12,16 +12,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
 import data.dto.SearchResult;
 import mysql.db.DBConnect;
 
 public class SearchDao_v3 {
-
+	
 	DBConnect db=new DBConnect();
 	
-	//String [] tables= {"tourspot","mycourse","recomcourse","tourreview","guest"};
+	//String [] tables= {"tourspot","mycourse","recomcourse","tourreview","guestreview","comment"};
 	
 	/*public List<HashMap<String, String>> searchInputWordsInWholeTables_GPT(String inputWords, int startNum, int perPage) {
 	    List<HashMap<String, String>> resultsList = new ArrayList<HashMap<String, String>>();
@@ -192,8 +194,8 @@ public class SearchDao_v3 {
 			while(rs.next())
 			{
 				String cn=rs.getString("column_name");
-				if(!cn.equals("tour_seq")||!cn.equals("writeday")||!cn.equals("stars")||!cn.equals("viewcount")||
-					!cn.equals("price")||!cn.equals("day")||!cn.equals("order")||!cn.equals("likes")||!cn.equals("seq"))
+				if(!cn.equals("tour_seq")&&!cn.equals("writeday")&&!cn.equals("stars")&&!cn.equals("viewcount")&&!cn.equals("pass")&&
+					!cn.equals("price")&&!cn.equals("day")&&!cn.equals("turn")&&!cn.equals("likes")&&!cn.equals("seq")&&!cn.equals("com_seq"))
 					{columns+=cn+",";}
 			}
 			
@@ -210,7 +212,7 @@ public class SearchDao_v3 {
 		return columns;
 	}
 	
-	public List<HashMap<String, String>> searchColumnsValuesInTable(String table,String columns,String keyWord,int startNum,int perPage) {
+	public List<HashMap<String, String>> searchColumnsValuesInTable(String table,String columns,String keyWords,int startNum,int perPage) {
 		
 		List<HashMap<String, String>> results=new ArrayList<HashMap<String,String>>();
 		String [] columnsArr=columns.split(",");
@@ -220,48 +222,83 @@ public class SearchDao_v3 {
 		ResultSet rs=null;
 		
 		String seqName="";
-		if(table.equals("tourspot")) {seqName="seq";}
+		if(table.equals("TourSpot")) {seqName="seq";}
 		else {seqName="tour_seq";}
+
+		StringJoiner sj=new StringJoiner(",t.");
+		for(String column:columnsArr){sj.add(column);}
 		
-		/*StringJoiner sj=new StringJoiner(",t.");
-		for(String column:columnsArr)
-		{
-			sj.add(column);
-		}*/
-		
-		String sql="select t.* from "+table+" t,statistics s where t."+seqName
-					+"=s.tour_seq and MATCH("+columns+") AGAINST(? IN BOOLEAN MODE) limit ?,?";
-		/*String sql="select t.*,s.selected_cnt,s.selected_date from "+table+" t"
-					+" JOIN statistics s ON t."+seqName+"=s.tour_seq"
-					+" where MATCH(t."+sj.toString()+") AGAINST(? IN BOOLEAN MODE) limit ?,?";*/
+		String sql="";
+		if(table.equals("TourReview")) {
+			sql="select t.*,c.id,c.membercomment from "+table+" t JOIN Statistics s ON t."+seqName+"=s.tour_seq JOIN MemberComment c ON t.com_seq=c.com_seq"
+				+" where MATCH(t."+sj.toString()+",c.id,c.membercomment) AGAINST(? IN BOOLEAN MODE) limit ?,?";
+		}
+		else if(table.equals("GuestReview")) {
+			sql="select t.*,c.writer,c.guestcomment from "+table+" t JOIN Statistics s ON t."+seqName+"=s.tour_seq JOIN GuestComment c ON t.com_seq=c.com_seq"
+				+" where MATCH(t."+sj.toString()+",c.writer,c.guestcomment) AGAINST(? IN BOOLEAN MODE) limit ?,?";
+		}
+		else {
+			sql="select t.* from "+table+" t JOIN Statistics s ON t."+seqName
+				+"=s.tour_seq where MATCH(t."+sj.toString()+") AGAINST(? IN BOOLEAN MODE) limit ?,?";
+		}
 
 		try {
 			pstmt=conn.prepareStatement(sql);
-
-			pstmt.setString(1, keyWord);
+			
+			//pstmt.setString(1, "%"+keyWord+"%");
+			pstmt.setString(1, keyWords);
 			pstmt.setInt(2, startNum);
 			pstmt.setInt(3, perPage);
 			rs=pstmt.executeQuery();
 			
+			keyWords=keyWords.substring(0, keyWords.length()-1);
+			String [] keyWordsDivided=keyWords.split("\\* ");
+			
 			while(rs.next())
-			{				
+			{
+				HashMap<String, String> map=new HashMap<String, String>();
+				
 				for(String column:columnsArr)
 				{
-					HashMap<String, String> map=new HashMap<String, String>();
-					String [] splitted_string=null;
+					String columnValue=rs.getString(column);
+					StringBuilder result=new StringBuilder(columnValue);
 					
-					if(keyWord.contains(rs.getString(column)))
+					int minForPrevAbrv=Integer.MAX_VALUE;
+					int maxForEndAbrv=0;
+					
+					for(String keyWord:keyWordsDivided)
 					{
-						splitted_string=rs.getString(column).split(keyWord);
+						columnValue=result.toString();
+						if(columnValue.contains(keyWord))
+						{
+							StringBuilder keyWordResult=new StringBuilder();
+							int index=-1;
+							
+							while((index=columnValue.indexOf(keyWord, index+1))>=0)
+							{
+								int forPrevAbrv=Math.max(0, index-10);
+								int forEndAbrv=Math.min(columnValue.length(), index+keyWord.length());
+								
+								minForPrevAbrv=Math.min(minForPrevAbrv, forPrevAbrv);
+								maxForEndAbrv=Math.max(maxForEndAbrv, forEndAbrv);
+								
+								keyWordResult.append(columnValue.substring(0, index));
+								keyWordResult.append("<b style='background-color:yellow'>"+keyWord+"</b>");
+								columnValue=columnValue.substring(index+keyWord.length());
+							}
+							keyWordResult.append(columnValue);
+							System.out.println(column+":"+keyWordResult.toString());
+							result.replace(0, result.length(), keyWordResult.toString());
+						}
 						
-						if(splitted_string.length==3) {map.put(column, splitted_string[0]+"<b style='background-colo:yellow'>"+keyWord+"</b>"+splitted_string[2]);}
-						else if(splitted_string.length==2&&splitted_string[0].equals(keyWord)) {map.put(column, "<b style='background-colo:yellow'>"+keyWord+"</b>"+splitted_string[1]);}
-						else {map.put(column, splitted_string[0]+"<b style='background-color:yellow'>"+keyWord+"</b>");}
 					}
-					else {map.put(column, rs.getString(column));}
-					
-					results.add(map);
+					if(result.toString().contains("<b style='background-color:yellow'>"))
+					{
+						map.put(column, "..."+result.toString().substring(minForPrevAbrv, maxForEndAbrv)+"...");
+					} else {map.put(column, (result.toString().length()>20?result.toString().substring(0, 20)+"...":result.toString()));}
+					map.put(column, result.toString());
 				}
+				results.add(map);				
 			}
 		}
 		catch (SQLException e) {
@@ -274,7 +311,7 @@ public class SearchDao_v3 {
 		return results;
 	}
 	
-	public List<HashMap<String, String>> searchColumnsValuesInTableOrderByPopularity(String table,String columns,String keyWord,int startNum,int perPage) {
+	public List<HashMap<String, String>> searchColumnsValuesInTableOrderByPopularity(String table,String columns,String keyWords,int startNum,int perPage) {
 		
 		List<HashMap<String, String>> results=new ArrayList<HashMap<String,String>>();
 		String [] columnsArr=columns.split(",");
@@ -284,40 +321,83 @@ public class SearchDao_v3 {
 		ResultSet rs=null;
 		
 		String seqName="";
-		if(table.equals("tourspot")) {seqName="seq";}
+		if(table.equals("TourSpot")) {seqName="seq";}
 		else {seqName="tour_seq";}
 		
-		String sql="select t.* from "+table+" t,statistics s where t."+seqName
-					+"=s.tour_seq and MATCH("+columns+") AGAINST(? IN BOOLEAN MODE)"
-					+" order by s.selected_cnt desc limit ?,?";
-
+		StringJoiner sj=new StringJoiner(",t.");
+		for(String column:columnsArr){sj.add(column);}
+		
+		String sql="";
+		if(table.equals("TourReview")) {
+			sql="select t.*,c.id,c.membercomment from "+table+" t JOIN Statistics s ON t."+seqName+"=s.tour_seq JOIN MemberComment c ON t.com_seq=c.com_seq"
+				+" where MATCH(t."+sj.toString()+",c.id,c.membercomment) AGAINST(? IN BOOLEAN MODE) order by s.selected_cnt desc limit ?,?";
+		}
+		else if(table.equals("GuestReview")) {
+			sql="select t.*,c.writer,c.guestcomment from "+table+" t JOIN Statistics s ON t."+seqName+"=s.tour_seq JOIN GuestComment c ON t.com_seq=c.com_seq"
+				+" where MATCH(t."+sj.toString()+",c.writer,c.guestcomment) AGAINST(? IN BOOLEAN MODE) order by s.selected_cnt desc limit ?,?";
+		}
+		else {
+			sql="select t.* from "+table+" t JOIN Statistics s ON t."+seqName
+				+"=s.tour_seq where MATCH(t."+sj.toString()+") AGAINST(? IN BOOLEAN MODE) order by s.selected_cnt desc limit ?,?";
+		}
+		//String sql="select * from "+table+" where name like ?";
 		try {
 			pstmt=conn.prepareStatement(sql);
 
-			pstmt.setString(1, keyWord);
+			//pstmt.setString(1, "%"+keyWord+"%");
+			pstmt.setString(1, keyWords);
 			pstmt.setInt(2, startNum);
 			pstmt.setInt(3, perPage);
 			rs=pstmt.executeQuery();
 			
+			keyWords=keyWords.substring(0, keyWords.length()-1);
+			String [] keyWordsDivided=keyWords.split("\\* ");
+			
 			while(rs.next())
-			{				
+			{
+				HashMap<String, String> map=new HashMap<String, String>();
+				
 				for(String column:columnsArr)
 				{
-					HashMap<String, String> map=new HashMap<String, String>();
-					String [] splitted_string=null;
+					String columnValue=rs.getString(column);
+					StringBuilder result=new StringBuilder(columnValue);
 					
-					if(keyWord.contains(rs.getString(column)))
+					int minForPrevAbrv=Integer.MAX_VALUE;
+					int maxForEndAbrv=0;
+					
+					for(String keyWord:keyWordsDivided)
 					{
-						splitted_string=rs.getString(column).split(keyWord);
+						columnValue=result.toString();
+						if(columnValue.contains(keyWord))
+						{
+							StringBuilder keyWordResult=new StringBuilder();
+							int index=-1;
+							
+							while((index=columnValue.indexOf(keyWord, index+1))>=0)
+							{
+								int forPrevAbrv=Math.max(0, index-10);
+								int forEndAbrv=Math.min(columnValue.length(), index+keyWord.length());
+								
+								minForPrevAbrv=Math.min(minForPrevAbrv, forPrevAbrv);
+								maxForEndAbrv=Math.max(maxForEndAbrv, forEndAbrv);
+								
+								keyWordResult.append(columnValue.substring(0, index));
+								keyWordResult.append("<b style='background-color:yellow'>"+keyWord+"</b>");
+								columnValue=columnValue.substring(index+keyWord.length());
+							}
+							keyWordResult.append(columnValue);
+							System.out.println(column+":"+keyWordResult.toString());
+							result.replace(0, result.length(), keyWordResult.toString());
+						}
 						
-						if(splitted_string.length==3) {map.put(column, splitted_string[0]+"<b style='background-colo:yellow'>"+keyWord+"</b>"+splitted_string[2]);}
-						else if(splitted_string.length==2&&splitted_string[0].equals(keyWord)) {map.put(column, "<b style='background-colo:yellow'>"+keyWord+"</b>"+splitted_string[1]);}
-						else {map.put(column, splitted_string[0]+"<b style='background-color:yellow'>"+keyWord+"</b>");}
 					}
-					else {map.put(column, rs.getString(column));}
-					
-					results.add(map);
+					if(result.toString().contains("<b style='background-color:yellow'>"))
+					{
+						map.put(column, "..."+result.toString().substring(minForPrevAbrv, maxForEndAbrv)+"...");
+					} else {map.put(column, (result.toString().length()>20?result.toString().substring(0, 20)+"...":result.toString()));}
+					map.put(column, result.toString());
 				}
+				results.add(map);				
 			}
 		}
 		catch (SQLException e) {
@@ -330,7 +410,7 @@ public class SearchDao_v3 {
 		return results;
 	}
 	
-	public List<HashMap<String, String>> searchColumnsValuesInTableOrderByLatest(String table,String columns,String keyWord,int startNum,int perPage) {
+	public List<HashMap<String, String>> searchColumnsValuesInTableOrderByLatest(String table,String columns,String keyWords,int startNum,int perPage) {
 		
 		List<HashMap<String, String>> results=new ArrayList<HashMap<String,String>>();
 		String [] columnsArr=columns.split(",");
@@ -340,40 +420,83 @@ public class SearchDao_v3 {
 		ResultSet rs=null;
 		
 		String seqName="";
-		if(table.equals("tourspot")) {seqName="seq";}
+		if(table.equals("TourSpot")) {seqName="seq";}
 		else {seqName="tour_seq";}
 		
-		String sql="select t.* from "+table+" t,statistics s where t."+seqName
-					+"=s.tour_seq and MATCH("+columns+") AGAINST(? IN BOOLEAN MODE)"
-					+" order by s.selected_date desc limit ?,?";
-
+		StringJoiner sj=new StringJoiner(",t.");
+		for(String column:columnsArr){sj.add(column);}
+		
+		String sql="";
+		if(table.equals("TourReview")) {
+			sql="select t.*,c.id,c.membercomment from "+table+" t JOIN Statistics s ON t."+seqName+"=s.tour_seq JOIN MemberComment c ON t.com_seq=c.com_seq"
+				+" where MATCH(t."+sj.toString()+",c.id,c.membercomment) AGAINST(? IN BOOLEAN MODE) order by s.selected_date desc limit ?,?";
+		}
+		else if(table.equals("GuestReview")) {
+			sql="select t.*,c.writer,c.guestcomment from "+table+" t JOIN Statistics s ON t."+seqName+"=s.tour_seq JOIN GuestComment c ON t.com_seq=c.com_seq"
+				+" where MATCH(t."+sj.toString()+",c.writer,c.guestcomment) AGAINST(? IN BOOLEAN MODE) order by s.selected_date desc limit ?,?";
+		}
+		else {
+			sql="select t.* from "+table+" t JOIN Statistics s ON t."+seqName
+				+"=s.tour_seq where MATCH(t."+sj.toString()+") AGAINST(? IN BOOLEAN MODE) order by s.selected_date desc limit ?,?";
+		}
+		//String sql="select * from "+table+" where name like ?";
 		try {
 			pstmt=conn.prepareStatement(sql);
 
-			pstmt.setString(1, keyWord);
+			//pstmt.setString(1, "%"+keyWord+"%");
+			pstmt.setString(1, keyWords);
 			pstmt.setInt(2, startNum);
 			pstmt.setInt(3, perPage);
 			rs=pstmt.executeQuery();
 			
+			keyWords=keyWords.substring(0, keyWords.length()-1);
+			String [] keyWordsDivided=keyWords.split("\\* ");
+			
 			while(rs.next())
-			{				
+			{
+				HashMap<String, String> map=new HashMap<String, String>();
+				
 				for(String column:columnsArr)
 				{
-					HashMap<String, String> map=new HashMap<String, String>();
-					String [] splitted_string=null;
+					String columnValue=rs.getString(column);
+					StringBuilder result=new StringBuilder(columnValue);
 					
-					if(keyWord.contains(rs.getString(column)))
+					int minForPrevAbrv=Integer.MAX_VALUE;
+					int maxForEndAbrv=0;
+					
+					for(String keyWord:keyWordsDivided)
 					{
-						splitted_string=rs.getString(column).split(keyWord);
+						columnValue=result.toString();
+						if(columnValue.contains(keyWord))
+						{
+							StringBuilder keyWordResult=new StringBuilder();
+							int index=-1;
+							
+							while((index=columnValue.indexOf(keyWord, index+1))>=0)
+							{
+								int forPrevAbrv=Math.max(0, index-10);
+								int forEndAbrv=Math.min(columnValue.length(), index+keyWord.length());
+								
+								minForPrevAbrv=Math.min(minForPrevAbrv, forPrevAbrv);
+								maxForEndAbrv=Math.max(maxForEndAbrv, forEndAbrv);
+								
+								keyWordResult.append(columnValue.substring(0, index));
+								keyWordResult.append("<b style='background-color:yellow'>"+keyWord+"</b>");
+								columnValue=columnValue.substring(index+keyWord.length());
+							}
+							keyWordResult.append(columnValue);
+							System.out.println(column+":"+keyWordResult.toString());
+							result.replace(0, result.length(), keyWordResult.toString());
+						}
 						
-						if(splitted_string.length==3) {map.put(column, splitted_string[0]+"<b style='background-colo:yellow'>"+keyWord+"</b>"+splitted_string[2]);}
-						else if(splitted_string.length==2&&splitted_string[0].equals(keyWord)) {map.put(column, "<b style='background-colo:yellow'>"+keyWord+"</b>"+splitted_string[1]);}
-						else {map.put(column, splitted_string[0]+"<b style='background-color:yellow'>"+keyWord+"</b>");}
 					}
-					else {map.put(column, rs.getString(column));}
-					
-					results.add(map);
+					if(result.toString().contains("<b style='background-color:yellow'>"))
+					{
+						map.put(column, "..."+result.toString().substring(minForPrevAbrv, maxForEndAbrv)+"...");
+					} else {map.put(column, (result.toString().length()>20?result.toString().substring(0, 20)+"...":result.toString()));}
+					map.put(column, result.toString());
 				}
+				results.add(map);				
 			}
 		}
 		catch (SQLException e) {
@@ -385,7 +508,7 @@ public class SearchDao_v3 {
 
 		return results;
 	}
-	
+
 	public int getTotalCount(String inputWords,List<String> tables) {
 		
 		int total=0;
@@ -407,7 +530,7 @@ public class SearchDao_v3 {
 		{
 			int totalIndividual=0;
 			String columns=searchColumnNamesInEachTables(table);
-			//StringJoiner js=new StringJoiner(",");
+			StringJoiner js=new StringJoiner(",");
 			
 			/*for(String column:columnsArr)
 			{
@@ -415,7 +538,7 @@ public class SearchDao_v3 {
 			}*/
 		
 			String sql="select count(*) from "+table+" where MATCH("+columns+") AGAINST(? IN BOOLEAN MODE)";
-	
+			//String sql="select count(*) from "+table+" where name like ?";
 			try {
 				pstmt=conn.prepareStatement(sql);
 	
@@ -436,6 +559,4 @@ public class SearchDao_v3 {
 		}
 		return total;
 	}
-	
-	//session null여부에 따라 tables list에 차별적 add하기
 }
