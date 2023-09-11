@@ -16,30 +16,40 @@ response.setCharacterEncoding("utf-8");
 %>
 <style>
 	div.search_layout{
-		position: absolute;
-		border: 1px solid gray;
-	}
-	div.search_main{
-		width: 61.5%;
-		height: 98.3%;
-		left: 10%;
-	}
-	div.popular{
-		width: 17%;
-		height: 65%;
-		left: 72%;
-		background-color: #f6f6f6;
-	}
-	div.commercial{
-		width: 17%;
-		height: 32.3%;
-		top: 66%;
-		left: 72%;
-	}
+      position: absolute;
+      border: 1px solid gray;
+   }
+   div.search_main{
+      width: 1200px;
+      height: 775px;
+      left: 5px;
+      margin-top: 90px;
+   }
+   div.popular{
+      width: 250px;
+      height: 570px;
+      left: 1213px;
+      margin-top: 90px;
+   }
+   div.commercial{
+      width: 250px;
+      height: 200px;
+      top: 577px;
+      left: 1213px;
+   }
 </style>
+<%
+String currentPage=request.getParameter("currentPage");
+String sortidx=request.getParameter("sortidx");
+String inputWords=request.getParameter("inputWords");
+%>
 <body>
 	<div class="search_layout search_main">
-		<jsp:include page="searchBoard_3.jsp"/>
+		<jsp:include page="searchBoard_3.jsp">
+			<jsp:param value="<%=currentPage %>" name="currentPage"/>
+			<jsp:param value="<%=sortidx %>" name="sortidx"/>
+			<jsp:param value="<%=inputWords %>" name="inputWords"/>
+		</jsp:include>
 	</div>
 	<div class="search_layout popular">
 		<jsp:include page="popularSearches.jsp"/>

@@ -58,7 +58,7 @@
 		return tableName;
 	}%>
 	<%
-	String sortidx=(request.getParameter("sortidx")!=null?request.getParameter("sortidx"):"");
+	String sortidx=(request.getParameter("sortidx")!=null||request.getParameter("sortidx").equals("null")?request.getParameter("sortidx"):"");
 	List<String> tables=new ArrayList<String>();
 	
 	if(sortidx.equals("0")||sortidx.equals(""))
@@ -69,7 +69,7 @@
 	else if(sortidx.equals("4")){tables.add("TourReview");}
 	else if(sortidx.equals("5")){tables.add("GuestReview");}
 
-	//String inputWords=(request.getParameter("inputWords")==null?"":request.getParameter("inputWords"));
+	//String inputWords=(request.getParameter("inputWords")==null||request.getParameter("inputWords").equals("null")?"":request.getParameter("inputWords"));
 	String inputWords="멋진 해수욕장 추천";
 	SearchDao_v3 searchDao=new SearchDao_v3();
 	
@@ -82,7 +82,7 @@
 	int perBlock=5;
 	int currentPage;
 	
-	if(request.getParameter("currentPage")==null)
+	if(request.getParameter("currentPage")==null||request.getParameter("currentPage").equals("null"))
 		currentPage=1;
 	else
 		currentPage=Integer.parseInt(request.getParameter("currentPage"));
@@ -175,9 +175,6 @@
 								<th>사진</th><th>컬럼</th><th>데이터</th>
 							</tr>
 							<%String photo="";
-							String intro="";
-							String comment="";
-							String content="";
 							for(String column:columnsArr){
 								if(column.equals("photo")){photo=(map.get("photo")==null?"":map.get("photo"));}
 								else if(column.equals("mainphoto")){photo=(map.get("mainphoto")==null?"":map.get("mainphoto"));}
@@ -208,7 +205,7 @@
 							{
 								if(!column.equals("photo")&&!column.equals("mainphoto")){%>
 								<tr>
-									<td><%=column %></th><td><%=map.get(column) %></td>
+									<td><%=column %></td><td><%=map.get(column) %></td>
 								</tr>
 							<%}}%>
 						</table>
@@ -269,7 +266,7 @@
 							{
 								if(!column.equals("photo")&&!column.equals("mainphoto")){%>
 								<tr>
-									<td><%=column %></th><td><%=map.get(column) %></td>
+									<td><%=column %></td><td><%=map.get(column) %></td>
 								</tr>
 							<%}}%>
 						</table>
@@ -330,7 +327,7 @@
 							{
 								if(!column.equals("photo")&&!column.equals("mainphoto")){%>
 								<tr>
-									<td><%=column %></th><td><%=map.get(column) %></td>
+									<td><%=column %></td><td><%=map.get(column) %></td>
 								</tr>
 							<%}}%>
 						</table>
@@ -346,7 +343,7 @@
 				if(startPage>1)
 				{%>
 					<li class="page-item">
-						<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=startPage-1%>" class="page-link">이전</a>
+						<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=startPage-1%>&sortidx=<%=sortidx%>&inputWords=<%=inputWords %>" class="page-link">이전</a>
 					</li>
 				<%}			
 				for(int pp=startPage;pp<=endPage;pp++)
@@ -354,19 +351,19 @@
 					if(pp==currentPage)
 					{%>
 						<li class="page-item active">
-							<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=pp%>" class="page-link"><%=pp %></a>
+							<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=pp%>&sortidx=<%=sortidx%>&inputWords=<%=inputWords %>" class="page-link"><%=pp %></a>
 						</li>
 					<%}else
 					{%>
 						<li class="page-item">
-							<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=pp%>" class="page-link"><%=pp %></a>
+							<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=pp%>&sortidx=<%=sortidx%>&inputWords=<%=inputWords %>" class="page-link"><%=pp %></a>
 						</li>
 					<%}
 				}
 				if(endPage<totalPage)
 				{%>
 					<li class="page-item">
-						<a href="index.jsp?main=search/searchBoard_3.jsp?currentPage=<%=endPage+1%>" class="page-link">다음</a>
+						<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=endPage+1%>&sortidx=<%=sortidx%>&inputWords=<%=inputWords %>" class="page-link">다음</a>
 					</li>
 				<%}	
 				%>

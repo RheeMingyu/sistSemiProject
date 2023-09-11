@@ -3,20 +3,19 @@ package data.dto;
 import java.sql.Timestamp;
 
 public class TourSpotDto {
-
-	private String seq;
-	private String name;
-	private String hp;
-	private String addr;
-	private String photo;
-	private String intro;
-	private String area;
-	private String theme;
-	private String main_cat;
-	private String sub_cat;
-	private String note;
-	private int price;
-	private Timestamp writeday;
+	private String seq; //시퀀스
+	private String name; //이름
+	private String hp; //전화번호
+	private String addr; //주소
+	private String photo; //사진
+	private String intro; //소개
+	private String area; //지역
+	private String theme; //테마
+	private String main_cat; //대분류
+	private String sub_cat; //소분류
+	private String note; //비고
+	private int price; //가격
+	private Timestamp writeday; //등록일
 	
 	public String getSeq() {
 		return seq;
@@ -87,8 +86,8 @@ public class TourSpotDto {
 	public int getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
-		this.price = price;
+	public void setPrice(int i) {
+		this.price = i;
 	}
 	public Timestamp getWriteday() {
 		return writeday;
@@ -96,5 +95,6 @@ public class TourSpotDto {
 	public void setWriteday(Timestamp writeday) {
 		this.writeday = writeday;
 	}
+	
 	
 }

@@ -56,7 +56,7 @@
 			$.ajax({
 				type:"get",
 				data:{"age":age_v},
-				url:"ageListProc.jsp",
+				url:"search/ageListProc.jsp",
 				dataType:"json",
 				success:function(res){
 					$.each(res, function(i,e){s+="<li>"+e+"</li>";});
@@ -72,7 +72,7 @@
 			$.ajax({
 				type:"get",
 				data:{"mbti":mbti_v},
-				url:"mbtiListProc.jsp",
+				url:"search/mbtiListProc.jsp",
 				dataType:"json",
 				success:function(res){
 					$.each(res, function(i,e){s+="<li>"+e+"</li>";});
@@ -88,7 +88,7 @@
 			$.ajax({
 				type:"get",
 				data:{"gender":gender_v},
-				url:"genderListProc.jsp",
+				url:"search/genderListProc.jsp",
 				dataType:"json",
 				success:function(res){
 					$.each(res, function(i,e){s+="<li>"+e+"</li>";});
@@ -104,7 +104,7 @@
 			$.ajax({
 				type:"get",
 				data:{"gender":gender_v},
-				url:"areaListProc.jsp",
+				url:"search/areaListProc.jsp",
 				dataType:"json",
 				success:function(res){
 				    $.each(res, function(i,e){s+="<li>"+e+"</li>";});

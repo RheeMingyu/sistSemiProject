@@ -3,12 +3,10 @@ package data.dto;
 import java.sql.Timestamp;
 
 public class StatisticsDto {
-
 	private String tour_seq;
 	private String id;
 	private int selected_cnt;
 	private Timestamp selected_date;
-	
 	public String getTour_seq() {
 		return tour_seq;
 	}
@@ -33,5 +31,7 @@ public class StatisticsDto {
 	public void setSelected_date(Timestamp selected_date) {
 		this.selected_date = selected_date;
 	}
+
+	
 	
 }
