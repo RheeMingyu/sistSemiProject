@@ -50,7 +50,7 @@
 		
 		dao.updateMember(dto);
 		
-		response.sendRedirect("../index.jsp?main=MyPage/mypage.jsp?id="+id);
+		response.sendRedirect("../index.jsp?main=myPage/mypage.jsp?id="+id);
 		
 	} catch(Exception e ) {
 		System.out.println("업로드 오류다 경로 확인해라");

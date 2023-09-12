@@ -29,7 +29,7 @@
 		String gender = multi.getParameter("gender");
 		String area = multi.getParameter("area");
 		String area1 = multi.getParameter("area1");
-		String mbti = multi.getParameter("mbti");
+		String mbti = multi.getParameter("mbti1")+multi.getParameter("mbti2")+multi.getParameter("mbti3")+multi.getParameter("mbti4");
 		
 		String area2 = area +" "+ area1;
 		

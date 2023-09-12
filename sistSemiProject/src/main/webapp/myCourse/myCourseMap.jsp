@@ -17,6 +17,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>주소로 장소 표시하기</title>
 <style>
@@ -85,7 +86,6 @@ margin: 0 0 20px;
 }
 
 
-
 </style>
 <%
 		TourSpotDao tourSpotDao = new TourSpotDao(); 
@@ -96,6 +96,7 @@ margin: 0 0 20px;
 		
 		MemberDao memberDao = new MemberDao();
 		MemberDto memberDto = memberDao.getData(myid);
+
 
 	%>
 
@@ -128,11 +129,14 @@ $(document).ready(function() {
 		<ul class="nav nav-tabs" role="tablist">
 			<!-- <li class="nav-item"><a class="nav-link active"
 				data-bs-toggle="tab" href="#tabs-1" onclick="selTheme('전체')">전체</a></li> -->
-			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="healingTab">힐링</a></li>
+			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="oceanTab">바다</a></li>
+			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="olleTab">올레길</a></li>
+			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="mountainTab">산</a></li>
 			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="experienceTab">체험</a></li>
-			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="tourismTab">관광</a></li>
-			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="hahaTab">하하</a></li>
-			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="hihiTab">히히</a></li>
+			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="foodTab">음식</a></li>
+			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="lodgeTab">숙박</a></li>
+			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="shoppingTab">쇼핑</a></li>
+			<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="islandTab">섬</a></li>
 		</ul>
 
 
@@ -169,25 +173,29 @@ String selTheme = request.getParameter("selTheme");
  //System.out.println(selTheme);
 if(selTheme == null){
 	selTheme = "";
-}else if(selTheme.equals("healingTab")){
-	selTheme ="힐링";
+}else if(selTheme.equals("oceanTab")){
+	selTheme ="바다";
+}else if(selTheme.equals("olleTab")){
+	selTheme ="올레길";
+}else if(selTheme.equals("mountainTab")){
+	selTheme ="산";
 }else if(selTheme.equals("experienceTab")){
 	selTheme ="체험";
-}else if(selTheme.equals("tourismTab")){
-	selTheme ="관광";
-	
-	//변경예정
-}else if(selTheme.equals("hahaTab")){
-	selTheme ="관광";
-}else if(selTheme.equals("hihiTab")){
-	selTheme ="관광";
+}else if(selTheme.equals("foodTab")){
+	selTheme ="음식";
+}else if(selTheme.equals("lodgeTab")){
+	selTheme ="숙박";
+}else if(selTheme.equals("shoppingTab")){
+	selTheme ="쇼핑";
+}else if(selTheme.equals("islandTab")){
+	selTheme ="섬";
 }
 
  
 String str=null;
 for (int i = 0; i < list.size(); i++) {
 	TourSpotDto tourSpotDto = list.get(i);
-	if(tourSpotDto.getTheme().equals(selTheme)){
+	if(tourSpotDto.getMain_cat().equals(selTheme)){
 
 		str = tourSpotDto.getAddr();
 /* 		System.out.println(selectTheme); */
@@ -408,7 +416,34 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 		       
 		    	location.href = "myCourse/selectTheme.jsp?selTheme="+theme;
 
-		    }  
+		    }
+		    
+		    
+		    /* $(document).on("click", "i.like", function() {
+		        var currentColor = $(this).css("color");
+		        
+		        if (currentColor === "rgb(255, 0, 0)") {
+		            // 현재 색상이 빨간색인 경우 검은색으로 변경합니다.
+		            $(this).css("color", "black");
+		           
+		            
+		            
+		        } else {
+		            // 현재 색상이 빨간색이 아닌 경우 빨간색으로 변경합니다.
+		            $(this).css("color", "red");
+		            $.ajax({
+		            	type: "get",
+				        url: "myCourse/Like.jsp",
+				        data: {  },
+				        success: function(data) {
+
+				        	
+				        }
+		            })
+		        }
+		    }); */
+		   
+		    
 
 		    
 		

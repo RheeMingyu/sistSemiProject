@@ -10,6 +10,8 @@
 <title>마이페이지</title>
 <%
 String root=request.getContextPath();
+
+String myid = (String)session.getAttribute("myid");
 %>
 <style>
 /*왼쪽 마이페이지 메뉴바*/
@@ -42,11 +44,11 @@ div.foot {
 
 .sidebar {
     height: 800px;
-    width: 190px;
+    width: 220px;
     position: fixed;
     top: 100px;
     left: -250px; /* 초기에는 화면 밖에 위치 */
-    background-color: white;
+    background-color: wheat;
     transition: left 0.3s ease;
     z-index: 999; /* 이 부분을 추가해서 sidebar가 다른 요소 위에 나타나도록 설정 */
 }
@@ -95,14 +97,14 @@ div.foot {
 <div class="sidebar">
 	<button type="button" style="margin-left:15px; margin-top:20px; border:none;" onclick="toggleSidebar()">
 	<i class="bi bi-menu-app" style="font-size:20px;"></i></button>
-	<br><br><br>
-    &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;홈</a><br><br>
-    &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;개인정보</a><br><br>
-    &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-shield-shaded"></i>&nbsp;&nbsp;&nbsp;&nbsp;보안</a><br><br>
-    &nbsp;&nbsp;<a href="../login/logoutaction.jsp">&nbsp;<i class="bi bi-telephone-outbound-fill"></i>&nbsp;&nbsp;&nbsp;고객센터</a>
+	<br><br>
+    &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>홈</b></a><br><br>
+    &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>개인정보</b></a><br><br>
+    &nbsp;&nbsp;<a href="index.jsp?main=myPage/secure.jsp">&nbsp;<i class="bi bi-shield-shaded"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>보안</b></a><br><br>
+    &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-telephone-outbound-fill"></i>&nbsp;&nbsp;&nbsp;<b>고객센터</b></a>
     <!-- 로그인상태면 로그아웃 , 로그아웃 상태면 로그인으로 보이게하기 0905 적어둠 -->
     <br><br><br><br><br><br><br><br><br><br>
-    &nbsp;&nbsp;<a href="index.jsp?main=login/logoutaction.jsp">&nbsp;<i class="bi bi-door-closed-fill"></i>&nbsp;&nbsp;&nbsp;로그아웃</a><br>
+    &nbsp;&nbsp;<a href="index.jsp?main=login/logoutAction.jsp">&nbsp;<i class="bi bi-door-closed-fill"></i>&nbsp;&nbsp;&nbsp;로그아웃</a><br>
     
     <%
 		// 관리자 로그인하면 메뉴바 하나 더 뜨게 만들기 0905 적어둠
@@ -144,7 +146,6 @@ response.sendRedirect("../index.jsp"); <- 메인페이지로 이동
         var sidebar = document.querySelector('.sidebar');
         sidebar.classList.toggle('open');
     }
-    
 </script>
 
 

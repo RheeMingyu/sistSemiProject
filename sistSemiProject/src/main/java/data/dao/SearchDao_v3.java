@@ -492,9 +492,9 @@ public class SearchDao_v3 {
 					}
 					if(result.toString().contains("<b style='background-color:yellow'>"))
 					{
-						map.put(column, "..."+result.toString().substring(minForPrevAbrv, maxForEndAbrv)+"...");
+						map.put(column, (minForPrevAbrv<0?"...":"")+result.toString().substring(minForPrevAbrv, maxForEndAbrv)+(maxForEndAbrv>result.toString().length()?"...":""));
 					} else {map.put(column, (result.toString().length()>20?result.toString().substring(0, 20)+"...":result.toString()));}
-					map.put(column, result.toString());
+					//map.put(column, result.toString());
 				}
 				results.add(map);				
 			}

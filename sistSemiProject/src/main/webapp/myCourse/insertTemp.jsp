@@ -1,4 +1,5 @@
 <%@page import="data.dao.TempSaveDao"%>
+<%@page import="data.dao.TourSpotDao"%>
 <%@page import="data.dto.TempSaveDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -7,7 +8,7 @@
 // 클라이언트로부터 전달된 데이터 가져오기
     String spotName = request.getParameter("spotName");
 	String tour_seq = request.getParameter("tour_seq");
-	System.out.println(tour_seq);
+	//System.out.println(tour_seq);
 	String intro = request.getParameter("intro");
 	String photo = request.getParameter("photo");
 	

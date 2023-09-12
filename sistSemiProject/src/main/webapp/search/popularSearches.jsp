@@ -36,6 +36,7 @@
 		
 		$(subjectDivs[0]).click(function(){
 			showList(0);
+			console.log("작동완");
 		});
 		$(subjectDivs[1]).click(function(){
 			showList(1);
@@ -64,7 +65,7 @@
 					$(listDivs[0]).html(s);
 				}
 			});
-			$("button.btn-danger").trigger("click");
+			$("button.cancel").trigger("click");
 		});
 		$(buttonDivs[1]).on("click",function(){
 			var mbti_v=$("#mbti").val();
@@ -80,7 +81,7 @@
 					$(listDivs[1]).html(s);
 				}
 			});
-			$("button.btn-danger").trigger("click");
+			$("button.cancel").trigger("click");
 		});
 		$(buttonDivs[2]).on("click",function(){
 			var gender_v=$("#gender").val();
@@ -96,7 +97,7 @@
 					$(listDivs[2]).html(s);
 				}
 			});
-			$("button.btn-danger").trigger("click");
+			$("button.cancel").trigger("click");
 		});
 		$(buttonDivs[3]).on("click",function(){
 			var gender_v=$("#gender").val();
@@ -112,7 +113,7 @@
 					$(listDivs[3]).html(s);
 				}
 			});
-			$("button.btn-danger").trigger("click");
+			$("button.cancel").trigger("click");
 		});
 	});
 	
@@ -120,7 +121,7 @@
 	
 	var listDivs = document.getElementsByClassName("list");
 	var selectDivs = document.getElementsByClassName("select");
-	var buttonDivs = document.getElementsByClassName("btn-success");
+	var buttonDivs = document.getElementsByClassName("attrsubmit");
 	var currentlyDisplayedList = null;
 	var currentlyDisplayedSelect = null;
 	var currentlyDisplayedButton = null;
@@ -146,7 +147,7 @@
 		buttonDivs[index].style.display = "block";
 		currentlyDisplayedButton = buttonDivs[index];
 		
-		$("button.btn-primary").trigger("click");
+		$("button.modalopen").trigger("click");
 	}
 	
 	function hideList() {
@@ -185,7 +186,7 @@
 	</div>
 	
 	<div class="container mt-3">
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="visibility: hidden"></button>
+		<button type="button" class="btn btn-primary modalopen" data-bs-toggle="modal" data-bs-target="#myModal" style="visibility: hidden"></button>
 	</div>
 	<!-- The Modal -->
 	<div class="modal" id="myModal">
@@ -256,11 +257,11 @@
 				
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" id="ageBtn">제출</button>
-					<button type="button" class="btn btn-success" id="mbtiBtn">제출</button>
-					<button type="button" class="btn btn-success" id="genderBtn">제출</button>
-					<button type="button" class="btn btn-success" id="areaBtn">제출</button>
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-success attrsubmit" id="ageBtn">제출</button>
+					<button type="button" class="btn btn-success attrsubmit" id="mbtiBtn">제출</button>
+					<button type="button" class="btn btn-success attrsubmit" id="genderBtn">제출</button>
+					<button type="button" class="btn btn-success attrsubmit" id="areaBtn">제출</button>
+					<button type="button" class="btn btn-danger cancel" data-bs-dismiss="modal">취소</button>
 				</div>
 			
 			</div>

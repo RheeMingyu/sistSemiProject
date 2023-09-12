@@ -28,7 +28,7 @@ public class PopularSearchesDao {
 		//			+" where t.seq=s.tour_seq and s.id=m.id and m.age"+range_code
 		//			+" order by s.selected_cnt desc limit 0,9";
 		String sql="select t.name from TourSpot t, JOIN Statistics s ON t.seq=s.tour_seq JOIN Member m ON s.id=m.id"
-					+" where m.age="+range_code+" order by s.selected_cnt desc limit 0,9";
+					+" where m.age"+range_code+" order by s.selected_cnt desc limit 0,9";
 		
 		try {
 			stmt=conn.createStatement();

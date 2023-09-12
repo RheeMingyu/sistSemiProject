@@ -1,6 +1,7 @@
-<%@page import="data.dao.TempSaveDao"%>
-<%@page import="data.dao.MyCourseDao"%>
 <%@page import="data.dto.MyCourseDto"%>
+<%@page import="data.dao.MyCourseDao"%>
+<%@page import="data.dao.TempSaveDao"%>
+<%@page import="data.dao.TourSpotDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
@@ -14,6 +15,7 @@
     String intro = request.getParameter("intro");
     String tour_seq = request.getParameter("tour_seq");
     String mainPhoto = request.getParameter("mainPhoto");
+    String day = request.getParameter("day");
     //System.out.println(selNum);
     
     
@@ -27,8 +29,7 @@
 	myCourseDto.setIntro(intro);
 	myCourseDto.setTour_seq(tour_seq);
 	myCourseDto.setMainPhoto(mainPhoto);
-	
-	myCourseDto.setDay("1"); //일차 추가하면 바꿔야함
+	myCourseDto.setDay(day);
 	
 	
 	MyCourseDao myCourseDao = new MyCourseDao();

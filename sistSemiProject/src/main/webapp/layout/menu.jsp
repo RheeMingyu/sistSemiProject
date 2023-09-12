@@ -23,10 +23,11 @@
    String name = dao.getName(myid);
 %>
 <meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Diphylleia&family=Dokdo&family=Nanum+Brush+Script&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script type="text/javascript" src="<%=root%>/menu/js/jquery.js"></script>
 <script type="text/javascript" src="<%=root%>/menu/js/function.js"></script>
 <title>Jeju do it</title>
@@ -68,6 +69,7 @@ span * {
 .submenu a:hover{
 	background-color: gray;
 	color: white;
+	text-decoration: none;
 }
    
 #ttop ul li {
@@ -88,7 +90,9 @@ span * {
   transition-duration: 1s;
   }
 
-
+nav ul li a:hover{
+	text-decoration: none;
+}
 </style>
 
 <script>
@@ -120,7 +124,7 @@ span * {
 </head>
 <body>
 <header>
-<div class="dv1" style="position: fixed; z-index:999; height: 0px; background-color: white;">
+<div class="dv1" style="position: fixed; z-index:999; height: 0px; background-color: white;opacity: 0.97">
    <nav id="ttop" style="">
    <ul class="t1">
       <li><img src="jeju/ㄹㄹ.png" style="width: 130px; height: 80px; margin-left: 40px; cursor: pointer;" onclick="location.href='<%=root%>/index.jsp'"></li>
@@ -131,11 +135,11 @@ span * {
       </li>
       <li><a href="#" class="topmenu" style="width: 150px; margin-left: 10px;">추천 코스</a>
          <ul class="submenu" style="margin-left: -20px;">
-         <a href="index.jsp?main=search/searchIndex.jsp" style="font-size: 15px;">테마</a>
+         <a href="index.jsp?main=recomCourse/recomCourseList.jsp" style="font-size: 15px;">테마</a>
          <a href="" style="font-size: 15px;">지역</a>
          </ul></li>
 
-     <li id="myCourseMenu"><a href='<%= (loginok != null) ? (root + "/index.jsp?main=myCourse/myCourseMap.jsp&selTheme=healingTab") : '#' %>' 
+     <li id="myCourseMenu"><a href='<%= (loginok != null) ? (root + "/index.jsp?main=myCourse/myCourseMap.jsp&selTheme=oceanTab") : '#' %>' 
      class="topmenu" style="width: 150px; margin-left: 20px;">나만의 코스</a></li>
 
       <li><a href="#" class="topmenu" style="width: 150px; margin-left: 10px;">리뷰</a>
@@ -158,8 +162,8 @@ span * {
          %>   
           <li><a href="#" class="topmenu" style="width: 150px; margin-left: 15px;">마이페이지</a>
          <ul  class="submenu" style="margin-left: -10px;">
-         <a href="index.jsp?main=MyPage/mypage.jsp" style="font-size: 15px;">나의 정보</a>
-         <a href="index.jsp?main=Mypage/MyList.jsp" style="font-size: 15px;">MY LIST</a>
+         <a href="index.jsp?main=myPage/mypage.jsp" style="font-size: 15px;">나의 정보</a>
+         <a href="index.jsp?main=myList/myList.jsp" style="font-size: 15px;">MY LIST</a>
          </ul>
          <%
          }

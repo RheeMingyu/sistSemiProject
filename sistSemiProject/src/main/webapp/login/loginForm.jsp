@@ -258,7 +258,6 @@ body {
 </head>
 
 <%
-
 String myid = (String)session.getAttribute("loginok");
 String saveok = (String)session.getAttribute("saveok");
 String sesave = (String)session.getAttribute("sesave");
@@ -302,8 +301,7 @@ if(saveok==null) {
      <button type="button" style="border: none; background: transparent; width: 110px; font-weight: bold; margin-left: 10px;"><b style="font-size:13px;">비밀번호찾기</b></button>
    </div>
 
-    
-    <a class="button-signup" href="index.jsp?main=member/GaipForm.jsp"><b>회원가입</b></a>
+    <a class="button-signup" href="index.jsp?main=member/Gaipform.jsp"><b>회원가입</b></a>
 
     <br><br>
     

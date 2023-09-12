@@ -77,7 +77,7 @@ dto = dao.getData(id);
 				회원정보 수정
 				</h4>
 				<hr>
-				<form class="validation-form" novalidate action="MyPage/updateProc.jsp"
+				<form class="validation-form" novalidate action="myPage/updateProc.jsp"
 					method="post" enctype="multipart/form-data">
 					<input type="hidden" name="id" value="<%=id %>">
 					<div class="row">

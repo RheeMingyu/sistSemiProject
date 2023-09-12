@@ -5,6 +5,7 @@
 
     <%
     String myid = (String)session.getAttribute("myid");
+    
     request.setCharacterEncoding("utf-8");
     
     String content = request.getParameter("content");
@@ -18,5 +19,4 @@
     
 	//data insert
     dao.insertlist(dto);
-    
     %>

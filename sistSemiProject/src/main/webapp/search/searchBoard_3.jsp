@@ -11,10 +11,11 @@
 <head>
 <meta charset="EUC-KR">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <style>
@@ -58,7 +59,7 @@
 		return tableName;
 	}%>
 	<%
-	String sortidx=(request.getParameter("sortidx")!=null||request.getParameter("sortidx").equals("null")?request.getParameter("sortidx"):"");
+	String sortidx=(request.getParameter("sortidx")==null||request.getParameter("sortidx").equals("null")?"":request.getParameter("sortidx"));
 	List<String> tables=new ArrayList<String>();
 	
 	if(sortidx.equals("0")||sortidx.equals(""))
@@ -69,8 +70,8 @@
 	else if(sortidx.equals("4")){tables.add("TourReview");}
 	else if(sortidx.equals("5")){tables.add("GuestReview");}
 
-	//String inputWords=(request.getParameter("inputWords")==null||request.getParameter("inputWords").equals("null")?"":request.getParameter("inputWords"));
-	String inputWords="멋진 해수욕장 추천";
+	String inputWords=(request.getParameter("inputWords")==null||request.getParameter("inputWords").equals("null")?"":request.getParameter("inputWords"));
+
 	SearchDao_v3 searchDao=new SearchDao_v3();
 	
 	int totalCount=searchDao.getTotalCount(inputWords,tables);
@@ -82,10 +83,8 @@
 	int perBlock=5;
 	int currentPage;
 	
-	if(request.getParameter("currentPage")==null||request.getParameter("currentPage").equals("null"))
-		currentPage=1;
-	else
-		currentPage=Integer.parseInt(request.getParameter("currentPage"));
+	if(request.getParameter("currentPage")==null||request.getParameter("currentPage").equals("null")) {currentPage=1;}
+	else {currentPage=Integer.parseInt(request.getParameter("currentPage"));}
 
 	totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
 
@@ -97,6 +96,7 @@
 		endPage=totalPage;
 
 	startNum=(currentPage-1)*perPage;
+	//System.out.println("키워드:"+inputWords+",sidx:"+sortidx+"cp:"+currentPage);
 	%>
 	<div>
 		<div style="margin: 0px 50px 0px 50px"><br>
@@ -130,8 +130,7 @@
 		
 		<div class="container mt-3">
 			<!-- Nav tabs -->
-			<ul class="nav nav-tabs left-tab">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<ul class="nav nav-tabs left-tab" style="margin-left: 33px">
 				<li class="nav-item">
 					<button type="button" class="btn btn-outline-info btn-sm v"><i class="bi bi-justify"></i></button>
 				</li>&nbsp;

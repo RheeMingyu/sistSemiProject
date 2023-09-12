@@ -104,7 +104,7 @@ String myid = (String)session.getAttribute("myid");
 	</table><br><br>
 	
 	<div class="container" style="margin-right:10px;" id="updateFormContainer">	
-	<button type="button" style="margin-left:800px; "onclick="location.href='index.jsp?main=MyPage/updateform.jsp?id=<%=myid %>'">수정</button>
+	<button type="button" style="margin-left:800px; "onclick="location.href='index.jsp?main=myPage/updateform.jsp?id=<%=myid %>'">수정</button>
 	<table class="table table-bordered" style="width:850px; height:300px;">
 	
 	<td style="border:none;">
@@ -227,28 +227,30 @@ String myid = (String)session.getAttribute("myid");
  
  function money() {
 	 let a= "여러분의 소중한 후원이 여러명의 개발자를 살립니다 감사합니다."; 
-	 let b = "후원계좌 : 카카오뱅크 3333050489678 진현규";
+	 let b = "후원계좌 : 카카오뱅크 3333050489678 진현규\n";
+	 let c = "후원계좌 : 카카오뱅크 1234567890123 위시온\n";
+	 let d = "후원계좌 : 카카오뱅크 7979 25 81760 임형준";
 
 	 alert(a);
-	 alert(b);
+	 alert(b+c+d);
  }
  
  function listgo() {
 	 var userId = '<%=myid %>';
-	 var url = "index.jsp?main=mylist/myList.jsp?id="+userId;
+	 var url = "index.jsp?main=myList/myList.jsp?id="+userId;
 	 location.href=url;
  }
  
  function reviewgo() {
 	 var userId = '<%=myid %>';
-	 var url = "index.jsp?main=mylist/myreview.jsp?id="+userId;
+	 var url = "index.jsp?main=myList/myreview.jsp?id="+userId;
 	 location.href=url;
  
  }
  
  function commentgo() {
 	 var userId = '<%=myid %>';
-	 var url = "index.jsp?main=mylist/mycomment.jsp?id="+userId;
+	 var url = "index.jsp?main=myList/mycomment.jsp?id="+userId;
 	 location.href=url;
  
  }

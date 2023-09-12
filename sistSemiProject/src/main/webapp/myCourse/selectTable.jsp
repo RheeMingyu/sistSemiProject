@@ -1,9 +1,10 @@
-<%@page import="com.google.gson.Gson"%>
 <%@page import="data.dto.MemberDto"%>
 <%@page import="data.dao.MemberDao"%>
-<%@page import="data.dto.TempSaveDto"%>
 <%@page import="data.dao.TempSaveDao"%>
+<%@page import="data.dto.TempSaveDto"%>
 <%@page import="java.util.List"%>
+<%@page import="data.dao.TourSpotDao"%>
+<%@page import="com.google.gson.Gson"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,7 +25,20 @@ margin: 0 0 20px;
     font-weight: 800;
     font-size: 22px;
     color:black;
+    display:inline-block;
 }
+
+#selDay{
+	display: inline-block;
+	margin-left:50px;
+	width:120px;
+	height:35px;
+}
+
+#courseName::placeholder{
+	color:#a9a9a9;
+}
+
 </style>
 </head>
 <body>
@@ -45,13 +59,72 @@ margin: 0 0 20px;
 %>
 
 
+<script>
+$(function(){
+	var s="";
+    $("#selDay").change(function(){
+        if ($(this).val() == "당일치기") {
+            //alert("당일치기가 선택되었습니다.");
+            s="";
+            s+='<select class="form-select form-select-sm selDayClass" style="width:85px;">';
+			s+= '<option value="1" selected>1일차</option>';
+			s+= '</select>';
+			
+			$("td.day").html(s);
+		}
+        else if($(this).val() == "1박2일"){
+        	s="";
+        	s+='<select class="form-select form-select-sm selDayClass" style="width:85px;">';
+			s+= '<option value="1" selected>1일차</option>';
+			s+= '<option value="2">2일차</option>';
+			s+= '</select>';
+			
+			$("td.day").html(s);
+        }
+        else if($(this).val() == "2박3일"){
+        	s="";
+        	s+='<select class="form-select form-select-sm selDayClass" style="width:85px;">';
+			s+= '<option value="1" selected>1일차</option>';
+			s+= '<option value="2">2일차</option>';
+			s+= '<option value="3">3일차</option>';
+			s+= '</select>';
+			
+			$("td.day").html(s);
+        }
+        else if($(this).val() == "3박4일"){
+        	s="";
+        	s+='<select class="form-select form-select-sm selDayClass" style="width:85px;">';
+			s+= '<option value="1" selected>1일차</option>';
+			s+= '<option value="2">2일차</option>';
+			s+= '<option value="3">3일차</option>';
+			s+= '<option value="4">4일차</option>';
+			s+= '</select>';
+			
+			$("td.day").html(s);
+        }
+        });
+    
+
+    });
+</script>
+
+
 <!-- 선택한 관광지 목록이 나타나는 테이블 -->
 <table id="selectedPlacesTable" class="table table-bordered" style="width:350px; text-align:center" >
-	<caption align="top" id="addCaption">추가한 장소</caption>
-	<thead><tr><th colspan="2">코스의 이름을 입력하세요&nbsp;&nbsp;&nbsp;<button type="button" id="btnCname" class="btn btn-danger btn-sm">중복체크</button><br><span class="cnameSuccess"></span><input type="text" class="form-control" id="courseName" name="courseName" placeholder="ex)하하호호 웃음이 나는 코스"></th></tr></thead>
+	<caption align="top"><b id="addCaption">추가한 장소</b>
+	<select id="selDay" class="form-select form-select-sm">
+    <option value="당일치기" selected>당일치기</option>
+    <option value="1박2일">1박2일</option>
+    <option value="2박3일">2박3일</option>
+    <option value="3박4일">3박4일</option>
+</select></caption>
+	<thead><tr><th colspan="3">코스의 이름을 입력하세요&nbsp;&nbsp;&nbsp;<button type="button" id="btnCname" class="btn btn-danger btn-sm">중복체크</button><br><span class="cnameSuccess"></span><input type="text" class="form-control" id="courseName" name="courseName" placeholder="ex)하하호호 웃음이 나는 코스"></th></tr></thead>
 		<tbody><%for (int i=0; i<list.size();i++){ TempSaveDto tempSaveDto = list.get(i);%></tbody>
 		<tr>
-		<td width="50"><%=i+1%></td>
+		<td width="70" class="day"><select class="form-select form-select-sm selDayClass" style="width:85px;">
+			<option value="1" selected>1일차</option>
+			</select></td>
+		<td width="40"><%=i+1%></td>
 		<td id="selName"><%=tempSaveDto.getName() %></td>
 		</tr>
 
@@ -80,7 +153,19 @@ margin: 0 0 20px;
 	 var tour_seq = <%= new Gson().toJson(tour_seq) %>;
 	 var spotName = <%= new Gson().toJson(name) %>;
 	 var mainPhoto = "<%= mainPhoto%>";
+	 var day = []; // 일차 저장할 배열
 	 var length = spotName.length;
+	 
+	 
+	// select 요소의 값을 배열에 추가
+     $(".selDayClass").each(function () {
+         var value = $(this).val();
+         day.push(value);
+     });
+
+	 
+	 
+	 
 	 //배열로 받기
 	 
 
@@ -98,7 +183,7 @@ margin: 0 0 20px;
            $.ajax({
                type: "POST",
                url: "myCourse/insertCourse.jsp", // 서버로 데이터를 전송할 주소 설정
-               data: {courseName: courseName, memId:memId, spotName: spotName[i], selNum: selNum[i], intro: intro[i], tour_seq: tour_seq[i], mainPhoto:mainPhoto  }, // 선택한 장소 데이터를 전송
+               data: {courseName: courseName, memId:memId, spotName: spotName[i], selNum: selNum[i], intro: intro[i], tour_seq: tour_seq[i], mainPhoto:mainPhoto, day:day[i]  }, // 선택한 장소 데이터를 전송
                success: function(response) {
                	//alert("장소가 성공적으로 추가되었습니다.");
 					
@@ -122,7 +207,7 @@ margin: 0 0 20px;
         	   url: "myCourse/statistics.jsp",
         	   data: {memId:memId, tour_seq: tour_seq[i]},
         	   success: function(response){
-        		   console.log("통계 데이터 전송 성공!!");
+        		   //alert("통계 데이터 전송 성공!!");
         	   }
            });
 		 

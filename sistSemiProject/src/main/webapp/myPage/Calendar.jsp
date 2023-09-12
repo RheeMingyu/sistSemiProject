@@ -296,7 +296,7 @@ if(loginok!=null) {
     %>
 		<input type="hidden" name="id" value="<%=dto.getId() %>">
 		<textarea style="text-align:left; width:256px; height:300px;" name="content" id="content" style="border-radius:20px; font-size:15px;">
- 			<%=now %>
+		제목 : 
 		</textarea>
 		<button type="submit" id="save" style="width: 80px; height: 40px;">저장</button>
 
@@ -307,49 +307,22 @@ if(loginok!=null) {
 $("#save").click(function(){
 	
 	var inputData = $("#content").val();
+	//alert(inputData);
 	
 	$.ajax({
-        type: "POST",          // HTTP 요청 방식 (POST)
-        url: "mylist/listinsertproc.jsp",   // 데이터를 처리할 서버 스크립트 경로
+        type: "POST", // HTTP 요청 방식 (POST)
+        url: "myList/listinsertProc.jsp", // 데이터를 처리할 서버 스크립트 경로
         dataType:"html",
         data: { content: inputData },  // 전송할 데이터
         success: function(response){
+        	
         	alert("나의 일정 추가완료");
-        	$("#content").val("");
+        	$("#content").val("제목 : ");
 		} 
 	})
 });
 
-<%-- $("#btnadd").click(function(){
 
-    var textarea = $("<textarea>").css({
-        "width": "100%",    
-       "height": "150px"   
-    });
-    
-
-    
-    var saveButton = $(".addText").text(); // 저장하기 버튼 생성
-    
-    $("table.addtext").append("<tr><td colspan='7' style='font-size:16px;'>[ <%=now %> ]<br></td></tr><br>");  
-    $("table tr:last td").append(textarea,saveButton);  
-    
-    // 저장하기 버튼 클릭 이벤트 처리
-    saveButton.click(function(){
-        var inputData = textarea.val(); // 텍스트 에어리어의 내용 가져오기
-        
-        // AJAX를 사용하여 데이터 서버로 전송
-        $.ajax({
-            type: "POST",          // HTTP 요청 방식 (POST)
-            url: "mylist/listinsertproc.jsp",   // 데이터를 처리할 서버 스크립트 경로
-            data: { inputData: inputData },  // 전송할 데이터
-            success: function(response){
-                alert(response);
-            }
-        });
-    });
-    
-}); --%>
 </script>
 
 </body>
