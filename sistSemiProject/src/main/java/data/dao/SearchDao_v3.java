@@ -276,11 +276,11 @@ public class SearchDao_v3 {
 							
 							while((index=columnValue.indexOf(keyWord, index+1))>=0)
 							{
-								int forPrevAbrv=Math.max(0, index-10);
-								int forEndAbrv=Math.min(columnValue.length(), index+keyWord.length());
+								//int forPrevAbrv=Math.max(0, index-10);
+								//int forEndAbrv=Math.min(columnValue.length(), index+keyWord.length());
 								
-								minForPrevAbrv=Math.min(minForPrevAbrv, forPrevAbrv);
-								maxForEndAbrv=Math.max(maxForEndAbrv, forEndAbrv);
+								//minForPrevAbrv=Math.min(minForPrevAbrv, forPrevAbrv);
+								//maxForEndAbrv=Math.max(maxForEndAbrv, forEndAbrv);
 								
 								keyWordResult.append(columnValue.substring(0, index));
 								keyWordResult.append("<b style='background-color:yellow'>"+keyWord+"</b>");
@@ -289,14 +289,18 @@ public class SearchDao_v3 {
 							keyWordResult.append(columnValue);
 							System.out.println(column+":"+keyWordResult.toString());
 							result.replace(0, result.length(), keyWordResult.toString());
+							
+							maxForEndAbrv=Math.max(maxForEndAbrv, result.lastIndexOf(keyWord)+keyWord.length()+14);
+							minForPrevAbrv=Math.min(minForPrevAbrv, result.indexOf(keyWord)-45);
 						}
 						
 					}
 					if(result.toString().contains("<b style='background-color:yellow'>"))
 					{
-						map.put(column, "..."+result.toString().substring(minForPrevAbrv, maxForEndAbrv)+"...");
+						System.out.println(minForPrevAbrv);
+						map.put(column, (minForPrevAbrv<0?"":"...")+result.toString().substring(Math.max(0, minForPrevAbrv), Math.min(result.toString().length(), maxForEndAbrv))+(maxForEndAbrv>result.toString().length()?"":"..."));
 					} else {map.put(column, (result.toString().length()>20?result.toString().substring(0, 20)+"...":result.toString()));}
-					map.put(column, result.toString());
+					//map.put(column, result.toString());
 				}
 				results.add(map);				
 			}
@@ -374,13 +378,7 @@ public class SearchDao_v3 {
 							int index=-1;
 							
 							while((index=columnValue.indexOf(keyWord, index+1))>=0)
-							{
-								int forPrevAbrv=Math.max(0, index-10);
-								int forEndAbrv=Math.min(columnValue.length(), index+keyWord.length());
-								
-								minForPrevAbrv=Math.min(minForPrevAbrv, forPrevAbrv);
-								maxForEndAbrv=Math.max(maxForEndAbrv, forEndAbrv);
-								
+							{								
 								keyWordResult.append(columnValue.substring(0, index));
 								keyWordResult.append("<b style='background-color:yellow'>"+keyWord+"</b>");
 								columnValue=columnValue.substring(index+keyWord.length());
@@ -388,14 +386,17 @@ public class SearchDao_v3 {
 							keyWordResult.append(columnValue);
 							System.out.println(column+":"+keyWordResult.toString());
 							result.replace(0, result.length(), keyWordResult.toString());
+							
+							maxForEndAbrv=Math.max(maxForEndAbrv, result.lastIndexOf(keyWord)+keyWord.length()+14);
+							minForPrevAbrv=Math.min(minForPrevAbrv, result.indexOf(keyWord)-45);
 						}
 						
 					}
 					if(result.toString().contains("<b style='background-color:yellow'>"))
 					{
-						map.put(column, "..."+result.toString().substring(minForPrevAbrv, maxForEndAbrv)+"...");
+						map.put(column, (minForPrevAbrv<0?"":"...")+result.toString().substring(Math.max(0, minForPrevAbrv), Math.min(result.toString().length(), maxForEndAbrv))+(maxForEndAbrv>result.toString().length()?"":"..."));
 					} else {map.put(column, (result.toString().length()>20?result.toString().substring(0, 20)+"...":result.toString()));}
-					map.put(column, result.toString());
+					//map.put(column, result.toString());
 				}
 				results.add(map);				
 			}
@@ -474,12 +475,6 @@ public class SearchDao_v3 {
 							
 							while((index=columnValue.indexOf(keyWord, index+1))>=0)
 							{
-								int forPrevAbrv=Math.max(0, index-10);
-								int forEndAbrv=Math.min(columnValue.length(), index+keyWord.length());
-								
-								minForPrevAbrv=Math.min(minForPrevAbrv, forPrevAbrv);
-								maxForEndAbrv=Math.max(maxForEndAbrv, forEndAbrv);
-								
 								keyWordResult.append(columnValue.substring(0, index));
 								keyWordResult.append("<b style='background-color:yellow'>"+keyWord+"</b>");
 								columnValue=columnValue.substring(index+keyWord.length());
@@ -487,12 +482,14 @@ public class SearchDao_v3 {
 							keyWordResult.append(columnValue);
 							System.out.println(column+":"+keyWordResult.toString());
 							result.replace(0, result.length(), keyWordResult.toString());
+							
+							maxForEndAbrv=Math.max(maxForEndAbrv, result.lastIndexOf(keyWord)+keyWord.length()+14);
+							minForPrevAbrv=Math.min(minForPrevAbrv, result.indexOf(keyWord)-45);
 						}
-						
 					}
 					if(result.toString().contains("<b style='background-color:yellow'>"))
 					{
-						map.put(column, (minForPrevAbrv<0?"...":"")+result.toString().substring(minForPrevAbrv, maxForEndAbrv)+(maxForEndAbrv>result.toString().length()?"...":""));
+						map.put(column, (minForPrevAbrv<0?"":"...")+result.toString().substring(Math.max(0, minForPrevAbrv), Math.min(result.toString().length(), maxForEndAbrv))+(maxForEndAbrv>result.toString().length()?"":"..."));
 					} else {map.put(column, (result.toString().length()>20?result.toString().substring(0, 20)+"...":result.toString()));}
 					//map.put(column, result.toString());
 				}
