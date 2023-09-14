@@ -116,19 +116,19 @@ div.container {
 						<div class="col-md-6 mb-3">
 							<label for="mbti">MBTI</label><br>
 							<div>
-							<select id="mbti1" class="form-control custom-select" style="width: 50px;float: left;margin-right: 10px">
+							<select name="mbti1" class="form-control custom-select" style="width: 50px;float: left;margin-right: 10px">
 								<option value="e" selected>E</option>
 								<option value="i">I</option>
 							</select>
-							<select id="mbti2" class="form-control custom-select" style="width: 50px;float: left;margin-right: 10px">
+							<select name="mbti2" class="form-control custom-select" style="width: 50px;float: left;margin-right: 10px">
 								<option value="n" selected>N</option>
 								<option value="s">S</option>
 							</select>
-							<select id="mbti3" class="form-control custom-select" style="width: 50px;float: left;margin-right: 10px">
+							<select name="mbti3" class="form-control custom-select" style="width: 50px;float: left;margin-right: 10px">
 								<option value="t" selected>T</option>
 								<option value="f">F</option>
 							</select>
-							<select id="mbti4" class="form-control custom-select" style="width: 50px;margin-right: 10px">
+							<select name="mbti4" class="form-control custom-select" style="width: 50px;margin-right: 10px">
 								<option value="p" selected>P</option>
 								<option value="j">J</option>
 							</select>

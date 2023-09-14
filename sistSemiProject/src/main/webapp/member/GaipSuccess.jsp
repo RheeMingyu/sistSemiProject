@@ -30,7 +30,7 @@
 	<b style="font-size:22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;어서오세요 회원 가입을 환영합니다. ↓ ↓</b>
 	<br>
 	
-	<button type="button" style="float:right;" class="btn btn-info" onclick="location.href='index.jsp?main=login/loginmain.jsp'">로그인</button>
+	<button type="button" style="float:right;" class="btn btn-info" onclick="location.href='index.jsp?main=login/loginMain.jsp'">로그인</button>
 	<button type="button" style="float:right;" class="btn btn-danger" onclick="location.href='index.jsp'">HOME</button>
 	<br><br>
 </div>

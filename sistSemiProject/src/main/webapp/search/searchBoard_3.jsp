@@ -5,7 +5,7 @@
 <%@page import="java.util.List"%>
 <%@page import="data.dao.SearchDao_v3"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="EUC-KR"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,6 +59,7 @@
 		return tableName;
 	}%>
 	<%
+	request.setCharacterEncoding("utf-8");
 	String sortidx=(request.getParameter("sortidx")==null||request.getParameter("sortidx").equals("null")?"":request.getParameter("sortidx"));
 	List<String> tables=new ArrayList<String>();
 	
@@ -71,7 +72,7 @@
 	else if(sortidx.equals("5")){tables.add("GuestReview");}
 
 	String inputWords=(request.getParameter("inputWords")==null||request.getParameter("inputWords").equals("null")?"":request.getParameter("inputWords"));
-
+	
 	SearchDao_v3 searchDao=new SearchDao_v3();
 	
 	int totalCount=searchDao.getTotalCount(inputWords,tables);
@@ -96,7 +97,7 @@
 		endPage=totalPage;
 
 	startNum=(currentPage-1)*perPage;
-	//System.out.println("키워드:"+inputWords+",sidx:"+sortidx+"cp:"+currentPage);
+	System.out.println("키워드:"+inputWords+",sidx:"+sortidx+"cp:"+currentPage);
 	%>
 	<div>
 		<div style="margin: 0px 50px 0px 50px"><br>
@@ -105,22 +106,22 @@
 					<div class="collapse navbar-collapse" id="collapsibleNavbar">
 						<ul class="navbar-nav">
 							<li class="nav-item">
-								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=0&currentPage=<%=currentPage%>">전체</a>
+								<a class="nav-link" href="index.jsp?main=search/searchIndex.jsp?sortidx=0&currentPage=<%=currentPage%>&inputWords='<%=inputWords%>'">전체</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=1&currentPage=<%=currentPage%>">관광지</a>
+								<a class="nav-link" href="index.jsp?main=search/searchIndex.jsp?sortidx=1&currentPage=<%=currentPage%>&inputWords='<%=inputWords%>'">관광지</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=2&currentPage=<%=currentPage%>">나만의코스</a>
+								<a class="nav-link" href="index.jsp?main=search/searchIndex.jsp?sortidx=2&currentPage=<%=currentPage%>&inputWords='<%=inputWords%>'">나만의코스</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link " href="index.jsp?main=search/searchBoard_3.jsp?sortidx=3&currentPage=<%=currentPage%>">추천코스</a>
+								<a class="nav-link " href="index.jsp?main=search/searchIndex.jsp?sortidx=3&currentPage=<%=currentPage%>&inputWords='<%=inputWords%>'">추천코스</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=4&currentPage=<%=currentPage%>">리뷰</a>
+								<a class="nav-link" href="index.jsp?main=search/searchIndex.jsp?sortidx=4&currentPage=<%=currentPage%>&inputWords='<%=inputWords%>'">리뷰</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="index.jsp?main=search/searchBoard_3.jsp?sortidx=5&currentPage=<%=currentPage%>">비회원리뷰</a>
+								<a class="nav-link" href="index.jsp?main=search/searchIndex.jsp?sortidx=5&currentPage=<%=currentPage%>&inputWords='<%=inputWords%>'">비회원리뷰</a>
 							</li>
 						</ul>
 					</div>
@@ -153,10 +154,10 @@
 	</div>
 	<div class="tab-content">
 		<div id="tabs1" class="container tab-pane fade row"><br>
-			<%List<HashMap<String,HashMap<String,String>>> list_relevance=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 1);
+			<%List<HashMap<String, List<HashMap<String, String>>>> list_relevance=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 1);
 			for(int i=0;i<list_relevance.size();i++)
 			{
-				HashMap<String,HashMap<String,String>> tableMap=list_relevance.get(i);
+				HashMap<String, List<HashMap<String, String>>> tableMap=list_relevance.get(i);
 				
 				for(String table:tables)
 				{
@@ -166,7 +167,11 @@
 					if(tableMap.get(table)==null){continue;}
 					else
 					{
-						HashMap<String,String> map=tableMap.get(table);%>
+						List<HashMap<String, String>> mapList=tableMap.get(table);
+						
+						for(HashMap<String, String> map:mapList)
+						{
+						%>
 						<div class="v_align">
 						<table class="table table-bordered">
 							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
@@ -210,14 +215,15 @@
 						</table>
 					</div>
 					<%}
+					}
 				}
 			}%>
 		</div>
 		<div id="tabs2" class="container tab-pane fade"><br>
-			<%List<HashMap<String,HashMap<String,String>>> list_latest=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 2);
+			<%List<HashMap<String, List<HashMap<String, String>>>> list_latest=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 2);
 			for(int i=0;i<list_latest.size();i++)
 			{
-				HashMap<String,HashMap<String,String>> tableMap=list_latest.get(i);
+				HashMap<String, List<HashMap<String, String>>> tableMap=list_latest.get(i);
 				
 				for(String table:tables)
 				{
@@ -227,7 +233,11 @@
 					if(tableMap.get(table)==null){continue;}
 					else
 					{
-						HashMap<String,String> map=tableMap.get(table);%>
+						List<HashMap<String, String>> mapList=tableMap.get(table);
+						
+						for(HashMap<String, String> map:mapList)
+						{
+						%>
 						<div class="v_align">
 						<table class="table table-bordered">
 							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
@@ -251,7 +261,7 @@
 									if(!column.equals("photo")&&!column.equals("mainphoto")){%>
 									<td><%=column %></td>
 									<td><%=map.get(column) %></td><%} %>
-								</tr>	
+								</tr>
 							<%j++;}%>
 					</table>
 					</div>
@@ -271,14 +281,15 @@
 						</table>
 					</div>
 					<%}
+					}
 				}
 			}%>
 		</div>
 		<div id="tabs3" class="container tab-pane fade"><br>
-			<%List<HashMap<String,HashMap<String,String>>> list_popularity=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 3);
+			<%List<HashMap<String, List<HashMap<String, String>>>> list_popularity=searchDao.searchInputWordsInWholeTablesWithStatistics(inputWords, tables, startNum, perPage, 3);
 			for(int i=0;i<list_popularity.size();i++)
 			{
-				HashMap<String,HashMap<String,String>> tableMap=list_popularity.get(i);
+				HashMap<String, List<HashMap<String, String>>> tableMap=list_popularity.get(i);
 				
 				for(String table:tables)
 				{
@@ -288,7 +299,11 @@
 					if(tableMap.get(table)==null){continue;}
 					else
 					{
-						HashMap<String,String> map=tableMap.get(table);%>
+						List<HashMap<String, String>> mapList=tableMap.get(table);
+						
+						for(HashMap<String, String> map:mapList)
+						{
+						%>
 						<div class="v_align">
 						<table class="table table-bordered">
 							<caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
@@ -312,7 +327,7 @@
 									if(!column.equals("photo")&&!column.equals("mainphoto")){%>
 									<td><%=column %></td>
 									<td><%=map.get(column) %></td><%} %>
-								</tr>	
+								</tr>
 							<%j++;}%>
 					</table>
 					</div>
@@ -332,6 +347,7 @@
 						</table>
 					</div>
 					<%}
+					}
 				}
 			}%>
 		</div>
@@ -342,7 +358,7 @@
 				if(startPage>1)
 				{%>
 					<li class="page-item">
-						<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=startPage-1%>&sortidx=<%=sortidx%>&inputWords=<%=inputWords %>" class="page-link">이전</a>
+						<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=startPage-1%>&sortidx=1&inputWords=<%=inputWords %>" class="page-link">이전</a>
 					</li>
 				<%}			
 				for(int pp=startPage;pp<=endPage;pp++)
@@ -350,19 +366,19 @@
 					if(pp==currentPage)
 					{%>
 						<li class="page-item active">
-							<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=pp%>&sortidx=<%=sortidx%>&inputWords=<%=inputWords %>" class="page-link"><%=pp %></a>
+							<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=pp%>&sortidx=1&inputWords=<%=inputWords %>" class="page-link"><%=pp %></a>
 						</li>
 					<%}else
 					{%>
 						<li class="page-item">
-							<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=pp%>&sortidx=<%=sortidx%>&inputWords=<%=inputWords %>" class="page-link"><%=pp %></a>
+							<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=pp%>&sortidx=1&inputWords=<%=inputWords %>" class="page-link"><%=pp %></a>
 						</li>
 					<%}
 				}
 				if(endPage<totalPage)
 				{%>
 					<li class="page-item">
-						<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=endPage+1%>&sortidx=<%=sortidx%>&inputWords=<%=inputWords %>" class="page-link">다음</a>
+						<a href="index.jsp?main=search/searchIndex.jsp?currentPage=<%=endPage+1%>&sortidx=1&inputWords=<%=inputWords %>" class="page-link">다음</a>
 					</li>
 				<%}	
 				%>

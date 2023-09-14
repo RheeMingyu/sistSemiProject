@@ -117,6 +117,12 @@ nav ul li a:hover{
              }
           }
        });
+      
+      /* $("#btninput").click(function(){
+    	 var inputWords=$("#inputWords").val();
+    	 alert(inputWords);
+    	 location.href="index.jsp?main=search/searchIndex.jsp?inputWords="+inputWords;
+      }); */
    });
    
 
@@ -187,9 +193,9 @@ nav ul li a:hover{
      
    </ul>
     <form class="d-flex" action="index.jsp?main=search/searchIndex.jsp" method="post">
-        <input class="form-control me-2" type="text"  style="width: 120px; margin-left: 30px; margin-top: 20px;" name="inputWords" placeholder="Search">
-        <button class="btn btn-primary" type="submit" style="margin-top: 20px; background-color: #696969; border-color: #696969;">Search</button>
-      </form>
+        <input id="inputWords" class="form-control me-2" type="text"  style="width: 120px; margin-left: 30px; margin-top: 20px;" name="inputWords" placeholder="Search">
+        <button id="btninput" class="btn btn-primary" type="submit" style="margin-top: 20px; background-color: #696969; border-color: #696969;">Search</button>
+    </form>
    </nav>
 </div>
 </header>

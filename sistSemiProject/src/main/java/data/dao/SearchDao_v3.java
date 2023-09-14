@@ -120,7 +120,7 @@ public class SearchDao_v3 {
 		return resultsList;
 	}*/
 	
-	public List<HashMap<String, HashMap<String, String>>> searchInputWordsInWholeTablesWithStatistics(String inputWords,List<String> tables,int startNum,int perPage,int sort) {
+	/*public List<HashMap<String, HashMap<String, String>>> searchInputWordsInWholeTablesWithStatistics(String inputWords,List<String> tables,int startNum,int perPage,int sort) {
 		
 		List<HashMap<String, HashMap<String, String>>> resultsList=new ArrayList<HashMap<String,HashMap<String,String>>>();
 		
@@ -149,6 +149,37 @@ public class SearchDao_v3 {
 				mmap.put(table, map);
 				resultsList.add(mmap);
 			}
+		}
+		
+		return resultsList;
+	}*/
+	
+	public List<HashMap<String, List<HashMap<String, String>>>> searchInputWordsInWholeTablesWithStatistics(String inputWords,List<String> tables,int startNum,int perPage,int sort) {
+		
+		List<HashMap<String, List<HashMap<String, String>>>> resultsList=new ArrayList<HashMap<String,List<HashMap<String,String>>>>();
+		
+		String [] keyWordsDivided=inputWords.split(" ");
+
+		StringJoiner sj=new StringJoiner("* ");
+
+		for(String keyWord:keyWordsDivided)
+		{
+			sj.add(keyWord);
+		}
+		
+		for(String table:tables)
+		{
+			HashMap<String, List<HashMap<String, String>>> mmap=new HashMap<String, List<HashMap<String,String>>>();
+			List<HashMap<String, String>> mapList=null;
+			
+			String columns=searchColumnNamesInEachTables(table);
+			if(sort==1) {mapList=searchColumnsValuesInTable(table, columns, sj.toString()+"*", startNum, perPage);}
+			else if(sort==2) {mapList=searchColumnsValuesInTableOrderByLatest(table, columns, sj.toString()+"*", startNum, perPage);}
+			else if(sort==3) {mapList=searchColumnsValuesInTableOrderByPopularity(table, columns, sj.toString()+"*", startNum, perPage);}
+			//else if(sort.equals("")) {return null;}
+			
+			mmap.put(table, mapList);
+			resultsList.add(mmap);
 		}
 		
 		return resultsList;
@@ -260,7 +291,7 @@ public class SearchDao_v3 {
 				
 				for(String column:columnsArr)
 				{
-					String columnValue=rs.getString(column);
+					String columnValue=rs.getString(column)==null?"":rs.getString(column);
 					StringBuilder result=new StringBuilder(columnValue);
 					
 					int minForPrevAbrv=Integer.MAX_VALUE;
@@ -302,7 +333,7 @@ public class SearchDao_v3 {
 					} else {map.put(column, (result.toString().length()>20?result.toString().substring(0, 20)+"...":result.toString()));}
 					//map.put(column, result.toString());
 				}
-				results.add(map);				
+				results.add(map);
 			}
 		}
 		catch (SQLException e) {
@@ -363,7 +394,7 @@ public class SearchDao_v3 {
 				
 				for(String column:columnsArr)
 				{
-					String columnValue=rs.getString(column);
+					String columnValue=rs.getString(column)==null?"":rs.getString(column);
 					StringBuilder result=new StringBuilder(columnValue);
 					
 					int minForPrevAbrv=Integer.MAX_VALUE;
@@ -459,7 +490,7 @@ public class SearchDao_v3 {
 				
 				for(String column:columnsArr)
 				{
-					String columnValue=rs.getString(column);
+					String columnValue=rs.getString(column)==null?"":rs.getString(column);
 					StringBuilder result=new StringBuilder(columnValue);
 					
 					int minForPrevAbrv=Integer.MAX_VALUE;
@@ -539,11 +570,12 @@ public class SearchDao_v3 {
 			try {
 				pstmt=conn.prepareStatement(sql);
 	
-				pstmt.setString(1, sj.toString());
+				pstmt.setString(1, sj.toString()+"*");
 				rs=pstmt.executeQuery();
 				
 				if(rs.next())
 					totalIndividual=Integer.parseInt(rs.getString(1));
+					System.out.println("각자:"+totalIndividual);
 			}
 			catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -554,6 +586,7 @@ public class SearchDao_v3 {
 			
 			total+=totalIndividual;
 		}
+		System.out.println("개수:"+total);
 		return total;
 	}
 }
