@@ -7,8 +7,9 @@
 <%
 //코스 이름 중복 체크하는 jsp파일
 String courseName = request.getParameter("courseName");
+String memId = request.getParameter("memId");
 MyCourseDao myCourseDao = new MyCourseDao(); 
-int count = myCourseDao.isNameCheck(courseName);
+int count = myCourseDao.isNameCheck(courseName, memId);
 
 JSONObject ob = new JSONObject();
 ob.put("count", count);

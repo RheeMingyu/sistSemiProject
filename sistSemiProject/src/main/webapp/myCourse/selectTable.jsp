@@ -140,7 +140,27 @@ $(function(){
 	<input type="hidden" id="memId" value="<%=memberDto.getId()%>">
 
 <script>
+//코스이름 중복 체크
+$(document).on("click", "#btnCname", function() {
+    var courseName = $("#courseName").val();
+    var memId = $("#memId").val(); 
 
+    $.ajax({
+        type: "get",
+        url: "myCourse/cnameSearch.jsp",
+        dataType: "json",
+        data: { "courseName": courseName, "memId":memId },
+        success: function(data) {
+
+           if (data.count >= 1) {
+                $("span.cnameSuccess").text("이미 존재하는 코스이름입니다");
+                $("#courseName").val("");
+            } else {
+                $("span.cnameSuccess").text("사용 가능한 코스이름입니다");
+            }
+        }
+    });
+});
 		
  //나만의 코스 만들기 버튼 클릭시 코스 이름 중복 여부 확인하고 추가
  $("#btncourseadd").click(function(){
@@ -163,8 +183,7 @@ $(function(){
          day.push(value);
      });
 
-	 
-	 
+   
 	 
 	 //배열로 받기
 	 

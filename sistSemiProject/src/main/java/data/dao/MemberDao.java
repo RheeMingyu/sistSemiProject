@@ -12,7 +12,7 @@ import mysql.db.DBConnect;
 
 public class MemberDao {
    
-	DBConnect db=new DBConnect();
+   DBConnect db=new DBConnect();
    
    //회원가입 insert
    public void insertMember(MemberDto dto) {

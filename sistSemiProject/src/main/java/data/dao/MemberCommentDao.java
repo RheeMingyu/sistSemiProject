@@ -20,14 +20,12 @@ DBConnect db=new DBConnect();
 		Connection conn=db.getConnection();
 		PreparedStatement pstmt=null;
 		
-		String sql="insert into MemberComment(con_seq,id,membercomment,writeday) values(?,?,?,now())";
+		String sql="insert into MemberComment(id,membercomment,writeday) values(?,?,now())";
 	
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getCom_seq());
-			pstmt.setString(2, dto.getId());
-			pstmt.setString(3, dto.getMembercomment());
-			pstmt.setTimestamp(4, dto.getWriteday());
+			pstmt.setString(1, dto.getId());
+			pstmt.setString(2, dto.getMembercomment());
 			
 			pstmt.execute();
 		} catch (SQLException e) {

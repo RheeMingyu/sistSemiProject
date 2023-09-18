@@ -15,7 +15,6 @@
 		border: 0px solid gray;
 		position: absolute;
 	}
-	
 </style>
 </head>
 <%

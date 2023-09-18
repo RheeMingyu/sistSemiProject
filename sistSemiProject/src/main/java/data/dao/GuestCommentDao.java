@@ -21,15 +21,14 @@ DBConnect db=new DBConnect();
 		Connection conn=db.getConnection();
 		PreparedStatement pstmt=null;
 		
-		String sql="insert into GuestComment(com_seq,writer,pass,guestcomment,writeday)";
+		String sql="insert into GuestComment(tour_seq,writer,pass,guestcomment,writeday) values(?,?,?,?,now())";
 		
 		try {
 			
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getCom_seq());
-			pstmt.setString(2, dto.getWriter());
-			pstmt.setString(3, dto.getPass());
-			pstmt.setString(4, dto.getGuestcomment());
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getPass());
+			pstmt.setString(3, dto.getGuestcomment());
 			
 			pstmt.execute();
 		} catch (SQLException e) {

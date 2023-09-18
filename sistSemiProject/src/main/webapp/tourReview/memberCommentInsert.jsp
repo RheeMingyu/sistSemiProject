@@ -34,7 +34,7 @@
 	
 	dao.insertMemberComment(dto);
 	
-	response.sendRedirect("../index.jsp?main=tourReview/logoutTourSpotReviewList.jsp?currentPage="+currentPage);
+	response.sendRedirect("../index.jsp?main=tourReview/tourSpotReviewList.jsp?currentPage="+currentPage);
 	
 	
 %>

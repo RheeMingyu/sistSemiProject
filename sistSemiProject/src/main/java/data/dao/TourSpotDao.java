@@ -245,5 +245,67 @@ public class TourSpotDao {
             
             return list;
          }
+		
+		
+		// 2023.09.15 추가분 
+
+		// 받아온 name값을 가지고 seq로 반환하기
+		public String modifySeq(String op_val) {
+			String seq = "";
+
+			Connection conn = db.getConnection();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			String sql = "select seq from TourSpot where name=?";
+
+			try {
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, op_val);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					seq = rs.getString("seq");
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				db.dbClose(rs, pstmt, conn);
+			}
+			return seq;
+		}
 	
+		 public String getSeq(String name)
+         {
+            String seq="";
+            
+            Connection conn=db.getConnection();
+            PreparedStatement pstmt=null;
+            ResultSet rs = null;
+            
+            String sql = "select * from TourSpot where name=?";
+            
+            try {
+               pstmt=conn.prepareStatement(sql);
+               pstmt.setString(1, name);
+               rs=pstmt.executeQuery();
+               
+               if(rs.next())
+               {
+                  seq=rs.getString("seq");
+               }
+            } catch (SQLException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+            }finally {
+               db.dbClose(rs, pstmt, conn);
+            }
+            return seq;
+            
+         }
+
 }

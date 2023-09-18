@@ -30,6 +30,11 @@
       top: 130px;
       left: 40px;
    }
+   @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+	body * { 
+		font-family: 'Jeju Gothic', sans-serif;
+	}
 </style>
 <script>
    $(function(){
@@ -190,7 +195,7 @@
                            <%if(j==0&&!photo.equals("")){%>
                               <td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
                            <%}else if(j==0&&photo.equals("")){%>
-                              <td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
+                              <td rowspan="<%=columnsArr.length%>"><img src="jeju/"></td>
                            <%}
                            if(!column.equals("photo")&&!column.equals("mainphoto")){%>
                            <td><%=column %></td>

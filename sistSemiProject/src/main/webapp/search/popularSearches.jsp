@@ -37,7 +37,11 @@
 		font-size: 1.3em;
 		margin-bottom: 12px;
 	}
+	@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 
+	body * { 
+		font-family: 'Jeju Gothic', sans-serif;
+	}
 </style>
 <script>
 	$(function(){
@@ -166,27 +170,27 @@
 </script>
 <body>
 	<div id="shape">
-		<div class="ptop"><b style="font-family: 'OAGothic-ExtraBold'; font-weight: 500;">인기 검색어</b><span class="pspan" style="float: right"><i class="bi bi-backspace-fill pback"></i></span></div>
+		<div class="ptop"><b>인기 검색어</b><span class="pspan" style="float: right"><i class="bi bi-backspace-fill pback"></i></span></div>
 		<div class="subject">
-			<span class="cat" style="font-family: 'OAGothic-ExtraBold'; font-weight: 200; color: #9E9E9E;">나이대별</span>
+			<span class="cat" style="font-weight: 200; color: #9E9E9E;">나이대별</span>
 		</div>
 		<div class="list">
 		안녕하세요
 		</div>
 		<div class="subject">
-			<span class="cat" style="font-family: 'OAGothic-ExtraBold'; font-weight: 200; color: #9E9E9E;">mbti별</span>
+			<span class="cat" style="font-weight: 200; color: #9E9E9E;">mbti별</span>
 		</div>
 		<div class="list">
 		2
 		</div>
 		<div class="subject">
-			<span class="cat" style="font-family: 'OAGothic-ExtraBold'; font-weight: 200; color: #9E9E9E;">성별</span>
+			<span class="cat" style="font-weight: 200; color: #9E9E9E;">성별</span>
 		</div>
 		<div class="list">
 		3
 		</div>
 		<div class="subject">
-			<span class="cat" style="font-family: 'OAGothic-ExtraBold'; font-weight: 200; color: #9E9E9E;">지역별</span>
+			<span class="cat" style="font-weight: 200; color: #9E9E9E;">지역별</span>
 		</div>
 		<div class="list">
 		4

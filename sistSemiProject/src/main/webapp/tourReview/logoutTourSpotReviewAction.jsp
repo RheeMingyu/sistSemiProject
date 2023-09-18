@@ -1,3 +1,5 @@
+<%@page import="data.dao.TourSpotDao"%>
+<%@page import="data.dto.TourSpotDto"%>
 <%@page import="data.dao.GuestTourSpotReviewDao"%>
 <%@page import="data.dto.GuestReviewDto"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
@@ -35,14 +37,15 @@ multi=new MultipartRequest(request,realPath,uploadSize,"utf-8", new DefaultFileR
 
 //
 GuestTourSpotReviewDao dao = new GuestTourSpotReviewDao();
+TourSpotDao tourspotdao = new TourSpotDao();
 
 String op_val=multi.getParameter("op_val");
 System.out.println(op_val);
+String seq = tourspotdao.getSeq(op_val);
 
 String nickname=multi.getParameter("nickname");
 System.out.println(nickname);
 //
-
 String pass = multi.getParameter("pass");
 System.out.println(pass);
 String photo = multi.getFilesystemName("photo");
@@ -72,7 +75,7 @@ System.out.println(likes);  */
 GuestReviewDto dto=new GuestReviewDto();
 
 
-dto.setTour_seq(op_val);
+dto.setTour_seq(seq);
 dto.setNickname(nickname);
 dto.setPass(pass);
 dto.setPhoto(photo);

@@ -33,7 +33,7 @@ public class AddListDao {
             
             dto.setId(rs.getString("id"));
             dto.setContent(rs.getString("content"));
-            dto.setWriteday(rs.getTimestamp("writeyday"));
+            dto.setWriteday(rs.getTimestamp("writeday"));
             
             list.add(dto);
          }
