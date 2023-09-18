@@ -14,8 +14,18 @@
 <title>Insert title here</title>
 </head>
 <style>
+	@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+	@font-face {
+    	font-family: 'OAGothic-ExtraBold';
+    	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    	font-style: normal;
+	}
+
 	#shape{
 		margin: 40px 20px 40px 20px;
+		background-color: #EEEEEE;
+		padding: 15px 15px 15px 15px;
 	}
 	div.subject,span.pspan{
 		cursor: pointer;
@@ -27,9 +37,7 @@
 		font-size: 1.3em;
 		margin-bottom: 12px;
 	}
-	span.cat{
-		font-size: 1.15em;
-	}
+
 </style>
 <script>
 	$(function(){
@@ -158,27 +166,27 @@
 </script>
 <body>
 	<div id="shape">
-		<div class="ptop"><b>주제별 인기 검색어</b><span class="pspan" style="float: right"><i class="bi bi-backspace-fill pback"></i></span></div>
+		<div class="ptop"><b style="font-family: 'OAGothic-ExtraBold'; font-weight: 500;">인기 검색어</b><span class="pspan" style="float: right"><i class="bi bi-backspace-fill pback"></i></span></div>
 		<div class="subject">
-			<span class="cat">나이대별</span>
+			<span class="cat" style="font-family: 'OAGothic-ExtraBold'; font-weight: 200; color: #9E9E9E;">나이대별</span>
 		</div>
 		<div class="list">
 		안녕하세요
 		</div>
 		<div class="subject">
-			<span class="cat">mbti별</span>
+			<span class="cat" style="font-family: 'OAGothic-ExtraBold'; font-weight: 200; color: #9E9E9E;">mbti별</span>
 		</div>
 		<div class="list">
 		2
 		</div>
 		<div class="subject">
-			<span class="cat">성별</span>
+			<span class="cat" style="font-family: 'OAGothic-ExtraBold'; font-weight: 200; color: #9E9E9E;">성별</span>
 		</div>
 		<div class="list">
 		3
 		</div>
 		<div class="subject">
-			<span class="cat">지역별</span>
+			<span class="cat" style="font-family: 'OAGothic-ExtraBold'; font-weight: 200; color: #9E9E9E;">지역별</span>
 		</div>
 		<div class="list">
 		4

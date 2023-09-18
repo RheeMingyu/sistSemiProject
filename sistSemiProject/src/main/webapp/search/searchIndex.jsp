@@ -22,20 +22,20 @@ response.setCharacterEncoding("utf-8");
    div.search_main{
       width: 1200px;
       height: 775px;
-      left: 5px;
+      left: 120px;
       margin-top: 90px;
    }
    div.popular{
       width: 250px;
       height: 570px;
-      left: 1213px;
+      left: 1323px;
       margin-top: 90px;
    }
    div.commercial{
       width: 250px;
       height: 200px;
       top: 667px;
-      left: 1213px;
+      left: 1323px;
    }
 </style>
 <%

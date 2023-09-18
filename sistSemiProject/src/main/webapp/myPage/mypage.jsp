@@ -84,13 +84,13 @@ div.foot {
 <br><br><br><br>	
 <button onclick="toggleSidebar()"><i class="bi bi-menu-app" style="font-size:20px; border:none;"></i></button><br><br>
 <a href="https://map.naver.com/p/entry/place/1917723384?lng=126.899169&lat=33.4915799&placePath=%2Fhome&entry=plt&c=15.00,0,0,0,dh">
-<img alt="광고1.gif" src="<%=root %>/no_image/jongdal.gif" style="width:200px; height:240px;"></a><br><br><br>
+<img alt="광고1.gif" src="<%=root %>/jeju/jongdal.gif" style="width:200px; height:240px;"></a><br><br><br>
 <a href="https://map.naver.com/p/search/%EC%A0%9C%EC%A3%BC%EC%98%A4%EC%84%B1/place/37797002?placePath=?entry=pll&from=nx&fromNxList=true&c=15.00,0,0,0,dh">
-<img alt="광고2.gif" src="<%=root %>/no_image/momo.gif" style="width:200px;"></a><br><br><br>
+<img alt="광고2.gif" src="<%=root %>/jeju/momo.gif" style="width:200px;"></a><br><br><br>
 <a href="https://map.naver.com/p/entry/place/1397321112?lng=126.90498876843613&lat=33.39882693494372&placePath=%2Fhome&entry=plt&c=15.00,0,0,0,dh">
-<img alt="광고3.gif" src="<%=root %>/no_image/onpyeong.gif" style="width:200px;"></a><br><br><br>
+<img alt="광고3.gif" src="<%=root %>/jeju/onpyeong.gif" style="width:200px;"></a><br><br><br>
 <a href="https://map.naver.com/p/entry/place/1035148658?lng=126.3012787&lat=33.2904473&placePath=%2Fhome&entry=plt&c=15.00,0,0,0,dh">
-<img alt="광고4.gif" src="<%=root %>/no_image/osung.gif" style="width:200px;"></a><br><br><br>
+<img alt="광고4.gif" src="<%=root %>/jeju/osung.gif" style="width:200px;"></a><br><br><br>
 </div>
 
 <!-- 사이드바 -->
@@ -101,7 +101,7 @@ div.foot {
     &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>홈</b></a><br><br>
     &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>개인정보</b></a><br><br>
     &nbsp;&nbsp;<a href="index.jsp?main=myPage/secure.jsp">&nbsp;<i class="bi bi-shield-shaded"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>보안</b></a><br><br>
-    &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-telephone-outbound-fill"></i>&nbsp;&nbsp;&nbsp;<b>고객센터</b></a>
+    &nbsp;&nbsp;<a href="index.jsp?main=admin/adminBoard.jsp">&nbsp;<i class="bi bi-telephone-outbound-fill"></i>&nbsp;&nbsp;&nbsp;<b>고객센터</b></a>
     <!-- 로그인상태면 로그아웃 , 로그아웃 상태면 로그인으로 보이게하기 0905 적어둠 -->
     <br><br><br><br><br><br><br><br><br><br>
     &nbsp;&nbsp;<a href="index.jsp?main=login/logoutAction.jsp">&nbsp;<i class="bi bi-door-closed-fill"></i>&nbsp;&nbsp;&nbsp;로그아웃</a><br>

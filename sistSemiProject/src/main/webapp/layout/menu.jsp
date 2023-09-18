@@ -117,12 +117,6 @@ nav ul li a:hover{
              }
           }
        });
-      
-      /* $("#btninput").click(function(){
-    	 var inputWords=$("#inputWords").val();
-    	 alert(inputWords);
-    	 location.href="index.jsp?main=search/searchIndex.jsp?inputWords="+inputWords;
-      }); */
    });
    
 
@@ -133,7 +127,7 @@ nav ul li a:hover{
 <div class="dv1" style="position: fixed; z-index:999; height: 0px; background-color: white;opacity: 0.97">
    <nav id="ttop" style="">
    <ul class="t1">
-      <li><img src="jeju/ㄹㄹ.png" style="width: 130px; height: 80px; margin-left: 40px; cursor: pointer;" onclick="location.href='<%=root%>/index.jsp'"></li>
+      <li><img src="jeju/logo.png" style="width: 130px; height: 50px; margin-left: 40px; margin-top: 10px; cursor: pointer;" onclick="location.href='<%=root%>/index.jsp'"></li>
       <li><a href="#" class="topmenu" style="width: 200px; margin-left: 80px;">ABOUT 제주</a>
          <ul class="submenu" style="margin-left: 40px;">
          <a href="<%=root%>/index.jsp?main=about/introduce.jsp" style="font-size: 15px;">제주 소개</a>
@@ -193,9 +187,9 @@ nav ul li a:hover{
      
    </ul>
     <form class="d-flex" action="index.jsp?main=search/searchIndex.jsp" method="post">
-        <input id="inputWords" class="form-control me-2" type="text"  style="width: 120px; margin-left: 30px; margin-top: 20px;" name="inputWords" placeholder="Search">
-        <button id="btninput" class="btn btn-primary" type="submit" style="margin-top: 20px; background-color: #696969; border-color: #696969;">Search</button>
-    </form>
+        <input class="form-control me-2" type="text"  style="width: 120px; margin-left: 30px; margin-top: 20px;" name="inputWords" placeholder="Search">
+        <button class="btn btn-primary" type="submit" style="margin-top: 20px; background-color: #696969; border-color: #696969;">Search</button>
+      </form>
    </nav>
 </div>
 </header>

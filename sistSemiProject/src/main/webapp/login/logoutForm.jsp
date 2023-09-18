@@ -18,6 +18,7 @@
 
    
    <%
+   String root=request.getContextPath();
    //세션으로부터 아이디를 얻는다
    String myid = (String)session.getAttribute("myid"); //session.attribute name가져오기.
    
@@ -27,7 +28,7 @@
    %>
    <br><br>
    <table>
-   <img alt="" src="no_image/muhan.gif">
+   <img alt="" src="<%=root%>/jeju/muhan.gif">
    <b><%=name  %>님이 로그인 하셨습니다</b><br><br>
    
    <b id="countdown" style="font-size:30px; font-color:red;">3</b>

@@ -1,6 +1,7 @@
+<%@page import="data.dao.LikesDao"%>
+<%@page import="data.dto.TourSpotDto"%>
 <%@page import="data.dto.MemberDto"%>
 <%@page import="data.dao.MemberDao"%>
-<%@page import="data.dto.TourSpotDto"%>
 <%@page import="data.dao.TourSpotDao"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -85,6 +86,10 @@ margin: 0 0 20px;
     font-size: 22px;
 }
 
+#btnView{
+	margin-bottom:20px;
+}
+
 
 </style>
 <%
@@ -96,7 +101,8 @@ margin: 0 0 20px;
 		
 		MemberDao memberDao = new MemberDao();
 		MemberDto memberDto = memberDao.getData(myid);
-
+		
+		LikesDao likesDao = new LikesDao();
 
 	%>
 
@@ -114,7 +120,12 @@ $(document).ready(function() {
         $("#" + selThemes).addClass("active");
     }
     
-
+	$("#btnMap").click(function(){
+		location.href="<%=root%>/index.jsp?main=myCourse/myCourseMap.jsp&selTheme=oceanTab";
+	});
+	$("#btnList").click(function(){
+		location.href="<%=root%>/index.jsp?main=myCourse/myCourseList.jsp";
+	});
 });
 </script>
 
@@ -124,6 +135,7 @@ $(document).ready(function() {
 
 
 <div id="myCourseMain">
+<div id="btnView"><button type="button" class="btn btn-outline-primary" id="btnMap">지도로 보기</button><button type="button" class="btn btn-outline-primary" id="btnList">리스트로 보기</button></div>
 <h4 id="themeTitle"><%=memberDto.getName() %>님 나만의 코스를 만들어 여행을 즐겨보세요.</h4>
 <!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
@@ -227,7 +239,7 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         var infowindow = new kakao.maps.InfoWindow({
-            content: "<div id='spotContent'><img src='<%=root%>/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:70px'><div id='spottext'><%=tourSpotDto.getName()%><br><%=tourSpotDto.getHp()%></div></div>"
+            content: "<div id='spotContent'><img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:70px'><div id='spottext'><%=tourSpotDto.getName()%><br><%=tourSpotDto.getHp()%></div></div>"
 										});
 								//infowindow.open(map, marker);
 
@@ -251,13 +263,17 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 							    	var tour_seq = '<%=tourSpotDto.getSeq()%>';
 							    	var intro = "<%=tourSpotDto.getIntro()%>";
 							    	var photo = '<%=tourSpotDto.getPhoto()%>';
+							    	var myid = '<%=myid%>';
 							    	selectedPlace.push(spotName); // 배열에 선택한 장소 이름 추가
 
 						                
-										
-										$("#placeInfo").html("<img src='<%=root%>/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><%=tourSpotDto.getName()%><br><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getHp()%><br>"+
+										if(<%=likesDao.isLikeCheck(myid, Integer.parseInt(tourSpotDto.getSeq()))==1%>){
+										$("#placeInfo").html("<img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><%=tourSpotDto.getName()%>&nbsp;&nbsp;<i class='bi bi-heart-fill like' style='color:red'></i><br><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getHp()%><br>"+
 												"<button type='button' id='btntouradd' class='btn btn-info'>추가하기</button> ");
-							    	
+										}else{
+											$("#placeInfo").html("<img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><%=tourSpotDto.getName()%>&nbsp;&nbsp;<i class='bi bi-heart-fill like'></i><br><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getHp()%><br>"+
+											"<button type='button' id='btntouradd' class='btn btn-info'>추가하기</button> ");
+										}
 							    		/* $("#placeInfo").addClass("placediv"); */
 										
 										$("#btntouradd").click(function(){
@@ -283,6 +299,39 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 							                //updateSelectedPlacesTable(selectedPlace);
 											}
 										});
+							    		
+										$(document).on("click", "i.like", function() {
+									        var currentColor = $(this).css("color");
+									        
+									        
+									        if (currentColor === "rgb(255, 0, 0)") {
+									            // 현재 색상이 빨간색인 경우 검은색으로 변경합니다.
+									            $(this).css("color", "black");
+									            $.ajax({
+									            	type: "get",
+											        url: "myCourse/likes.jsp",
+											        data: {tour_seq:tour_seq, myid:myid},
+											        success: function(data) {
+														console.log("좋아요클릭");
+											        	
+											        }
+									            })
+									            
+									            
+									        } else {
+									            // 현재 색상이 빨간색이 아닌 경우 빨간색으로 변경합니다.
+									            $(this).css("color", "red");
+									            $.ajax({
+									            	type: "get",
+											        url: "myCourse/likes.jsp",
+											        data: {tour_seq:tour_seq, myid:myid},
+											        success: function(data) {
+														console.log("좋아요클릭");
+											        	
+											        }
+									            })
+									        }
+									    }); 
 										
 										
 										
@@ -418,32 +467,6 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
 		    }
 		    
-		    
-		    /* $(document).on("click", "i.like", function() {
-		        var currentColor = $(this).css("color");
-		        
-		        if (currentColor === "rgb(255, 0, 0)") {
-		            // 현재 색상이 빨간색인 경우 검은색으로 변경합니다.
-		            $(this).css("color", "black");
-		           
-		            
-		            
-		        } else {
-		            // 현재 색상이 빨간색이 아닌 경우 빨간색으로 변경합니다.
-		            $(this).css("color", "red");
-		            $.ajax({
-		            	type: "get",
-				        url: "myCourse/Like.jsp",
-				        data: {  },
-				        success: function(data) {
-
-				        	
-				        }
-		            })
-		        }
-		    }); */
-		   
-		    
 
 		    
 		
@@ -452,7 +475,7 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
 	 <%--클릭한 장소의 정보가 여기에 표시됩니다. --%>
 	<div id="placeInfo" class="placediv" style="margin-right:20px;">
-		<img src='<%=root%>/image/mainInfo.png' style='width:100%; height:400px'><br><br><br>제주도의 다양한 관광지를 만나보세요 :)
+		<img src='<%=root%>/jeju/maininfo.png' style='width:100%; height:400px'><br><br><br>제주도의 다양한 관광지를 만나보세요 :)
 	</div>
 	
 

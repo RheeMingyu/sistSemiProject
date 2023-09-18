@@ -50,6 +50,7 @@ div.contatiner {
 }
 </style>
 <%
+String root=request.getContextPath();
 //로그인 세션
 String loginok = (String)session.getAttribute("loginok");
 
@@ -63,7 +64,7 @@ String myid =(String)session.getAttribute("myid");
     <br><br>
     <div class="row">
         <div class="col-md-4"> <!-- 왼쪽 열 (이미지) -->
-            <img src="no_image/1.JPG" alt="보안 이미지">
+            <img src="<%=root %>/jeju/img1.JPG" alt="보안 이미지">
         </div>
         <div class="col-md-4"> <!-- 오른쪽 열 (텍스트) -->
             <h1 align="center">보안</h1><br>
@@ -102,10 +103,10 @@ String myid =(String)session.getAttribute("myid");
     &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;홈</a><br><br>
     &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;개인정보</a><br><br>
     &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-shield-shaded"></i>&nbsp;&nbsp;&nbsp;&nbsp;보안</a><br><br>
-    &nbsp;&nbsp;<a href="../login/logoutaction.jsp">&nbsp;<i class="bi bi-telephone-outbound-fill"></i>&nbsp;&nbsp;&nbsp;고객센터</a>
+    &nbsp;&nbsp;<a href="index.jsp?main=admin/adminBoard.jsp">&nbsp;<i class="bi bi-telephone-outbound-fill"></i>&nbsp;&nbsp;&nbsp;고객센터</a>
     <!-- 로그인상태면 로그아웃 , 로그아웃 상태면 로그인으로 보이게하기 0905 적어둠 -->
     <br><br><br><br><br><br><br><br><br><br>
-    &nbsp;&nbsp;<a href="index.jsp?main=login/logoutaction.jsp">&nbsp;<i class="bi bi-door-closed-fill"></i>&nbsp;&nbsp;&nbsp;로그아웃</a><br>
+    &nbsp;&nbsp;<a href="index.jsp?main=login/logoutAction.jsp">&nbsp;<i class="bi bi-door-closed-fill"></i>&nbsp;&nbsp;&nbsp;로그아웃</a><br>
     
     <%
 		// 관리자 로그인하면 메뉴바 하나 더 뜨게 만들기 0905 적어둠

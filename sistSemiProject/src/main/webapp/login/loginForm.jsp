@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
+<%
+String root=request.getContextPath();
+%>
 <style>
 html {
   height: 100%;
@@ -15,7 +18,7 @@ body {
   font-family: sans-serif;
   background: #fff;
   min-height: 100vh; 
-  background-image: url('image/b1.JPG');
+  background-image: url('<%=root%>/jeju/b1.JPG');
   background-size:100% 100%;
 }
 
