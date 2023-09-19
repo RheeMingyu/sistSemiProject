@@ -1,7 +1,7 @@
+<%@page import="data.dto.MemberDto"%>
+<%@page import="data.dao.MemberDao"%>
 <%@page import="data.dao.LikesDao"%>
 <%@page import="data.dto.TourSpotDto"%>
-<%@page import="data.dto.memberDto"%>
-<%@page import="data.dao.memberDao"%>
 <%@page import="data.dao.TourSpotDao"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -104,8 +104,8 @@ font-size:15px;
 		
 		String myid = (String)session.getAttribute("myid");
 		
-		memberDao memberDao = new memberDao();
-		memberDto memberDto = memberDao.getData(myid);
+		MemberDao memberDao = new MemberDao();
+		MemberDto memberDto = memberDao.getData(myid);
 		
 		LikesDao likesDao = new LikesDao();
 
