@@ -54,7 +54,7 @@ public class RecomCourseDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="select * from recomcourse order by seq desc limit ?,?";
+		String sql="select * from RecomCourse order by seq desc limit ?,?";
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -95,7 +95,7 @@ public class RecomCourseDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="select DISTINCT name,intro from recomcourse";
+		String sql="select DISTINCT name,intro from RecomCourse";
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -127,7 +127,7 @@ public class RecomCourseDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="select * from recomcourse where name=? order by day,turn";
+		String sql="select * from RecomCourse where name=? order by day,turn";
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -169,7 +169,7 @@ public class RecomCourseDao {
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
 			
-			String sql="select * from recomcourse order by day,turn";
+			String sql="select * from RecomCourse order by day,turn";
 			
 			try {
 				pstmt=conn.prepareStatement(sql);
@@ -208,7 +208,7 @@ public class RecomCourseDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="select seq from recomcourse where name=? limit 1";
+		String sql="select seq from RecomCourse where name=? limit 1";
 		
 		try {
 			pstmt=conn.prepareStatement(seq);
@@ -236,7 +236,7 @@ public class RecomCourseDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="select name from recomcourse where seq=?";
+		String sql="select name from RecomCourse where seq=?";
 		
 		try {
 			pstmt=conn.prepareStatement(seq);

@@ -410,7 +410,7 @@ div.backgound {
 					s+="</div>";
 					s+="</div>";
 					s+="<div class='img-box'>";
-					s+="<img alt='' src='../jeju/"+data.photo+"'>";
+					s+="<img alt='' src="../jeju/"+data.photo+"'>";
 					s+="</div>";
 					s+="<div class='text-box'>";
 					s+="<p>"+data.intro+"</p>";
