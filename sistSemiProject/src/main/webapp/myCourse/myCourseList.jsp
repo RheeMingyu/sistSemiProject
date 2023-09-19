@@ -1,5 +1,5 @@
-<%@page import="data.dto.memberDto"%>
-<%@page import="data.dao.memberDao"%>
+<%@page import="data.dto.MemberDto"%>
+<%@page import="data.dao.MemberDao"%>
 <%@page import="data.dto.TourSpotDto"%>
 <%@page import="java.util.List"%>
 <%@page import="data.dao.TourSpotDao"%>
@@ -70,8 +70,8 @@ margin-top:25px;
 	
 	String myid = (String)session.getAttribute("myid");
 	
-	memberDao memberDao = new memberDao();
-	memberDto memberDto = memberDao.getData(myid);
+	MemberDao memberDao = new MemberDao();
+	MemberDto memberDto = memberDao.getData(myid);
 	String root = request.getContextPath();
 	
 	

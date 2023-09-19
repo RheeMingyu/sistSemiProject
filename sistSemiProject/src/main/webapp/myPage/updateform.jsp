@@ -21,10 +21,15 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
 
 body {
 	min-height: 100vh;
-	background-image: url('image/b1.JPG');
+	background-image: url('jeju/update.JPG');
 	background-size: 100% 100%;
 
 }
@@ -161,7 +166,7 @@ dto = dao.getData(id);
 
 					<hr class="mb-4">
 					<div class="mb-4"></div>
-					<button class="btn btn-primary btn-lg btn-block" type="submit" style="width:220px; margin-left:190px;"> 나의정보 수정하기</button>
+					<button class="btn" data-bs-toggle="button" type="submit" style="width:220px; margin-left:190px;"> 나의정보 수정하기</button>
 				</form>
 			</div>
 		</div>

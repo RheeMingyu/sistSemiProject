@@ -10,6 +10,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <title>Insert title here</title>
 </head>
+<style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+</style>
 <body>
 <%
 String root= request.getContextPath();

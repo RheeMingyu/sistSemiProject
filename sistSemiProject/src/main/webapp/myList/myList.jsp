@@ -17,13 +17,22 @@
 </head>
 <body>
 <style>
+
+.bi.bi-box-arrow-in-right {
+  background-color: wheat; /* 배경색을 투명하게 설정합니다. */
+}
+
+bi bi-reddit {
+ 	background-color: transparent;
+}
+
 .sidebar {
     height: 800px;
     width: 190px;
     position: fixed;
     top: 100px;
     left: -250px; /* 초기에는 화면 밖에 위치 */
-    background-color: white;
+    background-color: wheat;
     transition: left 0.3s ease;
     z-index: 999; /* 이 부분을 추가해서 sidebar가 다른 요소 위에 나타나도록 설정 */
 }
@@ -49,6 +58,12 @@ div.top {
 	margin-left:460px;
 	margin-top:120px;
 }
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
 </style>
 <%
 AddListDao adao = new AddListDao();
@@ -65,7 +80,7 @@ String myid = (String)session.getAttribute("myid");
 <body>
 
 <div class="top">
-<i class="bi bi-reddit" style="font-size:20px;"></i>&nbsp;&nbsp;일정 목록
+<i class="bi bi-reddit" style="font-size:28px;"></i>&nbsp;&nbsp;&nbsp;일정 목록
 </div>
 <button type="button" onclick="toggleSidebar()" style="border:none; margin-left:15px;"><i class="bi bi-menu-app" style="font-size:20px;"></i></button><br><br>
 <%
@@ -104,7 +119,8 @@ for(AddListDto dto:list) {
 <!-- 사이드바 -->
 <div class="sidebar open">
 	<button type="button" style="margin-left:15px; margin-top:50px; border:none;" onclick="toggleSidebar()">
-	<i class="bi bi-menu-app" style="font-size:20px;"></i></button>
+	<i class="bi bi-box-arrow-in-right" style="font-size:24px;"></i>
+	</button>
 	<br><br><br>
     &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;홈</a><br><br>
     &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;개인정보</a><br><br>

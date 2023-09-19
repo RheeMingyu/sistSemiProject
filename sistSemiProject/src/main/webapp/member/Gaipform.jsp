@@ -23,6 +23,13 @@
    %>
 <style>
 
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+
+
 body {
    min-height: 100vh;
    background-image: url('<%=root %>/jeju/gaip.JPG');

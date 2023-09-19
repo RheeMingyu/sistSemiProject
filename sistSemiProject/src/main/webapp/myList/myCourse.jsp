@@ -73,6 +73,20 @@ div.foot {
 div.a {
 	display:flex;
 }
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+
+.bi.bi-box-arrow-in-right {
+  background-color: wheat; /* 배경색을 투명하게 설정합니다. */
+}
+
+bi bi-menu-app {
+	background-color : white;
+}
 </style>
 <%
 String root = request.getContextPath();
@@ -126,7 +140,7 @@ List<String> nameList = dao.selectName(myid);
 			<button type="button"
 				style="margin-left: 15px; margin-top: 20px; border: none;"
 				onclick="toggleSidebar()">
-				<i class="bi bi-menu-app" style="font-size: 20px;"></i>
+				<i class="bi bi-box-arrow-in-right" style="font-size:24px;"></i>
 			</button>
 			<br>
 			<br> &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i

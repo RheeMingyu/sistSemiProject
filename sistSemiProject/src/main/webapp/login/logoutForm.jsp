@@ -22,6 +22,12 @@ body {
 
 }
 
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+
 
 @keyframes slideIn {
     0% {

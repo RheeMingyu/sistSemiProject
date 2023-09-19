@@ -52,6 +52,11 @@
 
 #a1 {
 }
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
 </style>
 <%
 String root= request.getContextPath();
@@ -164,8 +169,8 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
 
 <!-- 페이지번호 출력 -->
    <div>
-   <button type="button" style="float:right;">글쓰기</button>
-   <button type="button">목록</button>
+   <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true" style="float:right;">글쓰기</button>
+   <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true">목록</button>
       <ul class="pagination justify-content-center">
    
          <%

@@ -58,6 +58,9 @@ body * {
  background-color: 
 }
 
+
+
+
 </style>
 <%
 String root=request.getContextPath();
@@ -111,7 +114,8 @@ String myid = (String)session.getAttribute("myid");
 	</table><br><br>
 	
 	<div class="container" style="margin-right:10px;" id="updateFormContainer">	
-	<button type="button" style="margin-left:800px; "onclick="location.href='index.jsp?main=myPage/updateform.jsp?id=<%=myid %>'">수정</button>
+	<button type="button"  class="btn btn-primary btn-link" 
+	 style="margin-left:800px; "onclick="location.href='index.jsp?main=myPage/updateform.jsp?id=<%=myid %>'">수정</button>
 	<table class="table table-bordered" style="width:850px; height:300px;">
 	
 	<td style="border:none;">
@@ -195,7 +199,7 @@ String myid = (String)session.getAttribute("myid");
 	MemberDto dto = new MemberDto();
 	dto.setPass(pw); // 비밀번호 초기화, 실제로는 DB에서 값을 가져와야 합니다.
 %>
-<input type="button" class="btn btn-outline" value="회원탈퇴" style="float:right;" onclick="byeform()">
+<input type="button" class="btn btn-primary btn-link" value="회원탈퇴" style="float:right;" onclick="byeform()">
 
 <script>
  function byeform() {

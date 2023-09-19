@@ -1,6 +1,6 @@
 <%@page import="data.dao.TempSaveDao"%>
-<%@page import="data.dto.memberDto"%>
-<%@page import="data.dao.memberDao"%>
+<%@page import="data.dto.MemberDto"%>
+<%@page import="data.dao.MemberDao"%>
 <%@page import="data.dto.TempSaveDto"%>
 <%@page import="java.util.List"%>
 <%@page import="data.dao.TourSpotDao"%>
@@ -54,8 +54,8 @@ margin: 0 0 20px;
 	String mainPhoto = null;
 	
 	String myid = (String)session.getAttribute("myid");
-	memberDao memberDao = new memberDao();
-	memberDto memberDto = memberDao.getData(myid);
+	MemberDao memberDao = new MemberDao();
+	MemberDto memberDto = memberDao.getData(myid);
 %>
 
 

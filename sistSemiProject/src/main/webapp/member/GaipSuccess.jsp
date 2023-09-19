@@ -35,6 +35,13 @@ body {
 #wel {
  border-image-width:10%;
 }
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+
 </style>
 <body>
 

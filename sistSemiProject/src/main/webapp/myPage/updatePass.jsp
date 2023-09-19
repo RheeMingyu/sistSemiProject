@@ -12,15 +12,22 @@
 <title>비밀번호 변경 페이지</title>
 </head>
 <style>
-td {
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
 }
+
 </style>
+<%
+String myid = (String)session.getAttribute("myid");
+%>
 <body>
 <form name="frm" action="myPage/updatePassProc.jsp" method="post">
 	<table class="table table-bordered" style="position:relative; margin-top:200px; margin-left:200px;">
 		<tr align="center">
 			<th>&nbsp;&nbsp;<b disabled>현재 아이디 </b></th>
-			<td><% %></td>
+			<td><%=myid %></td>
 		</tr>
 	
 		<tr align="center">
@@ -39,8 +46,8 @@ td {
 		</tr>
 	</table>
 	<div class="button1" style="margin-left:320px;">
-	<button type="submit">비밀번호 변경하기</button>
-	<button type="button" onclick="later()">나중에 변경하기</button>
+	<button type="submit" class="btn" data-bs-toggle="button">비밀번호 변경하기</button>
+	<button type="button" onclick="later()" class="btn" data-bs-toggle="button" >나중에 변경하기</button>
 	</div>
 </form>
 <script>

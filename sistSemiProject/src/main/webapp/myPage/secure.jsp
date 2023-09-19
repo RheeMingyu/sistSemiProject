@@ -10,6 +10,14 @@
 <title>보안</title>
 </head>
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+.bi.bi-box-arrow-in-right {
+  background-color: wheat; /* 배경색을 투명하게 설정합니다. */
+}
 .sidebar {
     height: 800px;
     width: 190px;
@@ -82,7 +90,7 @@ String myid =(String)session.getAttribute("myid");
 			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer" onclick="location.href='https://www.naver.com/'">
 			<b>Q 검색하기</b></div><br><br>
 			
-			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;">
+			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;" onclick="question()">
 			<b>고객센터 의견 보내기 </b></div><br><br>
 			
 			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;" onclick="money()">
@@ -94,7 +102,7 @@ String myid =(String)session.getAttribute("myid");
 <!-- 사이드바 -->
 <div class="sidebar open">
 	<button type="button" style="margin-left:15px; margin-top:50px; border:none;" onclick="toggleSidebar()">
-	<i class="bi bi-menu-app" style="font-size:20px;"></i></button>
+	<i class="bi bi-box-arrow-in-right" style="font-size:24px;"></i></button>
 	<br><br><br>
     &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;홈</a><br><br>
     &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;개인정보</a><br><br>
@@ -133,6 +141,10 @@ String myid =(String)session.getAttribute("myid");
         var url = 'index.jsp?main=myPage/updatePass.jsp&myid=<%=myid %>';
         
         window.open(url , "passchange" , "scrollbars=yes , width:1000 , height=400 , left="+w+",top="+h);
+    }
+    
+    function question() {
+    		location.href='index.jsp?main=admin/adminBoard.jsp';
     }
 
 </script>
