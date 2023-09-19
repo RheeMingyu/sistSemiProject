@@ -11,9 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <title>회원가입을 환영합니다</title>
 </head>
-<body>
 <%
-
 	String root=request.getContextPath();
 	//String loginok =(String)session.getAttribute("loginok");
 	//String myid = (String)session.getAttribute("myid"); 
@@ -26,17 +24,35 @@
 	System.out.println(myid);
 	
 %>
+<style>
+body {
+   min-height: 100vh;
+   background-image: url('<%=root %>/jeju/gaip3.jpg');
+   background-size: 100%;
 
-<div style="margin:200px 200px; margin-left:550px; border:0px solid gray; width:700px; height:400px;">
-	<img alt="" src="<%=root%>/jeju/welcome.JPG" style="width:220px; height:220px;"> <!-- 이벤트줘서 더 이쁘게하기  -->
-	<b style="font-size:22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;어서오세요 회원 가입을 환영합니다. ↓ ↓</b>
+}
+
+#wel {
+ border-image-width:10%;
+}
+</style>
+<body>
+
+
+<div style="margin:200px 200px; margin-left:420px; border:0px solid gray; width:700px; height:400px;">
+	<img id="wel" alt="" src="<%=root%>/jeju/wel1.png" style="width:230px; height:230px;"> <!-- 이벤트줘서 더 이쁘게하기  -->
+	<b id="wel2" style="font-size:22px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;어서오세요 회원 가입을 환영합니다. ↓ ↓</b>
 	<br>
 	
-	<button type="button" style="float:right;" class="btn btn-info" onclick="location.href='index.jsp?main=login/loginmain.jsp'">로그인</button>
+	<button type="button" style="float:right;" class="btn btn-info" onclick="location.href='index.jsp?main=login/loginMain.jsp'">로그인</button>
 	<button type="button" style="float:right;" class="btn btn-danger" onclick="location.href='index.jsp'">HOME</button>
 	<br><br>
 </div>
+<script>
+$("#wel2").animate();
 
+
+</script>
 
 
 </body>

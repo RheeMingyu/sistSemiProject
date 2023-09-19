@@ -2,16 +2,16 @@
 <%@page import="data.dao.AdminBoardDao"%>
 <%@page import="data.dto.AdminBoardDto"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>°í°´¼¾ÅÍ ¹®ÀÇ</title>
+<meta charset="utf-8">
+<title>ê³ ê°ì„¼í„° ë¬¸ì˜</title>
 </head>
 <style>
    .sidebar {
@@ -19,35 +19,35 @@
     width: 220px;
     position: fixed;
     top: 100px;
-    left: -250px; /* ÃÊ±â¿¡´Â È­¸é ¹Û¿¡ À§Ä¡ */
+    left: -250px; /* ì´ˆê¸°ì—ëŠ” í™”ë©´ ë°–ì— ìœ„ì¹˜ */
     background-color: wheat;
     transition: left 0.3s ease;
-    z-index: 999; /* ÀÌ ºÎºĞÀ» Ãß°¡ÇØ¼­ sidebar°¡ ´Ù¸¥ ¿ä¼Ò À§¿¡ ³ªÅ¸³ªµµ·Ï ¼³Á¤ */
+    z-index: 999; /* ì´ ë¶€ë¶„ì„ ì¶”ê°€í•´ì„œ sidebarê°€ ë‹¤ë¥¸ ìš”ì†Œ ìœ„ì— ë‚˜íƒ€ë‚˜ë„ë¡ ì„¤ì • */
 }
 
-        /* »çÀÌµå¹Ù ¸µÅ© ½ºÅ¸ÀÏ (¸¶¿ì½º È£¹ö ½Ã) */
+        /* ì‚¬ì´ë“œë°” ë§í¬ ìŠ¤íƒ€ì¼ (ë§ˆìš°ìŠ¤ í˜¸ë²„ ì‹œ) */
 .sidebar a:hover {
             background-color: #555;
         }
 
-        /* ³»¿ë ºÎºĞ ½ºÅ¸ÀÏ */
+        /* ë‚´ìš© ë¶€ë¶„ ìŠ¤íƒ€ì¼ */
 .content {
-            margin-left: 0; /* »çÀÌµå¹Ù°¡ ¿­¸± ¶§ ³»¿ë ºÎºĞÀ» ¿Å±â±â À§ÇÑ ¿©¹é */
+            margin-left: 0; /* ì‚¬ì´ë“œë°”ê°€ ì—´ë¦´ ë•Œ ë‚´ìš© ë¶€ë¶„ì„ ì˜®ê¸°ê¸° ìœ„í•œ ì—¬ë°± */
             padding: 20px;
         }
 
-        /* »çÀÌµå¹Ù ¿­¸± ¶§ ¾Ö´Ï¸ŞÀÌ¼Ç */
+        /* ì‚¬ì´ë“œë°” ì—´ë¦´ ë•Œ ì• ë‹ˆë©”ì´ì…˜ */
 .sidebar.open {
    left: 0;
         }
 .a {
-	margin-left:360px;
-	border : 0px solid black;
-	display:flex;
-	margin-top:100px;
+   margin-left:360px;
+   border : 0px solid black;
+   display:flex;
+   margin-top:100px;
 }
 #tb1 {
-	width:800px;
+   width:800px;
 }
 
 #a1 {
@@ -58,54 +58,54 @@ String root= request.getContextPath();
 String myid=(String)session.getAttribute("myid");
 AdminBoardDao AdminBoardDao = new AdminBoardDao();
 
-	int totalCount = AdminBoardDao.getTotalCount(); //ÀüÃ¼ °³¼ö
-   int totalPage; //ÃÑ ÆäÀÌÁö ¼ö
-   int startPage; //°¢ ºí·°¿¡¼­ º¸¿©Áú ½ÃÀÛÆäÀÌÁö
-   int endPage; //°¢ ºí·°¿¡¼­ º¸¿©Áú ³¡ÆäÀÌÁö
-   int startNum; //db¿¡¼­ °¡Á®¿Ã ±ÛÀÇ ½ÃÀÛ¹øÈ£(mysqlÀº Ã¹±ÛÀÌ 0, oracleÀº 1)
-   int perPage = 5; //ÇÑÆäÀÌÁö´ç º¸¿©Áú ±Û °³¼ö
-   int perBlock = 5; //ÇÑ ºí·°´ç º¸¿©Áú ÆäÀÌÁö °³¼ö
-   int currentPage; //ÇöÀçÆäÀÌÁö
-   int no; //°¢ ÆäÀÌÁö ´ç Ãâ·ÂÇÒ ½ÃÀÛ¹øÈ£
+   int totalCount = AdminBoardDao.getTotalCount(); //ì „ì²´ ê°œìˆ˜
+   int totalPage; //ì´ í˜ì´ì§€ ìˆ˜
+   int startPage; //ê° ë¸”ëŸ­ì—ì„œ ë³´ì—¬ì§ˆ ì‹œì‘í˜ì´ì§€
+   int endPage; //ê° ë¸”ëŸ­ì—ì„œ ë³´ì—¬ì§ˆ ëí˜ì´ì§€
+   int startNum; //dbì—ì„œ ê°€ì ¸ì˜¬ ê¸€ì˜ ì‹œì‘ë²ˆí˜¸(mysqlì€ ì²«ê¸€ì´ 0, oracleì€ 1)
+   int perPage = 5; //í•œí˜ì´ì§€ë‹¹ ë³´ì—¬ì§ˆ ê¸€ ê°œìˆ˜
+   int perBlock = 5; //í•œ ë¸”ëŸ­ë‹¹ ë³´ì—¬ì§ˆ í˜ì´ì§€ ê°œìˆ˜
+   int currentPage; //í˜„ì¬í˜ì´ì§€
+   int no; //ê° í˜ì´ì§€ ë‹¹ ì¶œë ¥í•  ì‹œì‘ë²ˆí˜¸
 
-   //ÇöÁ¦ÆäÀÌÁö ÀĞ±â(´Ü nullÀÏ°æ¿ì´Â 1ÆäÀÌÁö·Î ÁØ´Ù)°è»êÀ» ÇØ¾ßÇÏ¹Ç·Î int·Î Çüº¯È¯
+   //í˜„ì œí˜ì´ì§€ ì½ê¸°(ë‹¨ nullì¼ê²½ìš°ëŠ” 1í˜ì´ì§€ë¡œ ì¤€ë‹¤)ê³„ì‚°ì„ í•´ì•¼í•˜ë¯€ë¡œ intë¡œ í˜•ë³€í™˜
    if (request.getParameter("currentPage") == null || request.getParameter("currentPage").equals("null"))
       currentPage = 1;
    else
-      //getParameterÀÇ ¹İÈ¯°ªÀÌ StringÀÌ¶ó int·Î Çüº¯È¯
+      //getParameterì˜ ë°˜í™˜ê°’ì´ Stringì´ë¼ intë¡œ í˜•ë³€í™˜
       currentPage = Integer.parseInt(request.getParameter("currentPage"));
 
-   //ÃÑ ÆäÀÌÁö¼ö ±¸ÇÏ±â
-   //ÃÑ ±ÛÀÇ °³¼ö/ÇÑ ÆäÀÌÁö´ç º¸¿©Áú °³¼ö·Î ³ª´®   ex)7/5=2ÆäÀÌÁö
+   //ì´ í˜ì´ì§€ìˆ˜ êµ¬í•˜ê¸°
+   //ì´ ê¸€ì˜ ê°œìˆ˜/í•œ í˜ì´ì§€ë‹¹ ë³´ì—¬ì§ˆ ê°œìˆ˜ë¡œ ë‚˜ëˆ”   ex)7/5=2í˜ì´ì§€
    totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1);
 
-   //°¢ ºí·°´ç º¸¿©¾ßÇÒ ½ÃÀÛÆäÀÌÁö
-   //perBlock=5ÀÏ°æ¿ì´Â ÇöÁ¦ÆäÀÌÁö 1~5 ½ÃÀÛ:1 ³¡:5
-   //ÇöÀçÆäÀÌÁö 13      ½ÃÀÛ:11  ³¡:15
+   //ê° ë¸”ëŸ­ë‹¹ ë³´ì—¬ì•¼í•  ì‹œì‘í˜ì´ì§€
+   //perBlock=5ì¼ê²½ìš°ëŠ” í˜„ì œí˜ì´ì§€ 1~5 ì‹œì‘:1 ë:5
+   //í˜„ì¬í˜ì´ì§€ 13      ì‹œì‘:11  ë:15
    startPage = (currentPage - 1) / perBlock * perBlock + 1;
 
-   //ÇÑ ºí·°´ç º¸ÀÌ´Â ¸¶Áö¸·ÆäÀÌÁö
-   //ex) ÇöÁ¦ÆäÀÌÁö 6ÆäÀÌÁö, perblock 5ÀÏ°æ¿ì - endPage:10
+   //í•œ ë¸”ëŸ­ë‹¹ ë³´ì´ëŠ” ë§ˆì§€ë§‰í˜ì´ì§€
+   //ex) í˜„ì œí˜ì´ì§€ 6í˜ì´ì§€, perblock 5ì¼ê²½ìš° - endPage:10
    endPage = startPage + perBlock - 1;
 
-   //ÃÑ ÆäÀÌÁö°¡ 23ÀÏ°æ¿ì ¸¶Áö¸·ºí·°Àº 25°¡ ¾Æ´Ï¶ó 23ÀÌ´Ù
+   //ì´ í˜ì´ì§€ê°€ 23ì¼ê²½ìš° ë§ˆì§€ë§‰ë¸”ëŸ­ì€ 25ê°€ ì•„ë‹ˆë¼ 23ì´ë‹¤
    if (endPage > totalPage)
       endPage = totalPage;
 
-   //°¢ ÆäÀÌÁö¿¡¼­ º¸¿©Áú ½ÃÀÛ¹øÈ£
-   //1ÆäÀÌÁö: 0,2ÆäÀÌÁö:5, 3ÆäÀÌÁö:10...0ºÎÅÍ ½ÃÀÛ perPage 5ÀÏ°æ¿ì
+   //ê° í˜ì´ì§€ì—ì„œ ë³´ì—¬ì§ˆ ì‹œì‘ë²ˆí˜¸
+   //1í˜ì´ì§€: 0,2í˜ì´ì§€:5, 3í˜ì´ì§€:10...0ë¶€í„° ì‹œì‘ perPage 5ì¼ê²½ìš°
    startNum = (currentPage - 1) * perPage;
 
-   //°¢ÆäÀÌÁö´ç Ãâ·ÂÇÒ ½ÃÀÛ¹øÈ£ ±¸ÇÏ±â
-   //ex) ÃÑ ±Û°³¼ö°¡ 23ÀÌ¸é 1ÆäÀÌÁö 23, 2ÆäÀÌÁö 18, 3ÆäÀÌÁö 13...
+   //ê°í˜ì´ì§€ë‹¹ ì¶œë ¥í•  ì‹œì‘ë²ˆí˜¸ êµ¬í•˜ê¸°
+   //ex) ì´ ê¸€ê°œìˆ˜ê°€ 23ì´ë©´ 1í˜ì´ì§€ 23, 2í˜ì´ì§€ 18, 3í˜ì´ì§€ 13...
    no = totalCount - (currentPage - 1) * perPage;
 
-   //ÆäÀÌÁö¿¡¼­ º¸¿©Áú ±Û¸¸ °¡Á®¿À±â
+   //í˜ì´ì§€ì—ì„œ ë³´ì—¬ì§ˆ ê¸€ë§Œ ê°€ì ¸ì˜¤ê¸°
    List<AdminBoardDto> list = AdminBoardDao.getPagingList(startNum, perPage);
 
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy³â MM¿ù dd¿ù");
+   SimpleDateFormat sdf = new SimpleDateFormat("yyyyë…„ MMì›” ddì›”");
 
-   //¸¶Áö¸· ÆäÀÌÁö ³²Àº ±Û Áö¿ì¸é ºóÆäÀÌÁö¸¸ ³²´Â´Ù -> ÇØ°á: ÀÌ¹øÆäÀÌÁö·Î ÀÌµ¿
+   //ë§ˆì§€ë§‰ í˜ì´ì§€ ë‚¨ì€ ê¸€ ì§€ìš°ë©´ ë¹ˆí˜ì´ì§€ë§Œ ë‚¨ëŠ”ë‹¤ -> í•´ê²°: ì´ë²ˆí˜ì´ì§€ë¡œ ì´ë™
    if (list.size() == 0 && currentPage != 1) {
    %>
    <script type="text/javascript">
@@ -126,15 +126,15 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
 <table class="table" id="tb1">
 <tr>
 <td><b style="float:left; font-size:22px;"><</b></td>
-<td align="center"><b style="align:center; font-size:24px;">&nbsp;&nbsp;¹®ÀÇ»çÇ× ¸®½ºÆ®</b></td>
+<td align="center"><b style="align:center; font-size:24px;">&nbsp;&nbsp;ë¬¸ì˜ì‚¬í•­ ë¦¬ìŠ¤íŠ¸</b></td>
 <td><b style="float:right; font-size:22px;">></b>
 </tr>
 
 <tr>
 <td width="80">
-<b>ÀüÃ¼</b>
+<b>ì „ì²´</b>
 </td>
-<td><b>°øÁö»çÇ×</b></td>
+<td><b>ê³µì§€ì‚¬í•­</b></td>
 <td></td>
 </tr>
 </table><br>
@@ -142,17 +142,17 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
 <input type="hidden" name="id" value="<%=myid %>">
 
 <table class="table table-bordered" style="width:800px;">
-<caption align="top"><b>ÃÑ <%=totalCount %>°Ç</b></caption>
+<caption align="top"><b>ì´ <%=totalCount %>ê±´</b></caption>
 
    <%for(int i=0; i<list.size(); i++){ 
       AdminBoardDto adminboardDto = list.get(i);   %>
    <tr class="tourList" style="height:25px">
-   	  <td width="50px" style="algin:center;"><input type="checkbox" class="chk"></td>
+        <td width="50px" style="algin:center;"><input type="checkbox" class="chk"></td>
       <td style="width:700px;">
       <b class="subject" style="font-size:24px;">
       <%-- <a href="index.jsp?main=admin/detailPage.jsp?num=<%=adminboardDto.getNum() %>&currentPage=<%=currentPage%>&id=<%=myid %>"> --%>
-      Á¦¸ñ : <%=adminboardDto.getSubject()%></b><br>
-      <p style="font-size:12px;"id="writeday" disabled>ÀÛ¼º³¯Â¥ : <%=sdf.format(adminboardDto.getWriteday()) %></p>
+      ì œëª© : <%=adminboardDto.getSubject()%></b><br>
+      <p style="font-size:12px;"id="writeday" disabled>ì‘ì„±ë‚ ì§œ : <%=sdf.format(adminboardDto.getWriteday()) %></p>
       </td>
    </tr>
 <%} %>
@@ -162,14 +162,14 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
 
 
 
-<!-- ÆäÀÌÁö¹øÈ£ Ãâ·Â -->
+<!-- í˜ì´ì§€ë²ˆí˜¸ ì¶œë ¥ -->
    <div>
-   <button type="button" style="float:right;">±Û¾²±â</button>
-   <button type="button">¸ñ·Ï</button>
+   <button type="button" style="float:right;">ê¸€ì“°ê¸°</button>
+   <button type="button">ëª©ë¡</button>
       <ul class="pagination justify-content-center">
-	
+   
          <%
-         //ÀÌÀü
+         //ì´ì „
          if (startPage > 1) {
          %>
          <li class="page-item"><a class="page-link"
@@ -222,7 +222,7 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
 
 
 
-         <!-- ´ÙÀ½¹öÆ° -->
+         <!-- ë‹¤ìŒë²„íŠ¼ -->
          <%
          if (currentPage < totalPage) {
          %>
@@ -263,27 +263,27 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
 </div>
 
 <div class="sidebar open">
-	<button type="button" style="margin-left:15px; margin-top:20px; border:none;" onclick="toggleSidebar()">
-	<i class="bi bi-menu-app" style="font-size:20px;"></i></button>
-	<br><br>
-    &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>È¨</b></a><br><br>
-    &nbsp;&nbsp;<a href="index.jsp?main=myPage/mypage.jsp">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>°³ÀÎÁ¤º¸</b></a><br><br>
-    &nbsp;&nbsp;<a href="index.jsp?main=myPage/secure.jsp">&nbsp;<i class="bi bi-shield-shaded"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>º¸¾È</b></a><br><br>
-    &nbsp;&nbsp;<a href="index.jsp?main=admin/adminBoard.jsp">&nbsp;<i class="bi bi-telephone-outbound-fill"></i>&nbsp;&nbsp;&nbsp;<b>°í°´¼¾ÅÍ</b></a>
-    <!-- ·Î±×ÀÎ»óÅÂ¸é ·Î±×¾Æ¿ô , ·Î±×¾Æ¿ô »óÅÂ¸é ·Î±×ÀÎÀ¸·Î º¸ÀÌ°ÔÇÏ±â 0905 Àû¾îµÒ -->
+   <button type="button" style="margin-left:15px; margin-top:20px; border:none;" onclick="toggleSidebar()">
+   <i class="bi bi-menu-app" style="font-size:20px;"></i></button>
+   <br><br>
+    &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>í™ˆ</b></a><br><br>
+    &nbsp;&nbsp;<a href="index.jsp?main=myPage/mypage.jsp">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>ê°œì¸ì •ë³´</b></a><br><br>
+    &nbsp;&nbsp;<a href="index.jsp?main=myPage/secure.jsp">&nbsp;<i class="bi bi-shield-shaded"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>ë³´ì•ˆ</b></a><br><br>
+    &nbsp;&nbsp;<a href="index.jsp?main=admin/adminBoard.jsp">&nbsp;<i class="bi bi-telephone-outbound-fill"></i>&nbsp;&nbsp;&nbsp;<b>ê³ ê°ì„¼í„°</b></a>
+    <!-- ë¡œê·¸ì¸ìƒíƒœë©´ ë¡œê·¸ì•„ì›ƒ , ë¡œê·¸ì•„ì›ƒ ìƒíƒœë©´ ë¡œê·¸ì¸ìœ¼ë¡œ ë³´ì´ê²Œí•˜ê¸° 0905 ì ì–´ë‘  -->
     <br><br><br><br><br><br><br><br><br><br>
-    &nbsp;&nbsp;<a href="index.jsp?main=login/logoutAction.jsp">&nbsp;<i class="bi bi-door-closed-fill"></i>&nbsp;&nbsp;&nbsp;·Î±×¾Æ¿ô</a><br>
+    &nbsp;&nbsp;<a href="index.jsp?main=login/logoutAction.jsp">&nbsp;<i class="bi bi-door-closed-fill"></i>&nbsp;&nbsp;&nbsp;ë¡œê·¸ì•„ì›ƒ</a><br>
     
     <%
-		// °ü¸®ÀÚ ·Î±×ÀÎÇÏ¸é ¸Ş´º¹Ù ÇÏ³ª ´õ ¶ß°Ô ¸¸µé±â 0905 Àû¾îµÒ
-		AdminBoardDto dto = new AdminBoardDto();
+      // ê´€ë¦¬ì ë¡œê·¸ì¸í•˜ë©´ ë©”ë‰´ë°” í•˜ë‚˜ ë” ëœ¨ê²Œ ë§Œë“¤ê¸° 0905 ì ì–´ë‘ 
+      AdminBoardDto dto = new AdminBoardDto();
     %>
 </div>
 
 
 
 <script>
-    // »çÀÌµå¹Ù ¿­±â/´İ±â ÇÔ¼ö
+    // ì‚¬ì´ë“œë°” ì—´ê¸°/ë‹«ê¸° í•¨ìˆ˜
     function toggleSidebar() {
         var sidebar = document.querySelector('.sidebar');
         sidebar.classList.toggle('open');
@@ -293,22 +293,26 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
     var currentpage = '<%=currentPage %>';
     var id = '<%=myid %>';
     
+   
     $(document).on('click', '.subject', function () {
         $.ajax({
             url: 'admin/detailPage.jsp',
             type: 'POST',
-            data: { num: num, currentpage: currentpage, id: id },
-            dataType: 'html', // µ¥ÀÌÅÍ Çü½ÄÀº HTML
+            data: { "num": num, "currentpage": currentpage, "id": id },
+            dataType: 'html', // ë°ì´í„° í˜•ì‹ì€ HTML
             success: function (response) {
-                // AJAX ¿äÃ»ÀÌ ¼º°øÇÏ¸é ³»¿ëÀ» questionContent div¿¡ »ğÀÔ
+                // AJAX ìš”ì²­ì´ ì„±ê³µí•˜ë©´ ë‚´ìš©ì„ questionContent divì— ì‚½ì…
                 if ($('#detail1').html() == "") {
                     $('#detail1').html(response);
+                    $('#detail1').html(response);
+                    $('#detail1').html(response);
+                    
                 } else {
                     $('#detail1').html("");
                 }
             },
             error: function () {
-                alert('µ¥ÀÌÅÍ¸¦ ºÒ·¯¿À´Â µ¥ ½ÇÆĞÇß½À´Ï´Ù.');
+                alert('ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.');
             }
         });
     });

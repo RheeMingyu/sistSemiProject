@@ -51,6 +51,13 @@ button.btn1 {
 	margin-bottom:100px;
 }
 
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+
 </style>
 <%
 String root=request.getContextPath();
@@ -83,23 +90,23 @@ String myid = (String)session.getAttribute("myid");
 	<div class="info0">
 		<h2><b>개인정보</b></h2>
 		<br>
-		<h4 style="font-size:18px;">다양한 <b>Jeju 하다</b>서비스에서 사용되는 나와 내 환경설정에 관한 정보입니다.</h4>	
+		<h4 style="font-size:18px;">다양한 <b>Jeju 하다</b> 서비스에서 사용되는 나와 내 환경설정에 관한 정보입니다.</h4>	
 	</div>
 	<br><br>
 	
 	<table class="table table-bordered" style="width:850px; height:300px;">
 		<tr>
-			<td width="400"><i class="bi bi-chat-text" onclick="reviewgo()"></i>&nbsp;&nbsp;나의 후기</td>
-			<td width="400"><i class="bi bi-menu-app-fill" onclick="commentgo()"></i>&nbsp;&nbsp;내가 쓴 댓글</td>
+			<td width="400" style="cursor:pointer" onclick="reviewgo()"><i class="bi bi-chat-text"></i>&nbsp;&nbsp;나의 후기</td>
+			<td width="400" style="cursor:pointer" onclick="coursego()"><i class="bi bi-menu-app-fill"></i>&nbsp;&nbsp;나만의 코스</td>
 		</tr>
 		
 		<tr>
-			<td width="400"><i class="bi bi-chat-heart"></i>&nbsp;&nbsp;좋아요</td>
-			<td width="400"><i class="bi bi-reddit" onclick="listgo()"></i>&nbsp;&nbsp;나의 일정</td>
+			<td width="400" style="cursor:pointer"><i class="bi bi-chat-heart"></i>&nbsp;&nbsp;좋아요</td>
+			<td width="400" style="cursor:pointer" onclick="listgo()"><i class="bi bi-reddit" ></i>&nbsp;&nbsp;나의 일정</td>
 		</tr>
 		
 		<tr>
-			<td colspan="2"><i class="bi bi-currency-exchange" onclick="money()"></i>&nbsp;&nbsp;개발자한테 기부하기</td>
+			<td colspan="2" style="cursor:pointer" onclick="money()" ><i class="bi bi-currency-exchange" ></i>&nbsp;&nbsp;개발자한테 기부하기</td>
 		</tr>
 	</table><br><br>
 	
@@ -119,23 +126,23 @@ String myid = (String)session.getAttribute("myid");
 	</tr>
 
 	<tr style="height:75px;">
-		<td style="text-align:left; width:100px; vertical-align: middle;">&nbsp;&nbsp;<b>이름 : </b></td>
-		<td style="text-align:center; vertical-align: middle;"><b><%=dto.getName() %></b></td>
+		<td style="text-align:left; width:100px; vertical-align: middle; font-size:18px;">&nbsp;&nbsp;<b>이름 : </b></td>
+		<td style="text-align:center; vertical-align: middle; font-size:18px;"><b><%=dto.getName() %></b></td>
 	</tr>
 	
 	<tr style="height:75px;">
-		<td style="text-align:left; vertical-align: middle;">&nbsp;&nbsp;<b>전화번호 :</b></td>
-		<td style="text-align:center; vertical-align: middle;"><b><%=dto.getHp() %></b></td>
+		<td style="text-align:left; vertical-align: middle; font-size:18px;">&nbsp;&nbsp;<b>폰 번호 :</b></td>
+		<td style="text-align:center; vertical-align: middle; font-size:18px;"><b><%=dto.getHp() %></b></td>
 	</tr>
 	
 	<tr style="height:75px;">
-		<td style="text-align:left; vertical-align: middle;">&nbsp;&nbsp;<b>나이 : </b></td>
-		<td style="text-align:center; vertical-align: middle;"><b><%=dto.getAge() %></b></td>
+		<td style="text-align:left; vertical-align: middle; font-size:18px;">&nbsp;&nbsp;<b>나이 : </b></td>
+		<td style="text-align:center; vertical-align: middle; font-size:18px;"><b><%=dto.getAge() %></b></td>
 	</tr>
 	
 	<tr style="height:75px;">
-		<td style="text-align:left; vertical-align: middle;">&nbsp;&nbsp;<b>성별 : </b></td>
-		<td style="text-align:center; vertical-align: middle;"><b><%=dto.getGender() %></b></td>
+		<td style="text-align:left; vertical-align: middle; font-size:18px;">&nbsp;&nbsp;<b>성별 : </b></td>
+		<td style="text-align:center; vertical-align: middle; font-size:18px;"><b><%=dto.getGender() %></b></td>
 	</tr>
 	</table><br><br>
 	
@@ -144,13 +151,14 @@ String myid = (String)session.getAttribute("myid");
 	<td style="border:none; text-align:left;">
 	<b style="font-size:24px;">연락처정보</b>
 	</td>
-	
 	<tr>
-	<td style="border:none; text-align:left; vertical-align: middle;">이메일 : <%=dto.getEmail() %></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;">이메일</td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><%=dto.getEmail() %></td>
 	</tr>
 	
 	<tr>
-	<td style="border:none; text-align:left; vertical-align: middle;">사는곳 : <%=dto.getArea() %></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;">거주지</td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><%=dto.getArea() %></td>
 	</tr>
 	</table>
 	<br><br>
@@ -163,46 +171,20 @@ String myid = (String)session.getAttribute("myid");
 	</td>
 	
 	<tr>
-	<td style="border:none; text-align:left; vertical-align: middle;">MBTI : <%=dto.getMbti() %></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;">MBTI</td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><%=dto.getMbti() %></td>
 	</tr>
-	<%
-	%>
+	
 	<tr>
-	<td style="border:none; text-align:left; vertical-align: middle;">가입날짜 : <%=sdf.format(dto.getRegister_day()) %></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;">가입날짜</td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><%=sdf.format(dto.getRegister_day()) %></td>
 	</tr>
 	
 	</table>
 	<br><br>
 	</div>
 	
-	<table class="table table-bordered" style="width:850px; height:300px;">
-	<td style="border:none; text-align:left;">
-	<b style="font-size:24px;">나만의 코스</b>
-	
-	<%
-	//for each문 dto로 list선언 후
-	//추가한게 있으면은 그게 출력되게끔 로직 짜기
-	//feat : 0907~
-	
-	%>
-	
-	<tr>
-	<td>1</td>
-	</tr>
-	
-	
-	</table>
 	<br><br>
-	
-	
-	
-	<%-- <div class="info2"><br> <!-- 메인 부가정보 넣기 -->
-	MBTI :<%=dto.getMbti() %><br>
-	성별 : <%=dto.getGender() %><br>
-	가입날짜 : <%=dto.getRegister_day() %><br>
-	</div> 
-	<br><br> --%>
-	
 	
 	<%	 
 		 }
@@ -220,7 +202,7 @@ String myid = (String)session.getAttribute("myid");
 	
     var userId = '<%=myid %>'; // JSP 변수를 JavaScript 변수에 할당
     
-    var url = "index.jsp?main=MyPage/deleteform.jsp?id=" + userId;
+    var url = "index.jsp?main=myPage/deleteform.jsp?id=" + userId;
     
     window.open(url, "회원탈퇴", "width=1000,height=500");
 } 
@@ -248,9 +230,9 @@ String myid = (String)session.getAttribute("myid");
  
  }
  
- function commentgo() {
+ function coursego() {
 	 var userId = '<%=myid %>';
-	 var url = "index.jsp?main=myList/mycomment.jsp?id="+userId;
+	 var url = "index.jsp?main=myList/myCourse.jsp?id="+userId;
 	 location.href=url;
  
  }

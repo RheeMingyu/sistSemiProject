@@ -29,6 +29,7 @@
 		String gender = multi.getParameter("gender");
 		String area = multi.getParameter("area");
 		String area1 = multi.getParameter("area1");
+		String area3 = area+area1;
 		String mbti = multi.getParameter("mbti1")+multi.getParameter("mbti2")+multi.getParameter("mbti3")+multi.getParameter("mbti4");
 		
 		String area2 = area +" "+ area1;
@@ -44,7 +45,7 @@
 		dto.setEmail(email);
 		dto.setAge(age);
 		dto.setGender(gender);
-		dto.setArea(area2);
+		dto.setArea(area3);
 		dto.setMbti(mbti);
 		
 		//dao선언 후 insert 호출
