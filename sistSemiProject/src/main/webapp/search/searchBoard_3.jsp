@@ -64,6 +64,7 @@
       return tableName;
    }%>
    <%
+   String root = request.getContextPath();
    request.setCharacterEncoding("utf-8");
    String sortidx=(request.getParameter("sortidx")==null||request.getParameter("sortidx").equals("null")?"":request.getParameter("sortidx"));
    List<String> tables=new ArrayList<String>();
@@ -178,10 +179,10 @@
                   {
                   %>
                   <div class="v_align">
-                  <table class="table table-bordered">
+                  <table class="tb1">
                      <caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
-                     <tr>
-                        <th>사진</th><th>컬럼</th><th>데이터</th>
+                     <tr style="text-align: center;">
+                        <th>사진</th><th>정보</th>
                      </tr>
                      <%String photo="";
                      for(String column:columnsArr){
@@ -193,12 +194,11 @@
                      {%>
                         <tr>
                            <%if(j==0&&!photo.equals("")){%>
-                              <td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
+                              <td rowspan="<%=columnsArr.length%>"><img src="<%=root%>/jeju/<%=photo %>" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                            <%}else if(j==0&&photo.equals("")){%>
-                              <td rowspan="<%=columnsArr.length%>"><img src="jeju/"></td>
+                              <td rowspan="<%=columnsArr.length%>"><img src="<%=root%>/jeju/<%=photo%>" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                            <%}
                            if(!column.equals("photo")&&!column.equals("mainphoto")){%>
-                           <td><%=column %></td>
                            <td><%=map.get(column) %></td><%} %>
                         </tr>
                      <%j++;}%>
@@ -208,7 +208,7 @@
                   <table class="table table-bordered">
                      <caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
                      <tr>
-                        <td colspan="2"><img src="save/<%=photo %>"></td>
+                        <td colspan="2"><img src="<%=root%>/jeju/<%=photo %>" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                      </tr>
                      <%for(String column:columnsArr)
                      {
@@ -246,8 +246,8 @@
                   <div class="v_align">
                   <table class="table table-bordered">
                      <caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
-                     <tr>
-                        <th>사진</th><th>컬럼</th><th>데이터</th>
+                     <tr style="text-align: center;">
+                        <th>사진</th><th>정보</th>
                      </tr>
                      <%String photo="";
                      for(String column:columnsArr){
@@ -259,12 +259,11 @@
                      {%>
                         <tr>
                            <%if(j==0&&!photo.equals("")){%>
-                              <td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
+                              <td rowspan="<%=columnsArr.length%>"><img src="<%=root%>/jeju/<%=photo %>" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                            <%}else if(j==0&&photo.equals("")){%>
-                              <td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
+                              <td rowspan="<%=columnsArr.length%>"><img src="<%=root%>/jeju/" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                            <%}
                            if(!column.equals("photo")&&!column.equals("mainphoto")){%>
-                           <td><%=column %></td>
                            <td><%=map.get(column) %></td><%} %>
                         </tr>
                      <%j++;}%>
@@ -274,7 +273,7 @@
                   <table class="table table-bordered">
                      <caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
                      <tr>
-                        <td colspan="2"><img src="save/<%=photo %>"></td>
+                        <td colspan="2"><img src="<%=root%>/jeju/<%=photo %>" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                      </tr>
                      <%for(String column:columnsArr)
                      {
@@ -312,8 +311,8 @@
                   <div class="v_align">
                   <table class="table table-bordered">
                      <caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
-                     <tr>
-                        <th>사진</th><th>컬럼</th><th>데이터</th>
+                     <tr style="text-align: center;">
+                        <th>사진</th><th>정보</th>
                      </tr>
                      <%String photo="";
                      for(String column:columnsArr){
@@ -325,12 +324,11 @@
                      {%>
                         <tr>
                            <%if(j==0&&!photo.equals("")){%>
-                              <td rowspan="<%=columnsArr.length%>"><img src="save/<%=photo %>"></td>
+                              <td rowspan="<%=columnsArr.length%>"><img src="<%=root%>/jeju/<%=photo %>" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                            <%}else if(j==0&&photo.equals("")){%>
-                              <td rowspan="<%=columnsArr.length%>"><img src="no_image/"></td>
+                              <td rowspan="<%=columnsArr.length%>"><img src="<%=root%>/jeju/" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                            <%}
                            if(!column.equals("photo")&&!column.equals("mainphoto")){%>
-                           <td><%=column %></td>
                            <td><%=map.get(column) %></td><%} %>
                         </tr>
                      <%j++;}%>
@@ -340,7 +338,7 @@
                   <table class="table table-bordered">
                      <caption align="top" style="font-size: 1.2em"><%=translation(table) %></caption>
                      <tr>
-                        <td colspan="2"><img src="save/<%=photo %>"></td>
+                        <td colspan="2"><img src="<%=root%>/jeju/<%=photo %>" style="width: 300px; height: 300px; border-radius: 10px 10px 10px 10px;"></td>
                      </tr>
                      <%for(String column:columnsArr)
                      {

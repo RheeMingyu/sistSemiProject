@@ -244,7 +244,7 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         var infowindow = new kakao.maps.InfoWindow({
-            content: "<div id='spotContent'><img src='<%=root%>/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:70px'><div id='spottext'><%=tourSpotDto.getName()%><br><%=tourSpotDto.getHp()%></div></div>"
+            content: "<div id='spotContent'><img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:70px'><div id='spottext'><%=tourSpotDto.getName()%><br><%=tourSpotDto.getHp()%></div></div>"
 										});
 								//infowindow.open(map, marker);
 
@@ -273,10 +273,10 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
 						                
 										if(<%=likesDao.isLikeCheck(myid, Integer.parseInt(tourSpotDto.getSeq()))==1%>){
-										$("#placeInfo").html("<img src='<%=root%>/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><b><%=tourSpotDto.getName()%></b>&nbsp;&nbsp;<i class='bi bi-heart-fill like' style='color:red'></i><br><p><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getAddr()%>&nbsp;/&nbsp;<%=tourSpotDto.getHp()%><br></p>"+
+										$("#placeInfo").html("<img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><b><%=tourSpotDto.getName()%></b>&nbsp;&nbsp;<i class='bi bi-heart-fill like' style='color:red'></i><br><p><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getAddr()%>&nbsp;/&nbsp;<%=tourSpotDto.getHp()%><br></p>"+
 												"<button type='button' id='btntouradd' class='btn btn-info'>추가하기</button> ");
 										}else{
-											$("#placeInfo").html("<img src='<%=root%>/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><b><%=tourSpotDto.getName()%></b>&nbsp;&nbsp;<i class='bi bi-heart-fill like'></i><br><p><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getAddr()%>&nbsp;/&nbsp;<%=tourSpotDto.getHp()%><br></p>"+
+											$("#placeInfo").html("<img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><b><%=tourSpotDto.getName()%></b>&nbsp;&nbsp;<i class='bi bi-heart-fill like'></i><br><p><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getAddr()%>&nbsp;/&nbsp;<%=tourSpotDto.getHp()%><br></p>"+
 											"<button type='button' id='btntouradd' class='btn btn-info'>추가하기</button> ");
 										}
 							    		/* $("#placeInfo").addClass("placediv"); */
@@ -481,7 +481,7 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
 	 <%--클릭한 장소의 정보가 여기에 표시됩니다. --%>
 	<div id="placeInfo" class="placediv" style="margin-right:20px;">
-		<img src='<%=root%>/image/mainInfo.png' style='width:100%; height:400px'><br><br><p>제주도의 다양한 관광지를 만나보세요 :)</p>
+		<img src='<%=root%>/jeju/maininfo.png' style='width:100%; height:400px'><br><br><p>제주도의 다양한 관광지를 만나보세요 :)</p>
 	</div>
 	
 
