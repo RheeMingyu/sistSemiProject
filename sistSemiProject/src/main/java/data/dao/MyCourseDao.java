@@ -46,18 +46,19 @@ public class MyCourseDao {
       
 
    // 코스이름 유무 체크
-   public int isNameCheck(String cname) {
+   public int isNameCheck(String cname, String id) {
       int isName = 0;
 
       Connection conn = db.getConnection();
       PreparedStatement pstmt = null;
       ResultSet rs = null;
 
-      String sql = "select count(*) from MyCourse where name=?";
+      String sql = "select count(*) from MyCourse where name=?, id=?";
 
       try {
          pstmt = conn.prepareStatement(sql);
          pstmt.setString(1, cname);
+         pstmt.setString(2, id);
          rs = pstmt.executeQuery();
 
          if (rs.next()) {
