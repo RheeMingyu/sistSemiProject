@@ -80,10 +80,10 @@ for(AddListDto dto:list) {
 	<div class="i">
 	<table class="table table-bordered" style="width:500px; height:300px; margin-top:10px; margin-left:450px;">
 		<tr style="width:150px; height:80px;">
-		<td>등록날짜 : <%=sdf.format(dto.getWriteday()) %></td>
+		<td><b>등록날짜 : <%=sdf.format(dto.getWriteday()) %></b></td>
 		</tr>
 		<tr>
-		<td>내용 : <%=dto.getContent() %></td>
+		<td><%=dto.getContent() %></td>
 		</tr>
 	</table>
 	</div>

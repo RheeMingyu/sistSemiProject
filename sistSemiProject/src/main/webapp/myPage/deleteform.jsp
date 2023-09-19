@@ -17,7 +17,7 @@ String myid= (String)session.getAttribute("myid");
 %>
 
 
-<form action="userDelete.jsp" method="post">
+<form action="myPage/userDelete.jsp" method="post">
 	
 	<div class="container" style="margin-left:150px; margin-top:100px; border:1px solid gray; width:800px;">
 	<legend>회원탈퇴</legend>

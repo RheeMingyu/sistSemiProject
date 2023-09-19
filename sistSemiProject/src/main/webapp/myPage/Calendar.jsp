@@ -311,7 +311,7 @@ $("#save").click(function(){
 	
 	$.ajax({
         type: "POST", // HTTP 요청 방식 (POST)
-        url: "myList/listinsertProc.jsp", // 데이터를 처리할 서버 스크립트 경로
+        url: "myList/listinsertproc.jsp", // 데이터를 처리할 서버 스크립트 경로
         dataType:"html",
         data: { content: inputData },  // 전송할 데이터
         success: function(response){
