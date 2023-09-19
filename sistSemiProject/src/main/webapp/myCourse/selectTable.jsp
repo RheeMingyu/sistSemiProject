@@ -1,6 +1,6 @@
 <%@page import="data.dao.TempSaveDao"%>
-<%@page import="data.dto.MemberDto"%>
-<%@page import="data.dao.MemberDao"%>
+<%@page import="data.dto.memberDto"%>
+<%@page import="data.dao.memberDao"%>
 <%@page import="data.dto.TempSaveDto"%>
 <%@page import="java.util.List"%>
 <%@page import="data.dao.TourSpotDao"%>
@@ -54,8 +54,8 @@ margin: 0 0 20px;
 	String mainPhoto = null;
 	
 	String myid = (String)session.getAttribute("myid");
-	MemberDao memberDao = new MemberDao();
-	MemberDto memberDto = memberDao.getData(myid);
+	memberDao memberDao = new memberDao();
+	memberDto memberDto = memberDao.getData(myid);
 %>
 
 
@@ -140,6 +140,8 @@ $(function(){
 	<input type="hidden" id="memId" value="<%=memberDto.getId()%>">
 
 <script>
+
+
 //코스이름 중복 체크
 $(document).on("click", "#btnCname", function() {
     var courseName = $("#courseName").val();
@@ -152,7 +154,7 @@ $(document).on("click", "#btnCname", function() {
         data: { "courseName": courseName, "memId":memId },
         success: function(data) {
 
-           if (data.count >= 1) {
+        	if (data.count >= 1) {
                 $("span.cnameSuccess").text("이미 존재하는 코스이름입니다");
                 $("#courseName").val("");
             } else {
@@ -161,6 +163,7 @@ $(document).on("click", "#btnCname", function() {
         }
     });
 });
+
 		
  //나만의 코스 만들기 버튼 클릭시 코스 이름 중복 여부 확인하고 추가
  $("#btncourseadd").click(function(){
@@ -183,7 +186,8 @@ $(document).on("click", "#btnCname", function() {
          day.push(value);
      });
 
-   
+	 
+	 
 	 
 	 //배열로 받기
 	 
