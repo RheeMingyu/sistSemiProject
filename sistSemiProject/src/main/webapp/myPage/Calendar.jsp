@@ -170,6 +170,15 @@ a:active, a:hover {
 .button:active { /*Clicked and held*/
   box-shadow: 0px 5px 6px rgba(0,0,0,0.3);
 }
+
+  &-slide {
+    transition: 0.3s;
+
+    &:hover {
+      background: transparent;
+      box-shadow: inset 90px 0 0 0 var(--btn-bg);
+    }
+  }
 </style>
 
 <%
@@ -277,9 +286,9 @@ if(loginok!=null) {
 	
 	
 	<div>
-		<table class="table table-bordered addtext" style="width:256px; height:40px;">
+		<table class="table table-bordered addtext" style="width:267px; height:40px;">
 			<tr>
-				<td><button type="button" style="width:100px; height:30px; border:none;" id="btnadd">일정 메모하기</button></td>
+				<td><button type="button" style="width:100px; height:30px; border:none;" id="btnadd"  class="btn btn-outline-dark">일정 메모</button></td>
 			</tr>
 		</table>
 	</div>
@@ -295,10 +304,10 @@ if(loginok!=null) {
 	
     %>
 		<input type="hidden" name="id" value="<%=dto.getId() %>">
-		<textarea style="text-align:left; width:256px; height:300px;" name="content" id="content" style="border-radius:20px; font-size:15px;">
+		<textarea style="text-align:left; width:267px; height:300px;" name="content" id="content" style="border-radius:20px; font-size:15px;">
 		제목 : 
 		</textarea>
-		<button type="submit" id="save" style="width: 80px; height: 40px;">저장</button>
+		<button type="submit" id="save" style="width: 80px; height: 40px;" class="btn btn-primary btn-ghost btn-slide">저장</button>
 
 	
 </div> <!-- Calendar 닫는 div -->

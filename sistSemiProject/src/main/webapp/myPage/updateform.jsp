@@ -24,7 +24,7 @@
 
 body {
 	min-height: 100vh;
-	background-image: url('image/b1.JPG');
+	background-image: url('jeju/up1.JPG');
 	background-size: 100% 100%;
 
 }
@@ -44,8 +44,8 @@ body {
 
 div.container {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.0);
-	margin-left: 400px;
-	margin-top: 100px;
+	margin-left: 450px;
+	margin-top: 30px;
 }
 </style>
 </head>
@@ -161,7 +161,10 @@ dto = dao.getData(id);
 
 					<hr class="mb-4">
 					<div class="mb-4"></div>
-					<button class="btn btn-primary btn-lg btn-block" type="submit" style="width:220px; margin-left:190px;"> 나의정보 수정하기</button>
+					<button class="btn btn-outline-dark" type="submit" style="width:220px; margin-left:190px;">
+  					<span class="spinner-grow spinner-grow-sm"></span>
+  					 &nbsp;&nbsp;정보 수정하기
+					</button>
 				</form>
 			</div>
 		</div>

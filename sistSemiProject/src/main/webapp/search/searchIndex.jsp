@@ -17,7 +17,7 @@ response.setCharacterEncoding("utf-8");
 <style>
 	div.search_layout{
       position: absolute;
-      border: 1px solid gray;
+      border: 0px solid gray;
    }
    div.search_main{
       width: 1200px;

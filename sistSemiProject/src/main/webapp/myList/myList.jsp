@@ -19,11 +19,11 @@
 <style>
 .sidebar {
     height: 800px;
-    width: 190px;
+    width: 220px;
     position: fixed;
     top: 100px;
     left: -250px; /* 초기에는 화면 밖에 위치 */
-    background-color: white;
+    background-color: wheat;
     transition: left 0.3s ease;
     z-index: 999; /* 이 부분을 추가해서 sidebar가 다른 요소 위에 나타나도록 설정 */
 }
@@ -53,7 +53,7 @@ div.top {
 <%
 AddListDao adao = new AddListDao();
 List<AddListDto> list = adao.getList();
-SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd - HH:mm:ss");
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 //로그인 세션
 String loginok = (String)session.getAttribute("loginok");
@@ -65,7 +65,7 @@ String myid = (String)session.getAttribute("myid");
 <body>
 
 <div class="top">
-<i class="bi bi-reddit" style="font-size:20px;"></i>&nbsp;&nbsp;일정 목록
+<i class="bi bi-reddit" style="font-size:30px;"></i>&nbsp;&nbsp;<b>일정 목록</b>
 </div>
 <button type="button" onclick="toggleSidebar()" style="border:none; margin-left:15px;"><i class="bi bi-menu-app" style="font-size:20px;"></i></button><br><br>
 <%
@@ -79,7 +79,7 @@ for(AddListDto dto:list) {
 <div class="col-md-4">
 	<div class="i">
 	<table class="table table-bordered" style="width:500px; height:300px; margin-top:10px; margin-left:450px;">
-		<tr style="width:150px; height:80px;">
+		<tr style="width:150px; height:50px;">
 		<td><b>등록날짜 : <%=sdf.format(dto.getWriteday()) %></b></td>
 		</tr>
 		<tr>

@@ -363,4 +363,49 @@ public class MemberDao {
       return isid;
    }
    
+ //비밀번호 변경하기 (아이디값, 비밀번호값, 새로운 비밀번호)
+   public MemberDto changePassword(String id, String pass, String npass) {
+	    MemberDto dto = new MemberDto();
+	    Connection conn = db.getConnection();
+	    PreparedStatement pstmt = null;
+	    boolean success = false;
+
+	    try {
+
+	        // 1. 현재 비밀번호 확인
+	        String chkpassSql = "SELECT pass FROM Member WHERE id = ?";
+
+	        pstmt = conn.prepareStatement(chkpassSql);
+	        pstmt.setString(1, id);
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            String storedPassword = rs.getString("pass");
+
+	            // 현재 비밀번호가 일치하는지 확인
+	            if (storedPassword.equals(pass)) {
+	                // 2. 비밀번호 변경
+	                String updatePassSql = "UPDATE Member SET pass = ? WHERE id = ?";
+
+	                pstmt = conn.prepareStatement(updatePassSql);
+	                pstmt.setString(1, npass);
+	                pstmt.setString(2, id);
+
+	                int rowsAffected = pstmt.executeUpdate();
+
+	                if (rowsAffected > 0) {
+	                    success = true; // 비밀번호 변경 성공
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        db.dbClose(pstmt, conn);
+	    }
+
+	    return dto;
+	}
+   
 }

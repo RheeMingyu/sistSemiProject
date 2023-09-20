@@ -101,7 +101,7 @@ String myid = (String)session.getAttribute("myid");
 		</tr>
 		
 		<tr>
-			<td width="400" style="cursor:pointer"><i class="bi bi-chat-heart"></i>&nbsp;&nbsp;좋아요</td>
+			<td width="400" style="cursor:pointer"><i class="bi bi-chat-heart" onclick="likes()"></i>&nbsp;&nbsp;좋아요</td>
 			<td width="400" style="cursor:pointer" onclick="listgo()"><i class="bi bi-reddit" ></i>&nbsp;&nbsp;나의 일정</td>
 		</tr>
 		
@@ -111,7 +111,7 @@ String myid = (String)session.getAttribute("myid");
 	</table><br><br>
 	
 	<div class="container" style="margin-right:10px;" id="updateFormContainer">	
-	<button type="button" style="margin-left:800px; "onclick="location.href='index.jsp?main=myPage/updateform.jsp?id=<%=myid %>'">수정</button>
+	<button type="button" class="btn btn-outline-light text-dark" style="margin-left:800px; "onclick="location.href='index.jsp?main=myPage/updateform.jsp?id=<%=myid %>'">수정</button>
 	<table class="table table-bordered" style="width:850px; height:300px;">
 	
 	<td style="border:none;">
@@ -121,7 +121,7 @@ String myid = (String)session.getAttribute("myid");
 	<tr>
 		<td rowspan="5" width="150px">
 		<br>
-		<img src="<%=root %>/save/<%=dto.getProfile() %>" class="rounded-circle" width="170" height="200">
+		<img src="<%=root %>/save/<%=dto.getProfile() %>" class="rounded-circle" width="210" height="210">
 		</td>
 	</tr>
 
@@ -152,32 +152,31 @@ String myid = (String)session.getAttribute("myid");
 	<b style="font-size:24px;">연락처정보</b>
 	</td>
 	<tr>
-	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;">이메일</td>
-	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><%=dto.getEmail() %></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><b>이메일</b></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><b><%=dto.getEmail() %></b></td>
 	</tr>
 	
 	<tr>
-	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;">거주지</td>
-	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><%=dto.getArea() %></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><b>거주지</b></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><b><%=dto.getArea() %></b></td>
 	</tr>
 	</table>
 	<br><br>
 	
 	
 	<table class="table table-bordered" style="width:850px; height:300px;">
-	
 	<td style="border:none; text-align:left;">
 	<b style="font-size:24px;">기타정보</b>
 	</td>
 	
 	<tr>
-	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;">MBTI</td>
-	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><%=dto.getMbti() %></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><b>MBTI</b></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><b><%=dto.getMbti() %></b></td>
 	</tr>
 	
 	<tr>
-	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;">가입날짜</td>
-	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><%=sdf.format(dto.getRegister_day()) %></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><b>가입날짜</b></td>
+	<td style="border:none; text-align:left; vertical-align: middle; font-size:18px;"><b><%=sdf.format(dto.getRegister_day()) %></b></td>
 	</tr>
 	
 	</table>
@@ -195,7 +194,7 @@ String myid = (String)session.getAttribute("myid");
 	MemberDto dto = new MemberDto();
 	dto.setPass(pw); // 비밀번호 초기화, 실제로는 DB에서 값을 가져와야 합니다.
 %>
-<input type="button" class="btn btn-outline" value="회원탈퇴" style="float:right;" onclick="byeform()">
+<input type="button" class="btn btn-outline-light text-dark" value="회원탈퇴" style="float:right;" onclick="byeform()">
 
 <script>
  function byeform() {
@@ -235,6 +234,11 @@ String myid = (String)session.getAttribute("myid");
 	 var url = "index.jsp?main=myList/myCourse.jsp?id="+userId;
 	 location.href=url;
  
+ }
+ 
+ function likes() {
+	 alert("진짜로????????????????????????");
+	 alert("난 별로ㅋ");
  }
  
  

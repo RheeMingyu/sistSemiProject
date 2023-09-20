@@ -52,10 +52,18 @@
 
 #a1 {
 }
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
 </style>
 <%
 String root= request.getContextPath();
 String myid=(String)session.getAttribute("myid");
+
+AdminBoardDto dto =new AdminBoardDto();
+
 AdminBoardDao AdminBoardDao = new AdminBoardDao();
 
    int totalCount = AdminBoardDao.getTotalCount(); //전체 개수
@@ -64,7 +72,7 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
    int endPage; //각 블럭에서 보여질 끝페이지
    int startNum; //db에서 가져올 글의 시작번호(mysql은 첫글이 0, oracle은 1)
    int perPage = 5; //한페이지당 보여질 글 개수
-   int perBlock = 5; //한 블럭당 보여질 페이지 개수
+   int perBlock = 5; //한 블럭당 보여질 페이지 개수   
    int currentPage; //현재페이지
    int no; //각 페이지 당 출력할 시작번호
 
@@ -120,6 +128,7 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
 
 <body>
 &nbsp;&nbsp;<button id="a1" onclick="toggleSidebar()"><i class="bi bi-menu-app" style="font-size:20px; border:none;"></i></button><br><br>
+<input type="hidden" name="num" value="<%=dto.getNum() %>">
 
 <div class="a">
 <div class="b1">
@@ -151,21 +160,19 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
       <td style="width:700px;">
       <b class="subject" style="font-size:24px;">
       <%-- <a href="index.jsp?main=admin/detailPage.jsp?num=<%=adminboardDto.getNum() %>&currentPage=<%=currentPage%>&id=<%=myid %>"> --%>
-      제목 : <%=adminboardDto.getSubject()%></b><br>
+      제목 : <%=adminboardDto.getSubject()%></b>
+      <p thisnum="<%=adminboardDto.getNum() %>" class="p"></p>
+      <br>
       <p style="font-size:12px;"id="writeday" disabled>작성날짜 : <%=sdf.format(adminboardDto.getWriteday()) %></p>
       </td>
    </tr>
 <%} %>
 </table>
 
-
-
-
-
 <!-- 페이지번호 출력 -->
    <div>
-   <button type="button" style="float:right;">글쓰기</button>
-   <button type="button">목록</button>
+   <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true" style="float:right;" onclick="location.href='index.jsp?main=admin/adminBoard.jsp'">글쓰기</button>
+   <button type="button" class="btn active" data-bs-toggle="button" aria-pressed="true" onclick="location.href='index.jsp?main=admin/boardList.jsp'">목록</button>
       <ul class="pagination justify-content-center">
    
          <%
@@ -201,9 +208,6 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
          %>
 
 
-
-
-
          <%
          for (int pp = startPage; pp <= endPage; pp++) {
             if (pp == currentPage) {
@@ -219,7 +223,6 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
          }
          }
          %>
-
 
 
          <!-- 다음버튼 -->
@@ -274,13 +277,7 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
     <br><br><br><br><br><br><br><br><br><br>
     &nbsp;&nbsp;<a href="index.jsp?main=login/logoutAction.jsp">&nbsp;<i class="bi bi-door-closed-fill"></i>&nbsp;&nbsp;&nbsp;로그아웃</a><br>
     
-    <%
-      // 관리자 로그인하면 메뉴바 하나 더 뜨게 만들기 0905 적어둠
-      AdminBoardDto dto = new AdminBoardDto();
-    %>
 </div>
-
-
 
 <script>
     // 사이드바 열기/닫기 함수
@@ -289,22 +286,21 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
         sidebar.classList.toggle('open');
     }
     
-    var num = '<%=dto.getNum()%>';
     var currentpage = '<%=currentPage %>';
     var id = '<%=myid %>';
-    
    
     $(document).on('click', '.subject', function () {
+       var num=$(this).siblings("p.p").attr("thisnum");
+       
         $.ajax({
             url: 'admin/detailPage.jsp',
             type: 'POST',
-            data: { "num": num, "currentpage": currentpage, "id": id },
+            data: {"num":num,"currentpage":currentpage,"id":id },
             dataType: 'html', // 데이터 형식은 HTML
             success: function (response) {
+               
                 // AJAX 요청이 성공하면 내용을 questionContent div에 삽입
                 if ($('#detail1').html() == "") {
-                    $('#detail1').html(response);
-                    $('#detail1').html(response);
                     $('#detail1').html(response);
                     
                 } else {
@@ -317,6 +313,5 @@ AdminBoardDao AdminBoardDao = new AdminBoardDao();
         });
     });
 </script>
-
 </body>
 </html>

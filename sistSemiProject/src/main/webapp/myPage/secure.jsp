@@ -82,7 +82,8 @@ String myid =(String)session.getAttribute("myid");
 			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer" onclick="location.href='https://www.naver.com/'">
 			<b>Q 검색하기</b></div><br><br>
 			
-			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;">
+			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;" 
+			onclick="location.href='index.jsp?main=admin/adminBoard.jsp'">
 			<b>고객센터 의견 보내기 </b></div><br><br>
 			
 			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;" onclick="money()">

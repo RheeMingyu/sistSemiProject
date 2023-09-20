@@ -52,7 +52,7 @@
 		
 		response.sendRedirect("../index.jsp?main=myPage/mypage.jsp?id="+id);
 		
-	} catch(Exception e ) {
+	} catch(Exception e) {
 		System.out.println("업로드 오류다 경로 확인해라");
 	}
 	
