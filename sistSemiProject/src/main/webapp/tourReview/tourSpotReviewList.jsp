@@ -54,6 +54,7 @@ $(function(){
        $("div.answer:eq(2)").toggle();
        
      });
+   $("span.answer").click();
 })
 
 
@@ -221,8 +222,10 @@ if (list.size() == 0 && currentPage != 1) {
                             <%
                         //수정 삭제는 로그인 중이면서 로그인한 아이디와 같은 경우만 보이게
                         if(loginok!=null&&tourreviewdto.getId().equals(myid)){%> 
-                        <i class="bi bi-trash3 adel" style="color: red; cursor: pointer; float:right; font-size:20px" com_seq=<%=tourreviewdto.getCom_seq() %>></i>
-                        <i class="bi bi-pencil-square aup" data-bs-toggle="modal" style="color: green; cursor: pointer; float:right; font-size:20px" com_seq=<%=tourreviewdto.getCom_seq() %>></i>
+                         <a href="tourReview/tourSpotReviewDelete.jsp?num=<%=tourreviewdto.getCom_seq()%>&currentPage=<%=currentPage%>"
+                       style="color: red"><i class="bi bi-trash3 del" style="color: red; cursor: pointer; float:right; font-size:20px" com_seq=<%=tourreviewdto.getCom_seq() %>></i></a>
+                     <a href="index.jsp?main=tourReview/tourSpotReviewUpdateForm.jsp?num=<%=tourreviewdto.getCom_seq()%>&currentPage=<%=currentPage%>"
+                     style="color: green"><i class="bi bi-pencil-square up"  style="color: green; cursor: pointer; float:right; font-size:20px" com_seq=<%=tourreviewdto.getCom_seq() %>></i></a>
                       <%}%>
                               <span class="likes"><a style="font-size: 0.7em; color: gray;">좋아요</a>&nbsp;<i
                                  class="bi bi-hand-thumbs-up" style="color: gray;"></i>&nbsp;&nbsp;&nbsp;<%=tourreviewdto.getLikes()%></span>
@@ -254,15 +257,15 @@ if (list.size() == 0 && currentPage != 1) {
 <%
 if(loginok!=null){
 %>
-               <div class="commentform">
+               <div class="commentform" style="margin-left: 180px">
                   <form action="tourReview/memberCommentInsert.jsp" method="post">
                      <table class="table table-bordered" style="width:1000px;" id="id<%=com_seq%>">
                         <tr>
-                           <td><textarea style="width: 800px; height: 100px"
+                           <td><textarea style="width: 1000px; height: 100px"
                                  name="content" required="required" class="form-control"></textarea>
                            </td>
                            <td>
-                              <button type="submit" class="btn btn-success">등록</button> <input
+                              <button type="submit" class="btn btn-outline-dark" style="width: 100px;height: 100px">등록</button> <input
                               type="hidden" name="com_seq" value="<%=tourreviewdto.getCom_seq() %>">
                               <input type="hidden" name="id" value="<%=myid %>">
                               <input type="hidden" name="currentPage" value="<%=currentPage %>">
@@ -291,8 +294,8 @@ if(loginok!=null){
                System.out.println(com_seq);
                System.out.println(mcList.size());%>
                
-               <div class="answer">
-            <table class="table" style="width:480px">
+               <div class="answer" style="margin-left: 180px">
+            <table class="table" style="width:1118px;">
                <%
                   for(MemberCommentDto m : mcList){ %>
                      <tr>

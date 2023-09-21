@@ -7,16 +7,24 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>보안</title>
 </head>
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+.bi.bi-box-arrow-in-right {
+  background-color: wheat; /* 배경색을 투명하게 설정합니다. */
+}
 .sidebar {
     height: 800px;
     width: 190px;
     position: fixed;
     top: 100px;
     left: -250px; /* 초기에는 화면 밖에 위치 */
-    background-color: white;
+    background-color: wheat;
     transition: left 0.3s ease;
     z-index: 999; /* 이 부분을 추가해서 sidebar가 다른 요소 위에 나타나도록 설정 */
 }
@@ -60,21 +68,17 @@ String myid =(String)session.getAttribute("myid");
 <button type="button" onclick="toggleSidebar()" style="margin-top:150px; border:none; margin-left:15px;"><i class="bi bi-menu-app" style="font-size:20px;"></i></button><br><br>
 
 
-<div class="container" style="margin-left:350px; border:0px solid gray; width:1500px; height:2000px; border-radius:20px;">
+<div class="container" style="margin-left:330px; margin-top:-100px; width:1500px; height:2000px; border-radius:20px;">
     <br><br>
     <div class="row">
-        <div class="col-md-4"> <!-- 왼쪽 열 (이미지) -->
-            <img src="<%=root %>/jeju/img1.JPG" alt="보안 이미지">
-        </div>
-        <div class="col-md-4"> <!-- 오른쪽 열 (텍스트) -->
-            <h1 align="center">보안</h1><br>
-            <div class="b" style="width:330px; margin-left:60px;"><h4 align="center">계정을 안전하게 보호해보자</h4></div>
-        </div>
+        <div class="col-md-4" style="margin-bottom:30px;"> <!-- 왼쪽 열 (이미지) -->
+            <img src="<%=root %>/jeju/img1.JPG" alt="보안 이미지" style="margin-left:215px; width:900px; height:200px;">
+        </div><br>
     </div>
     <hr><br><br>
 
 		<!-- div안에 비밀번호 변경 div임  -->
-		<div class="secure" style="margin-left:200px; border-radius:20px; border:1px solid gray; width:1000px; height:1000px; ">
+		<div class="secure" style="margin-left:170px; border-radius:20px; border:1px solid gray; width:1000px; height:1000px; ">
 			<br>
 			<legend><b font-size="22px">&nbsp;&nbsp;&nbsp;보&nbsp;안</b></legend><br><hr><br>
 			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px;">
@@ -86,7 +90,7 @@ String myid =(String)session.getAttribute("myid");
 			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer" onclick="location.href='https://www.naver.com/'">
 			<b>Q 검색하기</b></div><br><br>
 			
-			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;">
+			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;" onclick="question()">
 			<b>고객센터 의견 보내기 </b></div><br><br>
 			
 			<div class="recentLogin" style=" width: 800px; margin-left:50px; border:1px solid gray; height:120px; border-radius:10px; cursor:pointer;" onclick="money()">
@@ -98,7 +102,7 @@ String myid =(String)session.getAttribute("myid");
 <!-- 사이드바 -->
 <div class="sidebar open">
 	<button type="button" style="margin-left:15px; margin-top:50px; border:none;" onclick="toggleSidebar()">
-	<i class="bi bi-menu-app" style="font-size:20px;"></i></button>
+	<i class="bi bi-box-arrow-in-right" style="font-size:24px;"></i></button>
 	<br><br><br>
     &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;홈</a><br><br>
     &nbsp;&nbsp;<a href="#">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;개인정보</a><br><br>
@@ -137,6 +141,10 @@ String myid =(String)session.getAttribute("myid");
         var url = 'index.jsp?main=myPage/updatePass.jsp&myid=<%=myid %>';
         
         window.open(url , "passchange" , "scrollbars=yes , width:1000 , height=400 , left="+w+",top="+h);
+    }
+    
+    function question() {
+    		location.href='index.jsp?main=admin/adminBoard.jsp';
     }
 
 </script>

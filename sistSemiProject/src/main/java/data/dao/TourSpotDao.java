@@ -8,6 +8,7 @@ import data.dto.TourSpotDto;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mysql.db.DBConnect;
@@ -334,5 +335,39 @@ public class TourSpotDao {
 			   
 			   return photo;
 		   }
+		 
+		 public double getAverageStars(String name,String sort) {
+			 
+			 double avg=0;
+			 int cnt=0;
+			 
+			 Connection conn=db.getConnection();
+			 Statement stmt=null;
+			 ResultSet rs=null;
+			 
+			 String table_sort=(sort.equals("1")?"TourReview":"GuestReview");
+			 String seq=getSeq(name);
+			 
+			 String sql="select * from "+table_sort+" where tour_seq="+seq;
+			 
+			 try {
+				stmt=conn.createStatement();
+				rs=stmt.executeQuery(sql);
+				
+				while(rs.next())
+				{
+					avg+=Double.parseDouble(rs.getString("stars")==null?"0":rs.getString("stars"));
+					cnt++;
+					System.out.println("짝:"+avg);
+				}
+				avg=(cnt==0?0:avg/cnt);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				db.dbClose(rs, stmt, conn);
+			}
+			return avg;
+		 }
 
 }

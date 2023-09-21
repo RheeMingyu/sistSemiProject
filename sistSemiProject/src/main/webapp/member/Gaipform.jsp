@@ -18,12 +18,22 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <link rel="stylesheet"
    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+   <%
+   String root=request.getContextPath();
+   %>
 <style>
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+
 
 body {
    min-height: 100vh;
-   background-image: url('image/b1.JPG');
-   background-size: 100% 100%;
+   background-image: url('<%=root %>/jeju/gaip.JPG');
+   background-size: 100%;
 
 }
 
@@ -42,8 +52,8 @@ body {
 
 div.container {
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.0);
-   margin-left: 300px;
-   margin-top: 100px;
+   margin-left: 400px;
+   margin-top: 80px;
 }
 </style>
 </head>

@@ -24,7 +24,7 @@ body {
 
 }
 div.a1 {
- width:600px;   
+ width:600px;	
  height:700px;
  border : 0px solid gray;
  margin-left :100px;
@@ -63,12 +63,13 @@ AdminBoardDto dto = dao.getDto(num);
 
 %>
    <article>
-      
+		
       <div class="a1" id="a1">
       <div class="b">
-         <br>
+			<br>
          <h2><b>고객센터 문의</b></h2><br>
-         <input type="hidden" id="num" name="num" value=<%=num %>>
+
+         <form name="form" id="form" role="form" method="post" action="admin/insertProc.jsp" onsubmit="al()">
 
             <div class="mb-3">
 
@@ -95,52 +96,47 @@ AdminBoardDto dto = dao.getDto(num);
                </textarea>
 
             </div>
-         <%
-         System.out.println(myid);
-         System.out.println(id);
-         System.out.println(num);
-         
-         
-         //지금로그인한 사람이 작성자와 아이디가 같으면 수정,삭제 버튼이 뜨게 해야함.
-         if(myid.equals(id)){
-         %>
-         <input type="submit" class="btn btn-sm btn-primary" id="btnSave" value="수정">
-         <button type="button" style="width:48px; height:30px;" class="btn btn-sm btn-primary" id="btndel" value="삭제" onclick="del()">삭제</button>
-         <%   
-         }
-         %>
+			<%
+			System.out.println(myid);
+			System.out.println(id);
+			
+			//지금로그인한 사람이 작성자와 아이디가 같으면 수정,삭제 버튼이 뜨게 해야함.
+			if(myid.equals(id)){
+			%>
+			<input type="submit" class="btn btn-sm btn-primary" id="btnSave" value="수정">
+			<button type="button" style="width:48px; height:30px;" class="btn btn-sm btn-primary" id="btndel" value="삭제" onclick="del()">삭제</button>
+			<%	
+			}
+			%>
             <button type="button" class="btn btn-sm btn-primary" id="btnList" onclick="list()">목록</button>
-      <br><br>
-      
-      <!-- 댓글을 달 수 있는 창은 관리자만 보일 수 있게 한다. 그대시 다른 사람들은 댓글을 볼 수는 있게 만들 것 이다. -->
-      <%
-      if(myid.equals("admin")) {
-      %>   
-      
-            <div class="aform">
-               <table>
-               <tr>
-               <td><b><i class="bi bi-reddit"></i>&nbsp;관리자</b></td>
-               </tr>
-               
-               <tr>
-               <td><textarea style="width:700px; height:300px;"></textarea></td>
-               </tr>
-               </table>
-               <button type="button" style="float:center;" onclick="content()">답글달기</button>
-            </div>
-            
-             </div>
+         </form>
+		<br><br>
+		
+		<!-- 댓글을 달 수 있는 창은 관리자만 보일 수 있게 한다. 그대시 다른 사람들은 댓글을 볼 수는 있게 만들 것 이다. -->
+		<%
+		if(myid.equals("admin")) {
+		%>	
+		
+				<div class="aform">
+					<table>
+					<tr>
+					<td><b><i class="bi bi-reddit"></i>&nbsp;관리자</b></td>
+					</tr>
+					
+					<tr>
+					<td><textarea style="width:700px; height:300px;"></textarea></td>
+					</tr>
+					</table>
+					<button type="button" style="float:center;" onclick="content()">답글달기</button>
+				</div>
+		<%
+		}
+		%>
+       </div>
        <div id="Content" style="margin-left:40px; margin-top: -30px; width:450px; height:200px; border:0px solid gray;">
        <p><b><i class="bi bi-android"></i>&nbsp;관리자</b></p>
        <textarea style="width:430px; height:150px;"></textarea>
-     </div>
-      <%
-      }
-      %>
-      
-       
-       
+	  </div>
        
 </div> 
 
@@ -149,26 +145,26 @@ AdminBoardDto dto = dao.getDto(num);
    
    <script>
    function list() {
-      location.href="index.jsp?main=admin/boardList.jsp";
+	   location.href="index.jsp?main=admin/boardList.jsp";
    }
    
    function al() {
-      alert("등록이 완료되었습니다.");
+	   alert("등록이 완료되었습니다.");
    }
    
    function del() {
-      
-      var del = confirm("문의를 삭제하시겠습니까?");
-      
-      if(del) {
-         alert("삭제되었습니다.");
-         location.href="admin/deleteContent.jsp?myid="+myid+"&currentPage="+currentPage;
-      }
-      
+	   
+	   var del = confirm("문의를 삭제하시겠습니까?");
+	   
+	   if(del) {
+		   alert("삭제되었습니다.");
+		   locatin.href="admin/deleteContent.jsp?myid="+myid+"&currentPage="+currentPage;
+	   }
+	   
    }
    
    function content() {
-      
+   	
        $.ajax({
            url: 'admin/contentBoard.jsp', 
            type: 'POST', 
@@ -176,9 +172,9 @@ AdminBoardDto dto = dao.getDto(num);
            success: function(response) {
                // AJAX 요청이 성공하면 내용을 questionContent div에 삽입
                if($('#Content').html()=="") {
-                  $('#Content').html(response);
+               	$('#Content').html(response);
                } else {
-                  $('#Content').html("");
+               	$('#Content').html("");
                }
                
            },

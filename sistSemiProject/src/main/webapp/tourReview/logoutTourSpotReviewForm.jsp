@@ -435,10 +435,11 @@ function readURL(input){
                    	type:"get",
                    	url:"tourReview/getPhoto.jsp",
                    	dataType:"json",
-                   	data:{"op_val":op_val},
+                   	data:{"op_val":op_val,"sort":"2"},
                    	success:function(r){
                    		var p="<img src='jeju/"+r.photo+"' style='width:200px;height:200px;border-radius:20px;margin-left:100px'>";
                    		$("#sel3").html(p);
+                   		$("#avg").text(r.avg);
                    	}
                    	
                     });
@@ -453,7 +454,7 @@ function readURL(input){
    }
 %>
          
-                  <div id="sel2"></div><div id="sel3"></div>
+                  <div id="sel2"></div><div id="sel3"></div><div id="avg"></div>
                   
                   <%
                   {
@@ -472,7 +473,7 @@ function readURL(input){
                <input type="text" name="title" class="form-control" style="width: 1100px; margin-left: 10px" required="required" placeholder="제목">
                <br>
                <textarea style="width: 1100px; height: 150px; margin-left: 10px" name="content" required="required" class="form-control" placeholder="리뷰를 작성해주세요"></textarea>
-               <button class="btn btn-primary" type="submit" style="margin-top: 10px; margin-left: 1052px; background-color: #696969; border-color: #696969;">등록</button>
+               <button class="btn btn-ouline-dark" type="submit" style="margin-top: 10px; margin-left: 1052px; border-color: #696969;">등록</button>
             </td>
          </tr>
     

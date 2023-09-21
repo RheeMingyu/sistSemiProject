@@ -37,6 +37,10 @@ response.setCharacterEncoding("utf-8");
       top: 667px;
       left: 1323px;
    }
+   #com{
+   	text-decoration: none;
+   	color: black;
+   }
 </style>
 <%
 String currentPage=request.getParameter("currentPage");
@@ -55,7 +59,7 @@ String inputWords=request.getParameter("inputWords");
 		<jsp:include page="popularSearches.jsp"/>
 	</div>
 	<div class="search_layout commercial">
-		<h5>광고 문의<br><br>010-5257-1503<br>(송주영 과장) 쌍용 카리나<br>신한 110-418-213111</h5>
+		<h5><a href="https://instagram.com/0ij0_22?igshid=MzRlODBiNWFlZA==" id="com">광고 문의<br><br>010-5257-1503<br>(송주영 과장) 쌍용 카리나<br>신한 110-418-213111</a></h5>
 	</div>
 </body>
 </html>

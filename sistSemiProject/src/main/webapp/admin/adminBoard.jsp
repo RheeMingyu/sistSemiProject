@@ -10,6 +10,11 @@
 <title>고객문의 페이지</title>
 </head>
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
 table,td,tr {
 	border:1px solid gray;
 }
@@ -67,6 +72,9 @@ cursor:pointer;
  tr {
  height:50px;
  }
+ .bi.bi-box-arrow-in-right {
+  background-color: wheat; /* 배경색을 투명하게 설정합니다. */
+}
 </style>
 <body>
 &nbsp;&nbsp;<button id="a1" onclick="toggleSidebar()"><i class="bi bi-menu-app" style="font-size:20px; border:none;"></i></button><br><br>
@@ -107,7 +115,7 @@ cursor:pointer;
 
 <div class="sidebar open">
 	<button type="button" style="margin-left:15px; margin-top:20px; border:none;" onclick="toggleSidebar()">
-	<i class="bi bi-menu-app" style="font-size:20px;"></i></button>
+	<i class="bi bi-box-arrow-in-right" style="font-size:24px;"></i></button>
 	<br><br>
     &nbsp;&nbsp;<a href="index.jsp">&nbsp;<i class="bi bi-house-door"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>홈</b></a><br><br>
     &nbsp;&nbsp;<a href="index.jsp?main=myPage/mypage.jsp">&nbsp;<i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;<b>개인정보</b></a><br><br>

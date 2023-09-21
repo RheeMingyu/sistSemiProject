@@ -8,7 +8,7 @@
 <% 
 
 	request.setCharacterEncoding("utf-8");
-	String id=(String)session.getAttribute("id");
+	String id=(String)session.getAttribute("myid");
 
 	String realPath=getServletContext().getRealPath("/save");
 	System.out.println(realPath);

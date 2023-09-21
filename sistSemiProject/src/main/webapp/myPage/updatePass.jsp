@@ -24,36 +24,36 @@ String myid = (String)session.getAttribute("myid");
 %>
 <body>
 <form name="frm" action="myPage/updatePassProc.jsp" method="post">
-   <table class="table table-bordered" style="position:relative; margin-top:200px; margin-left:200px;">
-      <tr align="center">
-         <th>&nbsp;&nbsp;<b disabled>현재 아이디 </b></th>
-         <td><%=myid %></td>
-      </tr>
-   
-      <tr align="center">
-         <th>&nbsp;&nbsp;현재 암호 입력</th>
-         <td><input type="password" name="pass1"></td>
-      </tr>
-      
-      <tr align="center">
-         <th>&nbsp;&nbsp;새로운 암호 입력</th>
-         <td><input type="password" name="pass1"></td>
-      </tr>
-      
-      <tr align="center">
-         <th>&nbsp;&nbsp;새로운 암호 재입력</th>
-         <td><input type="password" name="pass1"></td>
-      </tr>
-   </table>
-   <div class="button1" style="margin-left:320px;">
-   <button type="submit" class="btn btn-outline-dark">비밀번호 변경하기</button>
-   <button type="button" onclick="later()" class="btn" data-bs-toggle="button" >나중에 변경하기</button>
-   </div>
+	<table class="table table-bordered" style="position:relative; margin-top:200px; margin-left:200px;">
+		<tr align="center">
+			<th>&nbsp;&nbsp;<b disabled>현재 아이디 </b></th>
+			<td><%=myid %></td>
+		</tr>
+	
+		<tr align="center">
+			<th>&nbsp;&nbsp;현재 암호 입력</th>
+			<td><input type="password" name="pass1"></td>
+		</tr>
+		
+		<tr align="center">
+			<th>&nbsp;&nbsp;새로운 암호 입력</th>
+			<td><input type="password" name="pass1"></td>
+		</tr>
+		
+		<tr align="center">
+			<th>&nbsp;&nbsp;새로운 암호 재입력</th>
+			<td><input type="password" name="pass1"></td>
+		</tr>
+	</table>
+	<div class="button1" style="margin-left:320px;">
+	<button type="submit" class="btn" data-bs-toggle="button">비밀번호 변경하기</button>
+	<button type="button" onclick="later()" class="btn" data-bs-toggle="button" >나중에 변경하기</button>
+	</div>
 </form>
 <script>
 function later() {
-   window.close();
-   window.loctaion.href='index.jsp?main=myPage/mypage.jsp'
+	window.close();
+	window.loctaion.href='index.jsp?main=myPage/mypage.jsp'
 }
 
 </script>

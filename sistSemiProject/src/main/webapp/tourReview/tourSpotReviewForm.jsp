@@ -413,12 +413,12 @@ $.ajax({
             	type:"get",
             	url:"tourReview/getPhoto.jsp",
             	dataType:"json",
-            	data:{"op_val":op_val},
+            	data:{"op_val":op_val,"sort":"1"},
             	success:function(r){
             		var p="<img src='jeju/"+r.photo+"' style='width:200px;height:200px;border-radius:20px;margin-left:100px'>";
             		$("#sel3").html(p);
+            		$("#avg").text(r.avg);
             	}
-            	
              });
           });
    }
@@ -430,7 +430,7 @@ $.ajax({
    }
 %>
          
-                  <div id="sel2"></div><div id="sel3"></div>
+                  <div id="sel2"></div><div id="sel3"></div><div id="avg"></div>
                   
                   <%
                   {
@@ -441,15 +441,15 @@ $.ajax({
                   style="margin-left:818px; width: 300px;"><br>
 
                </div> <br><input type="text" name="title" class="form-control"
-               style="width: 960px; margin-left: 10px" required="required" placeholder="제목">
+               style="width: 1100px; margin-left: 10px" required="required" placeholder="제목">
                <br>
-               <textarea style="width: 960px; height: 150px; margin-left: 10px"
+               <textarea style="width: 1100px; height: 150px; margin-left: 10px"
                   name="content" required="required" class="form-control"
                   placeholder="리뷰를 작성해주세요"></textarea>
 
 				<input type="hidden" name="op_val" value="" id="op">
-               <button class="btn btn-primary" type="submit"
-                  style="margin-top: 10px; width:60px;margin-left: 910px; background-color: #696969; border-color: #696969;">등록</button>
+               <button class="btn btn-outline-dark" type="submit"
+                  style="margin-top: 10px; width:60px;margin-left: 1050px; border-color: #696969;">등록</button>
    </td>
    </tr>
     

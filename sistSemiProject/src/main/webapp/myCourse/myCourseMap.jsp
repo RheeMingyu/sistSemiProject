@@ -22,14 +22,11 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>주소로 장소 표시하기</title>
 <style>
-body{
-font-family: 'KBO-Dia-Gothic_bold';
-   src:
-      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/KBO-Dia-Gothic_bold.woff')
-      format('woff');
-   font-weight: 700;
-   font-style: normal;
-}
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ }
 #spotContent {
    width: 200px;
 }
@@ -146,14 +143,14 @@ $(document).ready(function() {
       <ul class="nav nav-tabs" role="tablist">
          <!-- <li class="nav-item"><a class="nav-link active"
             data-bs-toggle="tab" href="#tabs-1" onclick="selTheme('전체')">전체</a></li> -->
-         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="oceanTab" style="color:black; font-weight: bold">바다</a></li>
-         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="olleTab" style="color:black; font-weight: bold">올레길</a></li>
-         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="mountainTab" style="color:black; font-weight: bold">산</a></li>
-         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="experienceTab" style="color:black; font-weight: bold">체험</a></li>
-         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="foodTab" style="color:black; font-weight: bold">음식</a></li>
-         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="lodgeTab" style="color:black; font-weight: bold">숙박</a></li>
-         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="shoppingTab" style="color:black; font-weight: bold">쇼핑</a></li>
-         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="islandTab" style="color:black; font-weight: bold">섬</a></li>
+         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="oceanTab" style="color:black;">바다</a></li>
+         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="olleTab" style="color:black;">올레길</a></li>
+         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="mountainTab" style="color:black;">산</a></li>
+         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="experienceTab" style="color:black;">체험</a></li>
+         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="foodTab" style="color:black;">음식</a></li>
+         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="lodgeTab" style="color:black;">숙박</a></li>
+         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="shoppingTab" style="color:black;">쇼핑</a></li>
+         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" id="islandTab" style="color:black;">섬</a></li>
       </ul>
 
 
@@ -244,7 +241,7 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         var infowindow = new kakao.maps.InfoWindow({
-            content: "<div id='spotContent'><img src='<%=root%>/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:70px'><div id='spottext'><%=tourSpotDto.getName()%><br><%=tourSpotDto.getHp()%></div></div>"
+            content: "<div id='spotContent'><img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:70px'><div id='spottext'><%=tourSpotDto.getName()%><br><%=tourSpotDto.getHp()%></div></div>"
                               });
                         //infowindow.open(map, marker);
 
@@ -273,10 +270,10 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
                                   
                               if(<%=likesDao.isLikeCheck(myid, Integer.parseInt(tourSpotDto.getSeq()))==1%>){
-                              $("#placeInfo").html("<img src='<%=root%>/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><b><%=tourSpotDto.getName()%></b>&nbsp;&nbsp;<i class='bi bi-heart-fill like' style='color:red'></i><br><p><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getAddr()%>&nbsp;/&nbsp;<%=tourSpotDto.getHp()%><br></p>"+
+                              $("#placeInfo").html("<img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><b><%=tourSpotDto.getName()%></b>&nbsp;&nbsp;<i class='bi bi-heart-fill like' style='color:red'></i><br><p><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getAddr()%>&nbsp;/&nbsp;<%=tourSpotDto.getHp()%><br></p>"+
                                     "<button type='button' id='btntouradd' class='btn btn-info'>추가하기</button> ");
                               }else{
-                                 $("#placeInfo").html("<img src='<%=root%>/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><b><%=tourSpotDto.getName()%></b>&nbsp;&nbsp;<i class='bi bi-heart-fill like'></i><br><p><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getAddr()%>&nbsp;/&nbsp;<%=tourSpotDto.getHp()%><br></p>"+
+                                 $("#placeInfo").html("<img src='<%=root%>/jeju/<%=tourSpotDto.getPhoto()%>' style='width:100%; height:400px'><br><b><%=tourSpotDto.getName()%></b>&nbsp;&nbsp;<i class='bi bi-heart-fill like'></i><br><p><%=tourSpotDto.getIntro()%><br><%=tourSpotDto.getAddr()%>&nbsp;/&nbsp;<%=tourSpotDto.getHp()%><br></p>"+
                                  "<button type='button' id='btntouradd' class='btn btn-info'>추가하기</button> ");
                               }
                                /* $("#placeInfo").addClass("placediv"); */
@@ -481,7 +478,7 @@ geocoder.addressSearch('<%=str%>', function(result, status) {
 
     <%--클릭한 장소의 정보가 여기에 표시됩니다. --%>
    <div id="placeInfo" class="placediv" style="margin-right:20px;">
-      <img src='<%=root%>/image/mainInfo.png' style='width:100%; height:400px'><br><br><p>제주도의 다양한 관광지를 만나보세요 :)</p>
+      <img src='<%=root%>/jeju/maininfo.png' style='width:100%; height:400px'><br><br><p>제주도의 다양한 관광지를 만나보세요 :)</p>
    </div>
    
 

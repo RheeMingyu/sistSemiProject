@@ -10,6 +10,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <title>Insert title here</title>
 </head>
+<style>
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
+</style>
 <body>
 <%
 String root= request.getContextPath();
@@ -17,7 +24,7 @@ String myid= (String)session.getAttribute("myid");
 %>
 
 
-<form action="userDelete.jsp" method="post">
+<form action="myPage/userDelete.jsp" method="post">
 	
 	<div class="container" style="margin-left:150px; margin-top:100px; border:1px solid gray; width:800px;">
 	<legend>회원탈퇴</legend>

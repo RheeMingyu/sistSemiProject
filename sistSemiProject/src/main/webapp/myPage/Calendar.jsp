@@ -47,6 +47,11 @@
 %>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+body * { 
+ font-family: 'Jeju Gothic', sans-serif;
+ background-color: 
+}
 
 *{
 	margin: 0; padding: 0;
@@ -279,7 +284,7 @@ if(loginok!=null) {
 	<div>
 		<table class="table table-bordered addtext" style="width:256px; height:40px;">
 			<tr>
-				<td><button type="button" style="width:100px; height:30px; border:none;" id="btnadd">일정 메모하기</button></td>
+				<td><button type="button" class="btn btn-outline-dark" style="width:100px; height:30px; border:none;" id="btnadd">일정 메모</button></td>
 			</tr>
 		</table>
 	</div>
@@ -298,7 +303,7 @@ if(loginok!=null) {
 		<textarea style="text-align:left; width:256px; height:300px;" name="content" id="content" style="border-radius:20px; font-size:15px;">
 		제목 : 
 		</textarea>
-		<button type="submit" id="save" style="width: 80px; height: 40px;">저장</button>
+		<button type="submit" id="save"  class="btn btn-outline-dark" style="width: 80px; height: 40px;">저장</button>
 
 	
 </div> <!-- Calendar 닫는 div -->
@@ -311,7 +316,7 @@ $("#save").click(function(){
 	
 	$.ajax({
         type: "POST", // HTTP 요청 방식 (POST)
-        url: "myList/listinsertProc.jsp", // 데이터를 처리할 서버 스크립트 경로
+        url: "myList/listinsertproc.jsp", // 데이터를 처리할 서버 스크립트 경로
         dataType:"html",
         data: { content: inputData },  // 전송할 데이터
         success: function(response){

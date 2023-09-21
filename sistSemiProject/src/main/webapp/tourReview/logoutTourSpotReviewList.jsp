@@ -73,6 +73,7 @@ $("span.answer:eq(2)").click(function() {
     
   });
   
+  $("span.answer").click();
   });
 
    
@@ -299,8 +300,8 @@ List<GuestReviewDto> guestreviewlist = dao.getPagingList(startNum, perPage);
          <input type="password" name="pass" class="form-control">
             <textarea style="width: 1000px; height: 120px; margin-right: 50px;"
                name="content"  class="form-control"></textarea>
-            <button type="submit" class="btn btn-success"
-               style="width: 70px; background-color: orange; height: 70px; margin-bottom: 40px;">등록</button>
+            <button type="submit" class="btn btn-outline-dark"
+               style="width: 100px; height: 100px; margin-bottom: 40px;">등록</button>
    
          </div>
          <input type="hidden" name="com_seq"   value="<%=guestreviewdto.getCom_seq()%>"> 
@@ -326,7 +327,7 @@ List<GuestReviewDto> guestreviewlist = dao.getPagingList(startNum, perPage);
             MemberDao memberDao = new MemberDao();%>
             
          <div class="answer">
-            <table class="table" style="width:480px">
+            <table class="table" style="width:1118px;margin-left: 180px;">
                <%
                   for(GuestCommentDto g : gcList){ %>
                      <tr>
